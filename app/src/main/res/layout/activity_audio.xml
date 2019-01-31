@@ -7,22 +7,65 @@
     android:orientation="vertical"
     tools:context=".audio.AudioActivity">
 
-    <Button
-        android:id="@+id/bt_start"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="start" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/bt_end"
+        <Button
+            android:id="@+id/bt_start_play_audio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="play audio" />
+
+        <Button
+            android:id="@+id/bt_stop_play_audio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="stop audio" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="end" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/bt_config"
+        <Button
+            android:id="@+id/bt_start_media_recorder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="start media recorder" />
+
+        <Button
+            android:id="@+id/bt_stop_media_recorder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="stop media recorder" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="config" />
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/bt_start_record_play"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="start record play" />
+
+        <Button
+            android:id="@+id/bt_stop_record_play"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="stop record play" />
+
+    </LinearLayout>
 </LinearLayout>

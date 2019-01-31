@@ -14,17 +14,51 @@ public class AudioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
 
-        findViewById(R.id.bt_start).setOnClickListener(new View.OnClickListener() {
+        final Intent intent = new Intent(AudioActivity.this, MediaPlayService.class);
+        findViewById(R.id.bt_start_play_audio).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startService(new Intent(AudioActivity.this,BellService.class));
+                intent.setAction(MediaPlayService.ACTION_PLAY_AUDIO);
+                startService(intent);
             }
         });
 
-        findViewById(R.id.bt_end).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bt_stop_play_audio).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopService(new Intent(AudioActivity.this,BellService.class));
+                intent.setAction(MediaPlayService.ACTION_STOP_AUDIO);
+                startService(intent);
+            }
+        });
+
+        findViewById(R.id.bt_start_media_recorder).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent.setAction(MediaPlayService.ACTION_START_MEDIA_RECORDER);
+                startService(intent);
+            }
+        });
+        findViewById(R.id.bt_stop_media_recorder).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent.setAction(MediaPlayService.ACTION_STOP_MEDIA_RECORDER);
+                startService(intent);
+            }
+        });
+
+        findViewById(R.id.bt_start_record_play).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent.setAction(MediaPlayService.ACTION_START_RECORD_PALY);
+                startService(intent);
+            }
+        });
+
+        findViewById(R.id.bt_stop_record_play).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent.setAction(MediaPlayService.ACTION_STOP_RECORD_PALY);
+                startService(intent);
             }
         });
     }
