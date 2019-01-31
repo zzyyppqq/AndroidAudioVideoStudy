@@ -10,6 +10,7 @@ set(SRC_DIR src/main/cpp/libmp3lame)
 include_directories(src/main/cpp/libmp3lame)
 aux_source_directory(src/main/cpp/libmp3lame SRC_LIST)
 
+add_definitions("-DSTDC_HEADERS")
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
