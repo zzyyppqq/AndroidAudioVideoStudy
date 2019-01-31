@@ -1,7 +1,12 @@
 package com.zyp.androidaudiovideostudy;
 
+import android.content.Context;
+import android.media.AudioFormat;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.AccessNetworkConstants;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(AudioLameNative.stringFromJNI());
+        tv.setText(LameNative.stringFromJNI());
 
         AudioRecordManager.init();
 
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         findViewById(R.id.bt_start_audio_trace).setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
                 AudioRecordManager.getInstance().playRecord();
@@ -58,11 +64,19 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_pcm_to_wav).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AudioRecordManager.getInstance().pcmToWav();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        LameNative.init(SAMPLE_RATE_HERTZ, CHANNEL_CONFIG, SAMPLE_RATE_HERTZ, AudioFormat.ENCODING_MP3);
+//                        LameNative.encode()
+
+
+                    }
+                }).start();
+
+
             }
         });
-
     }
-
-
 }

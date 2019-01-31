@@ -13,7 +13,6 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -33,8 +32,8 @@ public class AudioRecordManager {
     private static final String DIR_NAME = "arm";
     private static String AudioFolderFile; //音频文件路径
     private static AudioRecordManager mAudioRecordManager;
-    private File PcmFile = null ; //pcm音频文件
-    private File WavFile = null;  //wav格式的音频文件
+    private File pcmFile = null ; //pcm音频文件
+    private File wavFile = null;  //wav格式的音频文件
     private AudioRecordThread mAudioRecordThead; //录制线程
     private AudioRecordPlayThead mAudioRecordPlayThead;//播放线程
     private boolean isRecord = false;
@@ -77,7 +76,7 @@ public class AudioRecordManager {
             return;
         }
         isRecord = true;
-        mAudioRecordPlayThead = new AudioRecordPlayThead(PcmFile);
+        mAudioRecordPlayThead = new AudioRecordPlayThead(pcmFile);
         mAudioRecordPlayThead.start();
     }
 
@@ -171,11 +170,11 @@ public class AudioRecordManager {
         isRecord = true;
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd_HHmmss", Locale.CHINA);
         //源pcm数据文件
-        PcmFile = new File(AudioFolderFile + File.separator + sdf.format(new Date())+".pcm");
+        pcmFile = new File(AudioFolderFile + File.separator + sdf.format(new Date())+".pcm");
         //wav文件
-        WavFile = new File(PcmFile.getPath().replace(".pcm",".wav"));
+        wavFile = new File(pcmFile.getPath().replace(".pcm",".wav"));
 
-        Log.d(TAG, "PcmFile:"+ PcmFile.getName()+" , WavFile:"+WavFile.getName());
+        Log.d(TAG, "PcmFile:"+ pcmFile.getName()+" , WavFile:"+wavFile.getName());
 
         if (null != mAudioRecordThead) {
             //若线程不为空,则中断线程
@@ -220,6 +219,8 @@ public class AudioRecordManager {
              */
             mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC,
                     SAMPLE_RATE_HERTZ, CHANNEL_CONFIG, AUDIO_FORMAT, BufferSize);
+
+//            LameNative.init(SAMPLE_RATE_HERTZ,CHANNEL_CONFIG,SAMPLE_RATE_HERTZ,AudioFormat.ENCODING_MP3);
         }
 
         @Override
@@ -230,7 +231,7 @@ public class AudioRecordManager {
             try {
                 byte[] bytes = new byte[BufferSize];
 
-                FileOutputStream pcmFos = new FileOutputStream(PcmFile);
+                FileOutputStream pcmFos = new FileOutputStream(pcmFile);
 
                 //开始录制
                 mAudioRecord.startRecording();
@@ -257,8 +258,8 @@ public class AudioRecordManager {
             }
             isRecord = false;
             //当录制完成就将Pcm编码数据转化为wav文件，也可以直接生成.wav
-//            PcmUtil.pcmtoWav(PcmFile.getPath(),WavFile.getPath(),new byte[BufferSize],SAMPLE_RATE_HERTZ,CHANNEL_CONFIG);
-            PcmUtil.convertPcm2Wav(PcmFile.getPath(),WavFile.getPath(),SAMPLE_RATE_HERTZ,CHANNEL_CONFIG,BufferSize);
+            PcmUtil.convertPcm2Wav(pcmFile.getPath(),wavFile.getPath(),BufferSize,SAMPLE_RATE_HERTZ,2,16);
+//            LameNative.encode()
             Log.d(TAG, "录制结束");
         }
 
@@ -268,7 +269,7 @@ public class AudioRecordManager {
     public void pcmToWav() {
        int BufferSize = AudioRecord.getMinBufferSize(SAMPLE_RATE_HERTZ,
                 CHANNEL_CONFIG, AUDIO_FORMAT);
-        PcmUtil.pcmtoWav(PcmFile.getPath(),WavFile.getPath(),new byte[BufferSize],SAMPLE_RATE_HERTZ,CHANNEL_CONFIG);
+        PcmUtil.convertPcm2Wav(pcmFile.getPath(),wavFile.getPath(),BufferSize,SAMPLE_RATE_HERTZ);
     }
 
 
