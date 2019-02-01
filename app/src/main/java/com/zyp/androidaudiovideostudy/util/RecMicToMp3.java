@@ -1,9 +1,11 @@
-package com.zyp.androidaudiovideostudy;
+package com.zyp.androidaudiovideostudy.util;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Handler;
+
+import com.zyp.liblame.NativeLameMP3Encoder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -159,7 +161,7 @@ public class RecMicToMp3 {
                 }
 
                 // Lame init
-                LameNative.init(mSampleRate, 1, mSampleRate, 32);
+                NativeLameMP3Encoder.init(mSampleRate, 1, mSampleRate, 32);
 
                 mIsRecording = true; // ˜^‰¹‚ÌŠJŽnƒtƒ‰ƒO‚ð—§‚Ä‚é
                 try {
@@ -195,7 +197,7 @@ public class RecMicToMp3 {
                             }
                             // ƒf[ƒ^‚ª“ü‚Á‚Ä‚¢‚éê‡
                             else {
-                                int encResult = LameNative.encode(buffer,
+                                int encResult = NativeLameMP3Encoder.encode(buffer,
                                         buffer, readSize, mp3buffer);
                                 if (encResult < 0) {
                                     // ƒGƒ“ƒR[ƒh‚ÉŽ¸”s‚µ‚½
@@ -218,7 +220,7 @@ public class RecMicToMp3 {
                             }
                         }
 
-                        int flushResult = LameNative.flush(mp3buffer);
+                        int flushResult = NativeLameMP3Encoder.flush(mp3buffer);
                         if (flushResult < 0) {
                             // ƒGƒ“ƒR[ƒh‚ÉŽ¸”s‚µ‚½
                             if (mHandler != null) {
@@ -249,7 +251,7 @@ public class RecMicToMp3 {
                         audioRecord.release();
                     }
                 } finally {
-                    LameNative.close();
+                    NativeLameMP3Encoder.close();
                     mIsRecording = false; // ˜^‰¹‚ÌŠJŽnƒtƒ‰ƒO‚ð‰º‚°‚é
                 }
 

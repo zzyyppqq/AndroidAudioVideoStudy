@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zyp.androidaudiovideostudy.util.AudioRecordManager;
 import com.zyp.androidaudiovideostudy.util.MediaRecordManager;
 import com.zyp.androidaudiovideostudy.util.PcmUtil;
+import com.zyp.liblame.NativeLameMP3Encoder;
 
 import java.io.File;
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(LameNative.getLameVersion());
+        tv.setText(NativeLameMP3Encoder.getLameVersion());
 
         AudioRecordManager.init();
 
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
                         String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath()
                                 + File.separator + "arm"+ File.separator;
-                        LameNative.convertPcmToMp3(dir+"aaa.pcm",dir+"aaa_pcm.mp3",SAMPLE_RATE_HERTZ);
+                        NativeLameMP3Encoder.convertPcmToMp3(dir+"aaa.pcm",dir+"aaa_pcm.mp3",SAMPLE_RATE_HERTZ);
                         Log.d(TAG, "run: end");
 
                     }
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
                         String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath()
                                 + File.separator + "arm"+ File.separator;
-                        LameNative.convertWavToMp3(dir+"aaa.wav",dir+"aaa_wav.mp3",SAMPLE_RATE_HERTZ);
+                        NativeLameMP3Encoder.convertWavToMp3(dir+"aaa.wav",dir+"aaa_wav.mp3",SAMPLE_RATE_HERTZ);
                         Log.d(TAG, "run: end");
 
                     }

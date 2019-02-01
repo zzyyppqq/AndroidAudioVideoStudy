@@ -7,7 +7,7 @@
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_zyp_androidaudiovideostudy_LameNative_getLameVersion(JNIEnv *env, jclass type) {
+Java_com_zyp_liblame_NativeLameMP3Encoder_getLameVersion(JNIEnv *env, jclass type) {
 
     // TODO
 //    std::string hello = "Hello from C++";
@@ -20,7 +20,7 @@ static lame_global_flags *glf = NULL;
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_LameNative_close(JNIEnv *env, jclass type) {
+Java_com_zyp_liblame_NativeLameMP3Encoder_close(JNIEnv *env, jclass type) {
 
     lame_close(glf);
     glf = NULL;
@@ -29,7 +29,7 @@ Java_com_zyp_androidaudiovideostudy_LameNative_close(JNIEnv *env, jclass type) {
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_zyp_androidaudiovideostudy_LameNative_encode(JNIEnv *env, jclass type,
+Java_com_zyp_liblame_NativeLameMP3Encoder_encode(JNIEnv *env, jclass type,
                                                       jshortArray buffer_l_,
                                                       jshortArray buffer_r_, jint samples,
                                                       jbyteArray mp3buf_) {
@@ -53,7 +53,7 @@ Java_com_zyp_androidaudiovideostudy_LameNative_encode(JNIEnv *env, jclass type,
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_zyp_androidaudiovideostudy_LameNative_flush(JNIEnv *env, jclass type,
+Java_com_zyp_liblame_NativeLameMP3Encoder_flush(JNIEnv *env, jclass type,
                                                      jbyteArray mp3buf_) {
     jbyte *mp3buf = env->GetByteArrayElements(mp3buf_, NULL);
 
@@ -68,7 +68,7 @@ Java_com_zyp_androidaudiovideostudy_LameNative_flush(JNIEnv *env, jclass type,
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_LameNative_init__IIIII(JNIEnv *env, jclass type,
+Java_com_zyp_liblame_NativeLameMP3Encoder_init__IIIII(JNIEnv *env, jclass type,
                                                            jint inSampleRate, jint outChannel,
                                                            jint outSampleRate, jint outBitrate,
                                                            jint quality) {
@@ -91,7 +91,7 @@ int flag = 0;
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_zyp_androidaudiovideostudy_LameNative_convertWavToMp3__Ljava_lang_String_2Ljava_lang_String_2IIIIII(JNIEnv *env, jclass type,
+Java_com_zyp_liblame_NativeLameMP3Encoder_convertWavToMp3__Ljava_lang_String_2Ljava_lang_String_2IIIIII(JNIEnv *env, jclass type,
                                                               jstring wavPath_, jstring mp3Path_,
                                                               jint inSamplerate, jint outSamplerate,
                                                               jint numChannels, jint brate,
@@ -180,7 +180,7 @@ Java_com_zyp_androidaudiovideostudy_LameNative_convertWavToMp3__Ljava_lang_Strin
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_zyp_androidaudiovideostudy_LameNative_convertPcmToMp3(
+Java_com_zyp_liblame_NativeLameMP3Encoder_convertPcmToMp3__Ljava_lang_String_2Ljava_lang_String_2IIIIII(
         JNIEnv *env, jclass type, jstring pcmPath_, jstring mp3Path_, jint inSamplerate,
         jint outSamplerate, jint numChannels, jint brate, jint quality, jint vbrModel) {
     const char *pcmPath = env->GetStringUTFChars(pcmPath_, 0);

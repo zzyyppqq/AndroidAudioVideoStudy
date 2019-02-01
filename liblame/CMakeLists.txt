@@ -25,7 +25,7 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/lame-lib.cpp ${SRC_LIST_LAME})
+        src/main/cpp/NativeLameMP3Encoder.cpp ${SRC_LIST_LAME})
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

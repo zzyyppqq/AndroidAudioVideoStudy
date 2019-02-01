@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy;
+package com.zyp.androidaudiovideostudy.util;
 
 import java.io.File;
 import java.io.FileInputStream;

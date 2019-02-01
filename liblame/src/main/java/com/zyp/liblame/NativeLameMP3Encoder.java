@@ -1,6 +1,6 @@
-package com.zyp.androidaudiovideostudy;
+package com.zyp.liblame;
 
-public class LameNative {
+public class NativeLameMP3Encoder {
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("lame-lib");

@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zyp.androidaudiovideostudy.util.RecMicToMp3;
+
 public class LiblameActivity extends AppCompatActivity {
 
     private RecMicToMp3 mRecMicToMp3 = new RecMicToMp3(
