@@ -17,3 +17,20 @@
     cmake 中添加add_definitions("-DSTDC_HEADERS");
 
 https://www.jianshu.com/p/fb531239cd79
+
+https://www.jianshu.com/p/e4058e6a45a5
+
+https://www.jianshu.com/p/8da3cf058c0f
+
+音频编码库（pcm->mp3）：lame
+音频解码库（mp3->pcm）：git clone http://gitorious.org/rowboat/external-libmad.git
+
+
+PCM: 一种音频格式，能够到底最高保真水平的。因此，PCM约定俗成了无损编码，
+
+LAME: 目前最好的MP3编码引擎,所谓编码，即把未压缩的音乐压缩为mp3。由于AMR已经压缩的格式，所以不能直接使用LAME转为MP3。
+
+FFmpeg： 一套可以用来记录、转换数字音频、视频，并能将其转化为流的开源计算机程序。我们可以使用FFmpeg解码AMR，将AMR转为PCM。
+https://www.jianshu.com/p/dca127703886
+
+

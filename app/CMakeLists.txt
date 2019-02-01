@@ -7,8 +7,9 @@ cmake_minimum_required(VERSION 3.4.1)
 
 
 set(SRC_DIR src/main/cpp/libmp3lame)
+
 include_directories(src/main/cpp/libmp3lame)
-aux_source_directory(src/main/cpp/libmp3lame SRC_LIST)
+aux_source_directory(src/main/cpp/libmp3lame SRC_LIST_LAME)
 
 add_definitions("-DSTDC_HEADERS")
 
@@ -18,13 +19,13 @@ add_definitions("-DSTDC_HEADERS")
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-        native-lib
+        lame-lib
 
         # Sets the library as a shared library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/native-lib.cpp ${SRC_LIST})
+        src/main/cpp/lame-lib.cpp ${SRC_LIST_LAME})
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -44,7 +45,7 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-        native-lib
+        lame-lib
 
         # Links the target library to the log library
         # included in the NDK.

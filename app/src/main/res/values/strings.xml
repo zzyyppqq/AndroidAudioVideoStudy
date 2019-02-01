@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AndroidAudioVideoStudy</string>
+    <string name="PlayMusic">PlayMusic</string>
+    <string name="PauseMusic">PauseMusic</string>
+    <string name="leftSoundChannel">leftSoundChannel</string>
+    <string name="lightSoundChannel">lightSoundChannel</string>
+    <string name="succeed">succeed</string>
+    <string name="failed">"failed"</string>
 </resources>
