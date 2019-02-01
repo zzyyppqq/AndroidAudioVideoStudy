@@ -1,5 +1,7 @@
 package com.zyp.androidaudiovideostudy;
 
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
@@ -164,6 +166,23 @@ public class MainActivity extends AppCompatActivity {
     }
     public static final int SAMPLE_RATE_HERTZ = 44100;
 
+
+    private SoundPool soundPool;//播放短的反应速度要求高的声音，比如游戏爆破音，使用独立线程载入音乐文件
+
+    private void initSoundPool() {
+        soundPool = new SoundPool(10,AudioManager.STREAM_SYSTEM,5);
+    }
+
+    private void playSoundPool(){
+        final int sourceId = soundPool.load(this, R.raw.in_call_alarm, 0);
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int i, int i1) {
+                soundPool.play(sourceId,1,1,0,-1,-1);
+            }
+        });
+
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
