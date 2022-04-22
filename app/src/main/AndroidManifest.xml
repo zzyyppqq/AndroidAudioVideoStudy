@@ -6,7 +6,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-feature android:name="android.hardware.camera" />
+
+    <!-- <uses-feature android:name="android.hardware.camera" android:required="false" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,21 +20,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN1" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".audio.AudioActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN2" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <service android:name=".audio.MediaPlayService" />
-
         <activity android:name=".LibmadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN3" />
@@ -41,6 +35,20 @@
         <activity android:name=".LiblameActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN4" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".video.CameraActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".video.CameraMediaCodecActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN5" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

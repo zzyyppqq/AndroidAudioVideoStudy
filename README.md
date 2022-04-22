@@ -3,7 +3,7 @@
 AudioManager audioManager;
 MediaPlayer mediaPlayer;//播放视频、音频，适合播放长语音
 SoundPool soundPool;//播放短的反应速度要求高的声音，比如游戏爆破音，使用独立线程载入音乐文件
-MediaRecorder mediaRecorder;//录制wav、mp3并保存到文件
+MediaRecorder mediaRecorder;//录制amr、wav、mp3并保存到文件，录制mp4视频
 AudioRecord audioRecord;//录制pcm
 AudioTrack audioTrack;//播放pcm
 //Ringtone和RingtoneManager播放铃声
