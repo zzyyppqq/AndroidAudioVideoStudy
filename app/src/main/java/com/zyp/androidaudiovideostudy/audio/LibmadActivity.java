@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy;
+package com.zyp.androidaudiovideostudy.audio;
 
 import android.annotation.SuppressLint;
 import android.media.AudioFormat;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.zyp.androidaudiovideostudy.R;
 import com.zyp.androidaudiovideostudy.util.FileHelper;
 import com.zyp.libmad.NativeMP3Decoder;
 

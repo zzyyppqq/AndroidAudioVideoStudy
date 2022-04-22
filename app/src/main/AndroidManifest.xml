@@ -20,39 +20,16 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN1" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".LibmadActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN3" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".LiblameActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN4" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".video.CameraActivity">
-            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".video.CameraMediaCodecActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN5" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".audio.AudioActivity" />
+        <activity android:name=".audio.LibmadActivity" />
+        <activity android:name=".audio.LiblameActivity" />
+        <activity android:name=".video.CameraActivity" />
+        <activity android:name=".video.CameraMediaCodecActivity" />
     </application>
 
 </manifest>

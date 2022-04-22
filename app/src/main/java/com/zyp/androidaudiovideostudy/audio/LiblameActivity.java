@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy;
+package com.zyp.androidaudiovideostudy.audio;
 
 import android.os.Environment;
 import android.os.Handler;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zyp.androidaudiovideostudy.R;
 import com.zyp.androidaudiovideostudy.util.RecMicToMp3;
 
 public class LiblameActivity extends AppCompatActivity {
