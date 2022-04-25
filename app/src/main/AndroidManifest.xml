@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ffmpeg.FFmpegActivity"
+            android:exported="false" />
+        <activity
             android:name=".video.CameraOpenGLActivity"
             android:exported="false" />
         <activity

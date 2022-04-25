@@ -1,1 +1,2 @@
 include ':app', ':libmad', ':liblame'
+include ':ffmpeglib'
