@@ -9,7 +9,9 @@ import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Environment;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -17,6 +19,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.zyp.androidaudiovideostudy.R;
+import com.zyp.androidaudiovideostudy.util.CameraUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,12 +32,17 @@ public class CameraActivity extends AppCompatActivity {
     private static final String TAG = CameraActivity.class.getSimpleName();
 
     private SurfaceView surfaceView;
-    private Camera camera;
-    private SurfaceHolder surfaceHolder;
-    private YuvToFile yuvToFile;
-    private volatile boolean isRecord;
-    private int cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
 
+    private SurfaceHolder surfaceHolder;
+    private YuvToFile yuvToFile = new YuvToFile();
+    private YuvToImage yuvToImage = new YuvToImage();
+    private volatile boolean isRecord;
+
+    private String fileName = "aaa" + System.currentTimeMillis() + "_myVideo.mp4";
+    final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+    final String yuvFilePath = "aaa" + timeStamp + ".yuv";
+
+    private CameraUtil cameraUtil = new CameraUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,62 +54,14 @@ public class CameraActivity extends AppCompatActivity {
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(callback);
 
-        yuvToFile = new YuvToFile();
-        camera = Camera.open(cameraId);//后置
-
-        Camera.Parameters parameters = camera.getParameters();
-        parameters.setPreviewFormat(ImageFormat.NV21);
-
-
-        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
-            parameters.set("orientation", "portrait");
-            camera.setDisplayOrientation(90);
-            //在exif数据中，旋转90°
-            parameters.setRotation(90);
-        } else {
-            parameters.set("orientation", "landscape");
-            camera.setDisplayOrientation(0);
-            //在exif数据中，旋转0°
-            parameters.setRotation(0);
-        }
-
-        final Camera.Size previewSize = parameters.getPreviewSize();
-        Log.d(TAG, "onCreate: cur previewSize: width=" + previewSize.width + " , height=" + previewSize.height);
-        List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
-        for (Camera.Size size : supportedPreviewSizes) {
-            Log.d(TAG, "onCreate: support size: width=" + size.width + " , height=" + size.height);
-        }
-        parameters.setPreviewSize(previewSize.width, previewSize.height);
-
-        final YuvToImage yuvToImage = new YuvToImage();
-        final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        camera.setPreviewCallback(new Camera.PreviewCallback() {
-            @Override
-            public void onPreviewFrame(byte[] data, Camera camera) {
-                if (isRecord) {
-                    Log.d(TAG, "onPreviewFrame: data: " + data.length);
-//                    yuvToImage.image(data,previewSize.width,previewSize.height);
-                    data = YuvRotate.rotateYUVDegree90(data, previewSize.width, previewSize.height);
-                    yuvToFile.append(data, "aaa" + timeStamp + ".yuv");
-                }
-
-            }
-        });
-
-
-        List<String> focusMode = parameters.getSupportedFocusModes();
-        if (focusMode.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-            camera.cancelAutoFocus();
-        }
-
-        camera.setParameters(parameters);
+        cameraUtil.init(this);
+        cameraUtil.setPreviewCallback(previewCallback);
 
         findViewById(R.id.bt_start_record_video).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isRecord = true;
-                startPreviewDisplay(surfaceHolder);
+                cameraUtil.startPreviewDisplay(surfaceHolder);
             }
         });
 
@@ -109,7 +69,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isRecord = false;
-                camera.stopPreview();
+                cameraUtil.stopPreviewDisplay();
             }
         });
 
@@ -127,33 +87,38 @@ public class CameraActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mMediaRecorder.stop();  // stop the recording
                 releaseMediaRecorder(); // release the MediaRecorder object
-                camera.lock();         // take camera access back from MediaRecorder
+                cameraUtil.lock();      // take camera access back from MediaRecorder
 
             }
         });
-
-
-
     }
+
+    private Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+        @Override
+        public void onPreviewFrame(byte[] data, Camera camera) {
+            if (isRecord) {
+                Log.d(TAG, "onPreviewFrame: data: " + data.length);
+                // yuvToImage.image(data, previewSize.width, previewSize.height);
+                data = YuvRotate.rotateYUVDegree90(data, cameraUtil.previewSize.width, cameraUtil.previewSize.height);
+                yuvToFile.append(data, yuvFilePath);
+            }
+
+        }
+    };
 
 
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
             Log.d(TAG, "surfaceCreated: ");
-            startPreviewDisplay(holder);
+            cameraUtil.startPreviewDisplay(holder);
         }
 
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             Log.d(TAG, "surfaceChanged: ");
-            try {
-                camera.stopPreview();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            startPreviewDisplay(holder);
+            cameraUtil.stopPreviewDisplay();
+            cameraUtil.startPreviewDisplay(holder);
         }
 
         @Override
@@ -163,24 +128,14 @@ public class CameraActivity extends AppCompatActivity {
         }
     };
 
-    private void startPreviewDisplay(SurfaceHolder holder) {
-        try {
-            camera.setPreviewDisplay(holder);
-            camera.startPreview();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 
     private MediaRecorder mMediaRecorder;
 
     private void prepareVideoRecorder() {
         mMediaRecorder = new MediaRecorder();
         mMediaRecorder.reset();
-        camera.unlock();
-        mMediaRecorder.setCamera(camera);
+        cameraUtil.unlock();
+        mMediaRecorder.setCamera(cameraUtil.camera);
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
@@ -188,12 +143,12 @@ public class CameraActivity extends AppCompatActivity {
 //        if (CamcorderProfile.hasProfile(CamcorderProfile.QUALITY_QVGA)){
 //            profile =CamcorderProfile.get(CamcorderProfile.QUALITY_QVGA);
 //        }else {
-            profile =CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
+        profile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
 //        }
         profile.fileFormat = MediaRecorder.OutputFormat.MPEG_4;
         profile.audioCodec = MediaRecorder.AudioEncoder.AAC;
         profile.videoCodec = MediaRecorder.VideoEncoder.H264;
-        Log.d(TAG, "prepareVideoRecorder: "+profile.videoBitRate+" , "+profile.audioBitRate);
+        Log.d(TAG, "prepareVideoRecorder: " + profile.videoBitRate + " , " + profile.audioBitRate);
 //        profile.videoBitRate = VideoMakerConfig.VIDEO_BIT;
 //        profile.audioBitRate = VideoMakerConfig.AUDIO_BIT;
 
@@ -203,30 +158,30 @@ public class CameraActivity extends AppCompatActivity {
         mMediaRecorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
             @Override
             public void onInfo(MediaRecorder mr, int what, int extra) {
-                if (what==MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED){
+                if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED) {
 
                 }
             }
         });
 
-        if (getResources().getConfiguration().orientation!= Configuration.ORIENTATION_LANDSCAPE){
-            if (cameraId==Camera.CameraInfo.CAMERA_FACING_FRONT){
+        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            if (cameraUtil.cameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
                 mMediaRecorder.setOrientationHint(270);
-            }else {
+            } else {
                 mMediaRecorder.setOrientationHint(90);
             }
-        }else {
+        } else {
             mMediaRecorder.setOrientationHint(0);
         }
 
         //设置视频保存到文件
-        File fileDemo=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
-        if (!fileDemo.exists()){
-            if (!fileDemo.mkdirs()){
+        File fileDemo = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+        if (!fileDemo.exists()) {
+            if (!fileDemo.mkdirs()) {
                 return;
             }
         }
-        File videoFile=new File(Environment.getExternalStorageDirectory(),"aaa"+System.currentTimeMillis()+"_myVideo.mp4");
+        File videoFile = new File(Environment.getExternalStorageDirectory(), fileName);
         mMediaRecorder.setOutputFile(videoFile.getAbsolutePath());
         //将视频显示到SurfaceView上
         mMediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
@@ -240,26 +195,15 @@ public class CameraActivity extends AppCompatActivity {
     }
 
 
-
-
-    private void releaseMediaRecorder(){
+    private void releaseMediaRecorder() {
         if (mMediaRecorder != null) {
             mMediaRecorder.reset();   // clear recorder configuration
             mMediaRecorder.release(); // release the recorder object
             mMediaRecorder = null;
-            if (camera != null) {
-                camera.lock();
-            }// lock camera for later use
+            cameraUtil.lock(); // lock camera for later use
         }
     }
 
-    private void releaseCamera(){
-        if (camera != null) {
-            camera.stopPreview();
-            camera.release();
-            camera = null;
-        }
-    }
 
     @Override
     protected void onDestroy() {
@@ -268,7 +212,7 @@ public class CameraActivity extends AppCompatActivity {
             yuvToFile.close();
         }
         releaseMediaRecorder();
-        releaseCamera();
+        cameraUtil.releaseCamera();
 
     }
 

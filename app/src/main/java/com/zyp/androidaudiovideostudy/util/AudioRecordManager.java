@@ -25,6 +25,8 @@ import java.util.Locale;
  * @instructions 说明
  * @descirbe 描述
  * @features 功能
+ * Android音视频开发初探之AudioRecord与AudioTrack完成音频采集与播放
+ * https://www.jianshu.com/p/1f78c4211ab7
  */
 public class AudioRecordManager {
 

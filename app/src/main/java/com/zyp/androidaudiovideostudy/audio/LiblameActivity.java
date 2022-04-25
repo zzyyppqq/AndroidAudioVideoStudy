@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.zyp.androidaudiovideostudy.R;
 import com.zyp.androidaudiovideostudy.util.RecMicToMp3;
 
+/**
+ * liblame mp3编码
+ */
 public class LiblameActivity extends AppCompatActivity {
 
     private RecMicToMp3 mRecMicToMp3 = new RecMicToMp3(

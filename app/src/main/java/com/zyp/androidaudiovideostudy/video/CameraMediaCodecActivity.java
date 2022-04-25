@@ -48,6 +48,8 @@ import static android.media.MediaFormat.KEY_MAX_INPUT_SIZE;
 
 /**
  * https://developer.android.google.cn/reference/android/media/MediaCodec.html#dequeueInputBuffer(long)
+ * 使用MediaMuxer用来产生一个混合的音频和视频的多媒体文件MP4
+ * 基于Camera、AudioRecord 、MediaCodec 和 MediaMuxer 录制 MP4
  */
 
 public class CameraMediaCodecActivity extends AppCompatActivity implements SurfaceHolder.Callback2 {
@@ -105,6 +107,7 @@ public class CameraMediaCodecActivity extends AppCompatActivity implements Surfa
             @Override
             public void onClick(View v) {
                 codecToggle();
+
             }
         });
     }

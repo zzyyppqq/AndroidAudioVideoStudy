@@ -18,6 +18,9 @@ import com.zyp.libmad.NativeMP3Decoder;
 
 import java.io.File;
 
+/**
+ * libmad mp3编码
+ */
 public class LibmadActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String TAG = "LibmadActivity";
