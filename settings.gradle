@@ -1,3 +1,4 @@
 include ':app', ':libmad', ':liblame'
 include ':ffmpeglib'
 include ':x264lib'
+include ':libfdk-aac'

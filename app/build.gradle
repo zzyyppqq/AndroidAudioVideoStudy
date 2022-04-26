@@ -57,5 +57,6 @@ dependencies {
     implementation project(':liblame')
     implementation project(path: ':ffmpeglib')
     implementation project(path: ':x264lib')
+    implementation project(path: ':libfdk-aac')
 }
 

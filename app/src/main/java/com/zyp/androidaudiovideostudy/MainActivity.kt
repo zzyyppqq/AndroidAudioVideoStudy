@@ -11,6 +11,7 @@ import com.zyp.androidaudiovideostudy.audio.AudioActivity
 import com.zyp.androidaudiovideostudy.audio.LiblameActivity
 import com.zyp.androidaudiovideostudy.audio.LibmadActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityMainBinding
+import com.zyp.androidaudiovideostudy.fdkaac.FdkAACActivity
 import com.zyp.androidaudiovideostudy.ffmpeg.FFmpegActivity
 import com.zyp.androidaudiovideostudy.video.*
 import com.zyp.androidaudiovideostudy.x264.X264Activity
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(CameraOpenGLActivity::class.java),
         MainItem(FFmpegActivity::class.java),
         MainItem(X264Activity::class.java),
+        MainItem(FdkAACActivity::class.java),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
