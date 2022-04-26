@@ -50,8 +50,12 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    // mp4合成
+    implementation 'com.googlecode.mp4parser:isoparser:1.1.22'
+
     implementation project(':libmad')
     implementation project(':liblame')
     implementation project(path: ':ffmpeglib')
+    implementation project(path: ':x264lib')
 }
 

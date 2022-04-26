@@ -48,6 +48,7 @@
         <activity android:name=".audio.LiblameActivity" />
         <activity android:name=".video.CameraActivity" />
         <activity android:name=".video.CameraMediaCodecActivity" />
+        <activity android:name=".x264.X264Activity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
