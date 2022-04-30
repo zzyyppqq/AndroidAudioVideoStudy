@@ -15,10 +15,6 @@ class YuvLib {
 
     external fun nv21ToI420(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
 
-    external fun nv21ToABGR(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
-
-    external fun nv21ToRGB24(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
-
     external fun rgb24ToI420(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
 
     external fun rotateI420(src: ByteArray?, dst: ByteArray?, width: Int, height: Int, degree: Int)

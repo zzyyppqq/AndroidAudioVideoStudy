@@ -43,34 +43,6 @@ void i420_to_nv21(char *src, char *dst, int width, int height) {
 }
 
 
-void nv21_to_abgr(char *src, char *dst, int width, int height) {
-    int src_y_size = width * height;
-    char *src_y = src;
-    char *src_vu = src + src_y_size;
-
-    char *dst_abgr = dst;
-
-    NV21ToABGR((unsigned char *) src_y, width,
-               (unsigned char *) src_vu, width,
-               (unsigned char *) dst_abgr, width * 4,
-               width, height
-    );
-}
-
-void nv21_to_rgb24(char *src, char *dst, int width, int height) {
-
-    int src_y_size = width * height;
-    char *src_y = src;
-    char *src_vu = src + src_y_size;
-
-    char *dst_rgb24 = dst;
-
-    NV21ToRGB24((unsigned char *) src_y, width,
-                (unsigned char *) src_vu, width,
-                (unsigned char *) dst_rgb24, width * 3,
-                width,height);
-}
-
 void nv21_to_i420(char *src, char *dst, int width, int height) {
     int src_y_size = width * height;
     char *src_y = src;

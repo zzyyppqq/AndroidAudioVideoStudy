@@ -93,49 +93,6 @@ Java_com_zyp_yuvlib_YuvLib_nv21ToI420(JNIEnv *env, jclass clazz, jbyteArray src,
     env->ReleaseByteArrayElements(dst, i420_data, 0);
 }
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_zyp_yuvlib_YuvLib_nv21ToABGR(JNIEnv *env, jclass clazz, jbyteArray src,
-                                                jbyteArray dst, jint width, jint height) {
-    if (src == NULL || dst == NULL) {
-        throw_exception(env, "java/lang/RuntimeException", "Src or dst byte array cannot be NULL!");
-    }
-    if (width <= 0 || height <= 0) {
-        throw_exception(env, "java/lang/RuntimeException",
-                        "Width and height must be greater than 0!");
-    }
-
-    jbyte *nv21_data = env->GetByteArrayElements(src, JNI_FALSE);
-    jbyte *abgr_data = env->GetByteArrayElements(dst, JNI_FALSE);
-
-    nv21_to_abgr((char *) nv21_data, (char *) abgr_data, width, height);
-
-    env->ReleaseByteArrayElements(src, nv21_data, 0);
-    env->ReleaseByteArrayElements(dst, abgr_data, 0);
-}
-
-
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_zyp_yuvlib_YuvLib_nv21ToRGB24(JNIEnv *env, jclass clazz, jbyteArray src,
-                                                 jbyteArray dst, jint width, jint height) {
-    if (src == NULL || dst == NULL) {
-        throw_exception(env, "java/lang/RuntimeException", "Src or dst byte array cannot be NULL!");
-    }
-    if (width <= 0 || height <= 0) {
-        throw_exception(env, "java/lang/RuntimeException",
-                        "Width and height must be greater than 0!");
-    }
-
-    jbyte *nv21_data = env->GetByteArrayElements(src, JNI_FALSE);
-    jbyte *rgb24_data = env->GetByteArrayElements(dst, JNI_FALSE);
-
-    nv21_to_rgb24((char *) nv21_data, (char *) rgb24_data, width, height);
-
-    env->ReleaseByteArrayElements(src, nv21_data, 0);
-    env->ReleaseByteArrayElements(dst, rgb24_data, 0);
-}
-
 
 extern "C"
 JNIEXPORT void JNICALL
