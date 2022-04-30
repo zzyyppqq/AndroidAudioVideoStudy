@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.18.1)
 
 # Declares and names the project.
 
-project("libfdk-aac")
+project("librtmp")
 
 set(JNI_LIBS_DIR src/main/cpp)
 
@@ -20,18 +20,18 @@ message(WARNING "Cmake arch abi is: "${CMAKE_ANDROID_ARCH_ABI})
 
 
 add_library(
-        fdk-aac
-        STATIC
+        rtmp
+        SHARED
         IMPORTED
 )
 
 SET_TARGET_PROPERTIES(
-        fdk-aac
+        rtmp
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libfdk-aac.a
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/librtmp.so
 )
 
-include_directories(src/main/cpp/fdk-aac)
+include_directories(src/main/cpp/librtmp)
 
 
 # Creates and names a library, sets it as either STATIC
@@ -40,13 +40,13 @@ include_directories(src/main/cpp/fdk-aac)
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-        fdk-aac-lib
+        rtmp-lib
 
         # Sets the library as a shared library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/rtmp_lib.cpp)
+        src/main/cpp/rtmp_lib.cpp src/main/cpp/rtmp_core.c src/main/cpp/safe_queue.c)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -66,8 +66,8 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-        fdk-aac-lib
-        fdk-aac
+        rtmp-lib
+        rtmp
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
