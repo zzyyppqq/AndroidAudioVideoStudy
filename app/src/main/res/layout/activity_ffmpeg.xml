@@ -36,12 +36,22 @@
             android:text="Codec"
             android:textAllCaps="false" />
 
+
         <Button
             android:id="@+id/btn_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:text="Filter"
+            android:textAllCaps="false" />
+
+
+        <Button
+            android:id="@+id/btn_avcodec_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="avCodecConfig"
             android:textAllCaps="false" />
 
     </LinearLayout>
@@ -58,6 +68,8 @@
         android:id="@+id/ffVideoPlayer"
         android:layout_width="match_parent"
         android:layout_height="220dp" />
+
+
 
     <ScrollView
         android:layout_width="match_parent"

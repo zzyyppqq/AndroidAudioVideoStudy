@@ -34,6 +34,10 @@ class FFmpegActivity : AppCompatActivity() {
             mBinding.tvInfo.text = ffmpegLib.avfilterInfo()
         }
 
+        mBinding.btnAvcodecConfig.setOnClickListener {
+            mBinding.tvInfo.text = ffmpegLib.avcodecConfiguration()
+        }
+
         mBinding.btnPlayer.setOnClickListener {
             // mBinding.ffVideoPlayer.play("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
             mBinding.ffVideoPlayer.play("${Const.sdPath}/test_video.mp4")

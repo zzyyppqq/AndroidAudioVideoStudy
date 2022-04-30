@@ -204,4 +204,12 @@ Java_com_zyp_ffmpeglib_FFmpegLib_render(JNIEnv *env, jobject thiz, jstring url_,
 
     env->ReleaseStringUTFChars(url_, url);
 }
+
+JNIEXPORT jstring JNICALL
+Java_com_zyp_ffmpeglib_FFmpegLib_avcodecConfiguration(JNIEnv *env, jobject thiz) {
+    char info[10000] = {0};
+    sprintf(info, "%s\n", avcodec_configuration());
+    return env->NewStringUTF(info);
+}
+
 }

@@ -16,6 +16,8 @@ class FFmpegLib {
 
     external fun avcodecInfo(): String
 
+    external fun avcodecConfiguration(): String
+
     external fun avfilterInfo(): String
 
     external fun render(url: String?, surface: Surface)
