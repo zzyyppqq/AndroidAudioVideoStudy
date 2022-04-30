@@ -17,12 +17,14 @@
     "{LIST_OF_TARGETS_TO_BUILD}"
   ],
   "libraries": {
-    "fdk-aac-lib::@6890427a1f51a3e7e1df": {
+    "rtmp-lib::@6890427a1f51a3e7e1df": {
       "toolchain": "toolchain",
       "abi": "armeabi-v7a",
-      "artifactName": "fdk-aac-lib",
-      "output": "/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp/build/intermediates/cxx/Debug/4w6i453s/obj/armeabi-v7a/libfdk-aac-lib.so",
-      "runtimeFiles": []
+      "artifactName": "rtmp-lib",
+      "output": "/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp/build/intermediates/cxx/Debug/4w6i453s/obj/armeabi-v7a/librtmp-lib.so",
+      "runtimeFiles": [
+        "/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp/src/main/cpp/armeabi-v7a/librtmp.so"
+      ]
     }
   },
   "toolchains": {
@@ -31,7 +33,9 @@
       "cppCompilerExecutable": "/Users/zhangyipeng/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++"
     }
   },
-  "cFileExtensions": [],
+  "cFileExtensions": [
+    "c"
+  ],
   "cppFileExtensions": [
     "cpp"
   ]

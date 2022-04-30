@@ -164,7 +164,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=libfdk-aac
+CMAKE_PROJECT_NAME:STATIC=librtmp
 
 //Ranlib
 CMAKE_RANLIB:FILEPATH=/Users/zhangyipeng/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-ranlib
@@ -240,10 +240,10 @@ CMAKE_TOOLCHAIN_FILE:FILEPATH=/Users/zhangyipeng/Library/Android/sdk/ndk-bundle/
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-libfdk-aac_BINARY_DIR:STATIC=/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp/.cxx/Debug/4w6i453s/armeabi-v7a
+librtmp_BINARY_DIR:STATIC=/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp/.cxx/Debug/4w6i453s/armeabi-v7a
 
 //Value Computed by CMake
-libfdk-aac_SOURCE_DIR:STATIC=/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp
+librtmp_SOURCE_DIR:STATIC=/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp
 
 //Path to a library.
 log-lib:FILEPATH=/Users/zhangyipeng/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/21/liblog.so

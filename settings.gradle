@@ -1,6 +1,6 @@
 include ':app', ':libmad', ':liblame'
-include ':ffmpeglib'
-include ':x264lib'
+include ':libffmpeg'
+include ':libx264'
 include ':libfdk-aac'
 include ':librtmp'
 include ':libyuv'

@@ -55,8 +55,8 @@ dependencies {
 
     implementation project(':libmad')
     implementation project(':liblame')
-    implementation project(path: ':ffmpeglib')
-    implementation project(path: ':x264lib')
+    implementation project(path: ':libffmpeg')
+    implementation project(path: ':libx264')
     implementation project(path: ':libfdk-aac')
     implementation project(path: ':librtmp')
     implementation project(path: ':libyuv')
