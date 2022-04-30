@@ -1,0 +1,2 @@
+ninja: Entering directory `/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/.cxx/RelWithDebInfo/2k4q6u3k/armeabi-v7a'
+ninja: no work to do.

@@ -1,0 +1,3 @@
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/libfdk-aac/.cxx/Debug/6135rg5r/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/libfdk-aac/.cxx/Debug/6135rg5r/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/libfdk-aac/.cxx/Debug/6135rg5r/armeabi-v7a/CMakeFiles/fdk-aac-lib.dir

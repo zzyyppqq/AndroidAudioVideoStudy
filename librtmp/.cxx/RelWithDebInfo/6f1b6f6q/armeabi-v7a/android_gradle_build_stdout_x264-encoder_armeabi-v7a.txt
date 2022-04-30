@@ -1,0 +1,1 @@
+ninja: Entering directory `/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/.cxx/RelWithDebInfo/6f1b6f6q/armeabi-v7a'

@@ -1,0 +1,59 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "libfdk-aac",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "fdk-aac-lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fdk-aac-lib-Debug-f7e08fa28b163449eca3.json",
+					"name" : "fdk-aac-lib",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/libfdk-aac/.cxx/Debug/6135rg5r/armeabi-v7a",
+		"source" : "/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/libfdk-aac"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 1
+	}
+}

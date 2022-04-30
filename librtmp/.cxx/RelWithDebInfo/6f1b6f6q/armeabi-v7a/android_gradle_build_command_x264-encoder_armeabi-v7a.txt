@@ -1,0 +1,7 @@
+Executable : /Users/zhangyipeng/Library/Android/sdk/cmake/3.18.1/bin/ninja
+arguments : 
+-C
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/.cxx/RelWithDebInfo/6f1b6f6q/armeabi-v7a
+x264-encoder
+jvmArgs : 
+

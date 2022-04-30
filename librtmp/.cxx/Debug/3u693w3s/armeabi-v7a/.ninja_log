@@ -1,0 +1,6 @@
+# ninja log v5
+0	805	1650945664	CMakeFiles/x264-encoder.dir/src/main/cpp/x264_encode_lib.cpp.o	38f91bde21ea72ff
+806	961	1650945664	../../../../build/intermediates/cxx/Debug/3u693w3s/obj/armeabi-v7a/libx264-encoder.so	a3f77c2af278fe16
+0	6	0	clean	47ba1f1f9e53cc80
+4	1221	1650945714	CMakeFiles/x264-encoder.dir/src/main/cpp/x264_encode_lib.cpp.o	38f91bde21ea72ff
+1221	1390	1650945715	../../../../build/intermediates/cxx/Debug/3u693w3s/obj/armeabi-v7a/libx264-encoder.so	a3f77c2af278fe16

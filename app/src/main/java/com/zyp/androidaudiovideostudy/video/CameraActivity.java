@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.zyp.androidaudiovideostudy.R;
 import com.zyp.androidaudiovideostudy.util.CameraUtil;
+import com.zyp.yuvlib.YuvLib;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +44,8 @@ public class CameraActivity extends AppCompatActivity {
     final String yuvFilePath = "aaa" + timeStamp + ".yuv";
 
     private CameraUtil cameraUtil = new CameraUtil();
+
+    private YuvLib yuvLib = new YuvLib();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,14 @@ public class CameraActivity extends AppCompatActivity {
         });
     }
 
+    private byte[] mBytes;
+    private void init() {
+        if (mBytes == null){
+            //int size = 720 * 1440 * ImageFormat.getBitsPerPixel(ImageFormat.NV21) / 8;
+//            mBytes = new byte[size];
+        }
+    }
+
     private Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
         @Override
         public void onPreviewFrame(byte[] data, Camera camera) {
@@ -101,6 +112,17 @@ public class CameraActivity extends AppCompatActivity {
                 // yuvToImage.image(data, previewSize.width, previewSize.height);
                 data = YuvRotate.rotateYUVDegree90(data, cameraUtil.previewSize.width, cameraUtil.previewSize.height);
                 yuvToFile.append(data, yuvFilePath);
+
+                Camera.Size size = camera.getParameters().getPreviewSize();
+                int width = size.width;
+                int height = size.height;
+                mBytes = new byte[data.length];
+                yuvLib.nv21ToI420(data,mBytes,width,height);
+                if (cameraUtil.cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                    yuvLib.rotateI420(mBytes,data,width,height,90);
+                } else {
+                    yuvLib.rotateI420(mBytes,data,width,height,270);
+                }
             }
 
         }

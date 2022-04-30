@@ -1,0 +1,59 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.6.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "libfdk-aac",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "fdk-aac-lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fdk-aac-lib-RelWithDebInfo-667bbd980dc31dc229be.json",
+					"name" : "fdk-aac-lib",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/libfdk-aac/.cxx/RelWithDebInfo/4c374j30/armeabi-v7a",
+		"source" : "/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/libfdk-aac"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 1
+	}
+}

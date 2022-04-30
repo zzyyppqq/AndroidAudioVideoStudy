@@ -1,0 +1,3 @@
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/.cxx/Debug/3u693w3s/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/.cxx/Debug/3u693w3s/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/.cxx/Debug/3u693w3s/armeabi-v7a/CMakeFiles/x264-encoder.dir

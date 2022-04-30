@@ -1,0 +1,3 @@
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/.cxx/Debug/5t24206i/x86/CMakeFiles/rebuild_cache.dir
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/.cxx/Debug/5t24206i/x86/CMakeFiles/edit_cache.dir
+/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/.cxx/Debug/5t24206i/x86/CMakeFiles/nativelib.dir

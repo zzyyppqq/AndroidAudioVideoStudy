@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp/.cxx/Debug/4w6i453s/armeabi-v7a",
+  "command": "/Users/zhangyipeng/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=armv7-none-linux-androideabi21 --gcc-toolchain=/Users/zhangyipeng/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/zhangyipeng/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dfdk_aac_lib_EXPORTS -I../../../../src/main/cpp/fdk-aac -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC -o CMakeFiles/fdk-aac-lib.dir/src/main/cpp/rtmp_lib.cpp.o -c /Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp/src/main/cpp/rtmp_lib.cpp",
+  "file": "/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/librtmp/src/main/cpp/rtmp_lib.cpp"
+}
+]

@@ -1,0 +1,3 @@
+# ninja log v5
+0	430	1650978673	CMakeFiles/fdk-aac-lib.dir/src/main/cpp/fdk_aac_lib.cpp.o	e1b46c029cef3a4c
+430	494	1650978673	../../../../build/intermediates/cxx/RelWithDebInfo/4c374j30/obj/armeabi-v7a/libfdk-aac-lib.so	daec7c2fbf47db2b

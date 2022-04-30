@@ -1,0 +1,1 @@
+ninja: error: 'armeabi-v7a/libx264.a', needed by '/Users/zhangyipeng/AudioVideoProject/AndroidAudioVideoStudy/x264lib/build/intermediates/cxx/RelWithDebInfo/6f1b6f6q/obj/armeabi-v7a/libx264-encoder.so', missing and no known rule to make it
