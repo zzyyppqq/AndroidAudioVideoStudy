@@ -46,7 +46,7 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/rtmp_lib.cpp src/main/cpp/rtmp_core.c src/main/cpp/safe_queue.c)
+        src/main/cpp/rtmp_lib.cpp src/main/cpp/rtmp_handle.cpp src/main/cpp/rtmp_core.c src/main/cpp/safe_queue.c)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
