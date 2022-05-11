@@ -13,6 +13,7 @@ import com.zyp.androidaudiovideostudy.audio.LibmadActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityMainBinding
 import com.zyp.androidaudiovideostudy.fdkaac.FdkAACActivity
 import com.zyp.androidaudiovideostudy.ffmpeg.FFmpegActivity
+import com.zyp.androidaudiovideostudy.rtmp.CameraMediaCodecRtmpActivity
 import com.zyp.androidaudiovideostudy.video.*
 import com.zyp.androidaudiovideostudy.x264.X264Activity
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(VideoViewActivity::class.java),
         MainItem(MediaCodecVideoActivity::class.java),
         MainItem(CameraOpenGLActivity::class.java),
+        MainItem(CameraMediaCodecRtmpActivity::class.java),
         MainItem(FFmpegActivity::class.java),
         MainItem(X264Activity::class.java),
         MainItem(FdkAACActivity::class.java),

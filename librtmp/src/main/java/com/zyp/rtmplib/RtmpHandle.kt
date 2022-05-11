@@ -6,6 +6,8 @@ object RtmpHandle {
         System.loadLibrary("rtmp-lib")
     }
 
+    external fun getVersion(): Int
+
     external fun pushFile(path: String?)
 
     external fun connect(url: String?): Int

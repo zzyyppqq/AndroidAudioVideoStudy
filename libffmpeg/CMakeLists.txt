@@ -30,6 +30,14 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
+        libs/include/cmdutils.c
+        libs/include/cmdutils.h
+        libs/include/config.h
+        libs/include/ffmpeg.c
+        libs/include/ffmpeg.h
+        libs/include/ffmpeg_filter.c
+        libs/include/ffmpeg_hw.c
+        libs/include/ffmpeg_opt.c
         src/main/cpp/ffmpeglib.cpp)
 
 
@@ -83,6 +91,29 @@ set_target_properties(swscale
         PROPERTIES IMPORTED_LOCATION
         ${distribution_DIR}/${ANDROID_ABI}/libswscale.so)
 
+add_library(postproc
+        SHARED
+        IMPORTED)
+set_target_properties(postproc
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libpostproc.so)
+
+
+add_library(avresample
+        SHARED
+        IMPORTED)
+set_target_properties(avresample
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libavresample.so)
+
+
+add_library(avdevice
+        SHARED
+        IMPORTED)
+set_target_properties(avdevice
+        PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/${ANDROID_ABI}/libavdevice.so)
+
 
 find_library( # Sets the name of the path variable.
         log-lib
@@ -107,6 +138,9 @@ target_link_libraries(
         avutil
         swresample
         swscale
+        postproc
+        avdevice
+        avresample
         -landroid
         # Links the target library to the log library
         # included in the NDK.

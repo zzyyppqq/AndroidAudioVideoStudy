@@ -79,11 +79,11 @@ void logCallback(int logLevel, const char *msg, va_list args) {
     char log[1024];
     vsprintf(log, msg, args);
     if (logLevel == RTMP_LOGERROR) {
-        __android_log_write(ANDROID_LOG_ERROR, "eric", log);
+        __android_log_write(ANDROID_LOG_ERROR, "rtmp", log);
     } else if (logLevel == RTMP_LOGWARNING) {
-        __android_log_write(ANDROID_LOG_WARN, "eric", log);
+        __android_log_write(ANDROID_LOG_WARN, "rtmp", log);
     } else {
-        __android_log_write(ANDROID_LOG_DEBUG, "eric", log);
+        __android_log_write(ANDROID_LOG_DEBUG, "rtmp", log);
     }
 }
 
@@ -276,7 +276,7 @@ Java_com_zyp_rtmplib_RtmpHandle_connect(JNIEnv *env, jobject thiz, jstring url_)
     memset(rtmpUrl, 0, len + 1);
     memcpy(rtmpUrl, url, len);
 
-    __android_log_print(ANDROID_LOG_WARN, "eric",
+    __android_log_print(ANDROID_LOG_WARN, "rtmp",
                         "%d,%s",
                         len, rtmpUrl);
     rtmp = RTMP_Alloc();
@@ -290,7 +290,6 @@ Java_com_zyp_rtmplib_RtmpHandle_connect(JNIEnv *env, jobject thiz, jstring url_)
         return -1;
     }
     logw("RTMP_SetupURL");
-
     //if unable,the AMF command would be 'play' instead of 'publish'
     RTMP_EnableWrite(rtmp);
     logw("RTMP_EnableWrite");
@@ -348,7 +347,7 @@ Java_com_zyp_rtmplib_RtmpHandle_push(JNIEnv *env, jobject thiz, jbyteArray buf_,
     streamid = HTON24(streamid);
     buf += 3;
 
-    __android_log_print(ANDROID_LOG_WARN, "eric",
+    __android_log_print(ANDROID_LOG_WARN, "rtmp",
                         "解析包数据：%u,%u,%u,%u,%d",
                         type, datalength, timestamp, streamid, length);
 
@@ -390,4 +389,16 @@ Java_com_zyp_rtmplib_RtmpHandle_close(JNIEnv *env, jobject thiz) {
         packet = NULL;
     }
     return 0;
+}
+
+
+
+extern "C"
+JNIEXPORT jint JNICALL
+Java_com_zyp_rtmplib_RtmpHandle_getVersion(JNIEnv *env, jobject thiz) {
+    int version = RTMP_LibVersion();
+    __android_log_print(ANDROID_LOG_WARN, "rtmp",
+                        "%s,%d",
+                        "RTMP_LibVersion",version);
+    return version;
 }

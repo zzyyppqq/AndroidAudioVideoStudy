@@ -20,7 +20,22 @@ class FFmpegLib {
 
     external fun avfilterInfo(): String
 
-    external fun render(url: String?, surface: Surface)
+    external fun render(url: String, surface: Surface)
+
+    /**
+     * 解码 mp4->yuv
+     */
+    external fun decode(inputPath: String, outputPath: String): Int
+
+    /**
+     * 推流器
+     */
+    external fun stream(inputUrl: String, outputUrl: String): Int
+
+    /**
+     * 转码器
+     */
+    external fun ffmpegcore(cmdnum: Int, cmdline: Array<String>): Int
 
     companion object {
         // Used to load the 'ffmpeglib' library on application startup.

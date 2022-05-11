@@ -52,6 +52,7 @@
         <activity android:name=".video.CameraActivity" />
         <activity android:name=".video.CameraMediaCodecActivity" />
         <activity android:name=".x264.X264Activity" />
+        <activity android:name=".rtmp.CameraMediaCodecRtmpActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

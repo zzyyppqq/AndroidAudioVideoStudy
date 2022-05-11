@@ -2,11 +2,11 @@ package com.zyp.androidaudiovideostudy.ffmpeg
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.zyp.androidaudiovideostudy.R
+import android.widget.Toast
 import com.zyp.androidaudiovideostudy.databinding.ActivityFfmpegBinding
-import com.zyp.androidaudiovideostudy.databinding.ActivityMediaCodecBinding
 import com.zyp.androidaudiovideostudy.util.Const
 import com.zyp.ffmpeglib.FFmpegLib
+import java.util.concurrent.Executors
 
 class FFmpegActivity : AppCompatActivity() {
     private var _binding: ActivityFfmpegBinding? = null
@@ -41,6 +41,33 @@ class FFmpegActivity : AppCompatActivity() {
         mBinding.btnPlayer.setOnClickListener {
             // mBinding.ffVideoPlayer.play("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
             mBinding.ffVideoPlayer.play("${Const.sdPath}/test_video.mp4")
+        }
+
+        mBinding.btnDecode.setOnClickListener {
+            Executors.newSingleThreadExecutor().execute {
+                ffmpegLib.decode("${Const.sdPath}/sintel.mp4", "${Const.sdPath}/sintel.yuv")
+                runOnUiThread{
+                    Toast.makeText(applicationContext,"decode success", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        mBinding.btnStream.setOnClickListener {
+            Executors.newSingleThreadExecutor().execute {
+                ffmpegLib.stream("${Const.sdPath}/sintel.mp4", "rtmp://192.168.1.102/mytv")
+                runOnUiThread{
+                    Toast.makeText(applicationContext,"decode success", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        mBinding.btnFfmpegCore.setOnClickListener {
+            Executors.newSingleThreadExecutor().execute {
+                val cmdStr = "ffmpeg -i ${Const.sdPath}/sintel.mp4 ${Const.sdPath}/sintel.mkv"
+                val cmdLine = cmdStr.split(" ").toTypedArray()
+                ffmpegLib.ffmpegcore(cmdLine.size, cmdLine)
+                runOnUiThread{
+                    Toast.makeText(applicationContext,"ffmpeg success", Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 }
