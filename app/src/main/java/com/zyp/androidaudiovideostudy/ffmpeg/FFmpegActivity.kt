@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.zyp.androidaudiovideostudy.databinding.ActivityFfmpegBinding
 import com.zyp.androidaudiovideostudy.util.Const
 import com.zyp.ffmpeglib.FFmpegLib
+import java.io.File
 import java.util.concurrent.Executors
 
 class FFmpegActivity : AppCompatActivity() {
@@ -61,6 +62,10 @@ class FFmpegActivity : AppCompatActivity() {
         }
         mBinding.btnFfmpegCore.setOnClickListener {
             Executors.newSingleThreadExecutor().execute {
+                val outFile = File("${Const.sdPath}/sintel.mkv")
+                if (outFile.exists()) {
+                    outFile.delete()
+                }
                 val cmdStr = "ffmpeg -i ${Const.sdPath}/sintel.mp4 ${Const.sdPath}/sintel.mkv"
                 val cmdLine = cmdStr.split(" ").toTypedArray()
                 ffmpegLib.ffmpegcore(cmdLine.size, cmdLine)

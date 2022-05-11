@@ -6,7 +6,7 @@
 cmake_minimum_required(VERSION 3.18.1)
 
 # 定义变量
-set(distribution_DIR ../../../../libs)
+set(JNI_LIBS_DIR src/main/cpp)
 
 #打印LOG
 message(STATUS "Cmake build type is: "${CMAKE_BUILD_TYPE})
@@ -30,14 +30,14 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        libs/include/cmdutils.c
-        libs/include/cmdutils.h
-        libs/include/config.h
-        libs/include/ffmpeg.c
-        libs/include/ffmpeg.h
-        libs/include/ffmpeg_filter.c
-        libs/include/ffmpeg_hw.c
-        libs/include/ffmpeg_opt.c
+        src/main/cpp/cmdutils.c
+        src/main/cpp/cmdutils.h
+        src/main/cpp/config.h
+        src/main/cpp/ffmpeg.c
+        src/main/cpp/ffmpeg.h
+        src/main/cpp/ffmpeg_filter.c
+        src/main/cpp/ffmpeg_hw.c
+        src/main/cpp/ffmpeg_opt.c
         src/main/cpp/ffmpeglib.cpp)
 
 
@@ -54,49 +54,49 @@ add_library(avcodec
 # 还可以设置其他属性，格式：PROPERTIES key value
 set_target_properties(avcodec
         PROPERTIES IMPORTED_LOCATION
-        ${distribution_DIR}/${ANDROID_ABI}/libavcodec.so)
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavcodec.so)
 
 add_library(avfilter
         SHARED
         IMPORTED)
 set_target_properties(avfilter
         PROPERTIES IMPORTED_LOCATION
-        ${distribution_DIR}/${ANDROID_ABI}/libavfilter.so)
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavfilter.so)
 
 add_library(avformat
         SHARED
         IMPORTED)
 set_target_properties(avformat
         PROPERTIES IMPORTED_LOCATION
-        ${distribution_DIR}/${ANDROID_ABI}/libavformat.so)
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavformat.so)
 
 add_library(avutil
         SHARED
         IMPORTED)
 set_target_properties(avutil
         PROPERTIES IMPORTED_LOCATION
-        ${distribution_DIR}/${ANDROID_ABI}/libavutil.so)
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavutil.so)
 
 add_library(swresample
         SHARED
         IMPORTED)
 set_target_properties(swresample
         PROPERTIES IMPORTED_LOCATION
-        ${distribution_DIR}/${ANDROID_ABI}/libswresample.so)
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libswresample.so)
 
 add_library(swscale
         SHARED
         IMPORTED)
 set_target_properties(swscale
         PROPERTIES IMPORTED_LOCATION
-        ${distribution_DIR}/${ANDROID_ABI}/libswscale.so)
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libswscale.so)
 
 add_library(postproc
         SHARED
         IMPORTED)
 set_target_properties(postproc
         PROPERTIES IMPORTED_LOCATION
-        ${distribution_DIR}/${ANDROID_ABI}/libpostproc.so)
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libpostproc.so)
 
 
 add_library(avresample
@@ -104,7 +104,7 @@ add_library(avresample
         IMPORTED)
 set_target_properties(avresample
         PROPERTIES IMPORTED_LOCATION
-        ${distribution_DIR}/${ANDROID_ABI}/libavresample.so)
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavresample.so)
 
 
 add_library(avdevice
@@ -112,7 +112,7 @@ add_library(avdevice
         IMPORTED)
 set_target_properties(avdevice
         PROPERTIES IMPORTED_LOCATION
-        ${distribution_DIR}/${ANDROID_ABI}/libavdevice.so)
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavdevice.so)
 
 
 find_library( # Sets the name of the path variable.
@@ -124,7 +124,8 @@ find_library( # Sets the name of the path variable.
 
 
 # 引入头文件
-include_directories(libs/include)
+include_directories(src/main/cpp/include)
+include_directories(src/main/cpp)
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
