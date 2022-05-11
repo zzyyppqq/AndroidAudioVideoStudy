@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.zyp.androidaudiovideostudy.databinding.ActivityFfmpegBinding
 import com.zyp.androidaudiovideostudy.util.Const
+import com.zyp.androidaudiovideostudy.util.ToastUtil
 import com.zyp.ffmpeglib.FFmpegLib
 import java.io.File
 import java.util.concurrent.Executors
@@ -39,39 +40,37 @@ class FFmpegActivity : AppCompatActivity() {
             mBinding.tvInfo.text = ffmpegLib.avcodecConfiguration()
         }
 
-        mBinding.btnPlayer.setOnClickListener {
-            // mBinding.ffVideoPlayer.play("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+        mBinding.btnPlayer.setOnClickListener { // mBinding.ffVideoPlayer.play("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
             mBinding.ffVideoPlayer.play("${Const.sdPath}/test_video.mp4")
         }
 
         mBinding.btnDecode.setOnClickListener {
             Executors.newSingleThreadExecutor().execute {
                 ffmpegLib.decode("${Const.sdPath}/sintel.mp4", "${Const.sdPath}/sintel.yuv")
-                runOnUiThread{
-                    Toast.makeText(applicationContext,"decode success", Toast.LENGTH_LONG).show()
-                }
+                ToastUtil.show("ffmpeg decode success")
             }
         }
         mBinding.btnStream.setOnClickListener {
             Executors.newSingleThreadExecutor().execute {
                 ffmpegLib.stream("${Const.sdPath}/sintel.mp4", "rtmp://192.168.1.102/mytv")
-                runOnUiThread{
-                    Toast.makeText(applicationContext,"decode success", Toast.LENGTH_LONG).show()
-                }
+                ToastUtil.show("ffmpeg rtmp push success")
             }
         }
         mBinding.btnFfmpegCore.setOnClickListener {
             Executors.newSingleThreadExecutor().execute {
+                val inFile = File("${Const.sdPath}/sintel.mp4")
+                if (!inFile.exists()) {
+                    ToastUtil.show("ffmpeg input file not exists")
+                    return@execute
+                }
                 val outFile = File("${Const.sdPath}/sintel.mkv")
-                if (outFile.exists()) {
+                if (outFile.exists()) { // 输出文件存在则删除，ffmpegcore 方法不会删除或覆盖已生成的文件，会导致报错，故需要提前判断
                     outFile.delete()
                 }
-                val cmdStr = "ffmpeg -i ${Const.sdPath}/sintel.mp4 ${Const.sdPath}/sintel.mkv"
+                val cmdStr = "ffmpeg -i ${inFile.absoluteFile} ${outFile.absoluteFile}"
                 val cmdLine = cmdStr.split(" ").toTypedArray()
                 ffmpegLib.ffmpegcore(cmdLine.size, cmdLine)
-                runOnUiThread{
-                    Toast.makeText(applicationContext,"ffmpeg success", Toast.LENGTH_LONG).show()
-                }
+                ToastUtil.show("ffmpeg transcoding success")
             }
         }
     }
