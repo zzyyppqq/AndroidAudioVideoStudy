@@ -476,6 +476,14 @@ public class CameraMediaCodecActivity extends AppCompatActivity implements Surfa
             public void onPreviewFrame(byte[] data, Camera camera) {
                 if (isStarted) {
                     if (data != null) {
+                        //Camera预览采集的图像流通常为NV21或YV12，那么编码器需要指定相应的颜色格式，
+                        // 否则编码得到的数据可能会出现花屏、叠影、颜色失真等现象。
+                        // MediaCodecInfo.CodecCapabilities.存储了编码器所有支持的颜色格式，常见颜色格式映射如下：
+                        // 原始数据    编码器
+                        // NV12(YUV420sp) ———> COLOR_FormatYUV420PackedSemiPlanar
+                        // NV21 ———-> COLOR_FormatYUV420SemiPlanar
+                        // YV12(I420) ———-> COLOR_FormatYUV420Planar
+
                         // data 是Nv21
                         if (colorFormat == MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar) {
                             Yuv420Util.Nv21ToYuv420SP(data, dstByte, previewSize.width, previewSize.height);

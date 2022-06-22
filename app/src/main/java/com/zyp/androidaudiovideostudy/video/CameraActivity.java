@@ -97,8 +97,9 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private byte[] mBytes;
+
     private void init() {
-        if (mBytes == null){
+        if (mBytes == null) {
             //int size = 720 * 1440 * ImageFormat.getBitsPerPixel(ImageFormat.NV21) / 8;
 //            mBytes = new byte[size];
         }
@@ -117,11 +118,11 @@ public class CameraActivity extends AppCompatActivity {
                 int width = size.width;
                 int height = size.height;
                 mBytes = new byte[data.length];
-                yuvLib.nv21ToI420(data,mBytes,width,height);
+                yuvLib.nv21ToI420(data, mBytes, width, height);
                 if (cameraUtil.cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
-                    yuvLib.rotateI420(mBytes,data,width,height,90);
+                    yuvLib.rotateI420(mBytes, data, width, height, 90);
                 } else {
-                    yuvLib.rotateI420(mBytes,data,width,height,270);
+                    yuvLib.rotateI420(mBytes, data, width, height, 270);
                 }
             }
 

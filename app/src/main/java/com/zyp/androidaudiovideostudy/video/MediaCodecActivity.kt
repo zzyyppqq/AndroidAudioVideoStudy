@@ -1,9 +1,6 @@
 package com.zyp.androidaudiovideostudy.video
 
-import android.media.MediaCodec
-import android.media.MediaCodecList
-import android.media.MediaExtractor
-import android.media.MediaFormat
+import android.media.*
 import android.os.Bundle
 import android.util.Log
 import android.view.Surface
@@ -11,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityMediaCodecBinding
 import java.io.IOException
 
-
+/**
+ * MediaCodec params learn
+ */
 class MediaCodecActivity : AppCompatActivity() {
 
     companion object {
@@ -33,9 +32,22 @@ class MediaCodecActivity : AppCompatActivity() {
 
             displayDecoders()
 
-            val selTrackFmt = chooseVideoTrack(extractor)
-            val codec = createCodec(selTrackFmt!!, null)
+            val mediaFormat = chooseVideoTrack(extractor)
+            val mime = mediaFormat?.getString(MediaFormat.KEY_MIME)
+            val mediaCodec = MediaCodec.createDecoderByType(mediaFormat?.getString(MediaFormat.KEY_MIME)!!)
+
+            val codec = createCodec(mediaFormat, null)
+
+            showSupportedColorFormat(mediaCodec.getCodecInfo().getCapabilitiesForType(mime));
         }
+    }
+
+    private fun showSupportedColorFormat(caps: MediaCodecInfo.CodecCapabilities) {
+        print("supported color format: ")
+        for (c in caps.colorFormats) {
+            print(c.toString() + "\t")
+        }
+        println()
     }
 
     /**
