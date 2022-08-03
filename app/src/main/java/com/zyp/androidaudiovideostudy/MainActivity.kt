@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         MainItem(FFmpegActivity::class.java),
         MainItem(X264Activity::class.java),
         MainItem(FdkAACActivity::class.java),
+        MainItem(ANativeWindowActivity::class.java),
+        MainItem(RgbaPlayerActivity::class.java),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

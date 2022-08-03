@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".video.RgbaPlayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".fdkaac.FdkAACActivity"
             android:exported="false" />
         <activity
@@ -54,6 +57,7 @@
         <activity android:name=".video.CameraMediaCodecActivity" />
         <activity android:name=".x264.X264Activity" />
         <activity android:name=".rtmp.CameraMediaCodecRtmpActivity" />
+        <activity android:name=".video.ANativeWindowActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

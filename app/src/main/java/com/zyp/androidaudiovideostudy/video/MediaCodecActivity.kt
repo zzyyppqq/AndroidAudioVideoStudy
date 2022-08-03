@@ -4,9 +4,11 @@ import android.media.*
 import android.os.Bundle
 import android.util.Log
 import android.view.Surface
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityMediaCodecBinding
 import java.io.IOException
+
 
 /**
  * MediaCodec params learn
@@ -34,20 +36,23 @@ class MediaCodecActivity : AppCompatActivity() {
 
             val mediaFormat = chooseVideoTrack(extractor)
             val mime = mediaFormat?.getString(MediaFormat.KEY_MIME)
-            val mediaCodec = MediaCodec.createDecoderByType(mediaFormat?.getString(MediaFormat.KEY_MIME)!!)
+            val mediaCodec =
+                MediaCodec.createDecoderByType(mediaFormat?.getString(MediaFormat.KEY_MIME)!!)
 
             val codec = createCodec(mediaFormat, null)
 
             showSupportedColorFormat(mediaCodec.getCodecInfo().getCapabilitiesForType(mime));
+
+            MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible
+            MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Planar
         }
     }
 
     private fun showSupportedColorFormat(caps: MediaCodecInfo.CodecCapabilities) {
-        print("supported color format: ")
+        Log.i(TAG, "supported color format: ")
         for (c in caps.colorFormats) {
-            print(c.toString() + "\t")
+            Log.i(TAG, c.toString())
         }
-        println()
     }
 
     /**
@@ -133,10 +138,63 @@ class MediaCodecActivity : AppCompatActivity() {
     @Throws(IOException::class)
     private fun createCodec(format: MediaFormat, surface: Surface?): MediaCodec? {
         val codecList = MediaCodecList(MediaCodecList.REGULAR_CODECS)
+        // 指定解码后的帧格式
+        format.setInteger(
+            MediaFormat.KEY_COLOR_FORMAT,
+            MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible
+        );
         // MediaCodec.createByCodecName("OMX.qcom.video.decoder.avc")
         val codec = MediaCodec.createByCodecName(codecList.findDecoderForFormat(format))
         codec.configure(format, surface, null, 0)
         return codec
+    }
+
+    private lateinit var mMediaCodec: MediaCodec
+
+    private fun initMediaCodec() {
+        val VCODEC_MIME = "video/avc";
+        val WIDTH = 1280;
+        val HEIGHT = 720;
+        val FRAME_RATE = 30;
+        val bitrate: Int = 2 * WIDTH * HEIGHT * FRAME_RATE / 20
+        try {
+            val mediaCodecInfo: MediaCodecInfo? = selectCodec(VCODEC_MIME)
+            if (mediaCodecInfo == null) {
+                Toast.makeText(this, "mMediaCodec null", Toast.LENGTH_LONG).show()
+                throw RuntimeException("mediaCodecInfo is Empty")
+            }
+            mMediaCodec = MediaCodec.createByCodecName(mediaCodecInfo.name)
+            val mediaFormat = MediaFormat.createVideoFormat(VCODEC_MIME, WIDTH, HEIGHT)
+            mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, bitrate)
+            mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, FRAME_RATE)
+            mediaFormat.setInteger(
+                MediaFormat.KEY_COLOR_FORMAT,
+                MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Planar
+            )
+            mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1)
+            mMediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
+            mMediaCodec.start()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun selectCodec(mimeType: String): MediaCodecInfo? {
+        val numCodecs = MediaCodecList.getCodecCount()
+        for (i in 0 until numCodecs) {
+            val codecInfo = MediaCodecList.getCodecInfoAt(i)
+            //是否是编码器
+            if (!codecInfo.isEncoder) {
+                continue
+            }
+            val types = codecInfo.supportedTypes
+            for (type in types) {
+                if (mimeType.equals(type, ignoreCase = true)) {
+                    return codecInfo
+                }
+            }
+        }
+        return null
     }
 
 }

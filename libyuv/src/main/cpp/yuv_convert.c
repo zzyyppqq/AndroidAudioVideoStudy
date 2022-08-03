@@ -19,7 +19,21 @@ void i420_to_rgba(char *src, char *dst, int width, int height) {
                (unsigned char *) src_v, width >> 1,
                (unsigned char *) dst_rgba, width * 4,
                width, height);
+}
 
+void i420_to_abgr(char *src, char *dst, int width, int height) {
+    int src_y_size = width * height;
+    int src_u_size = src_y_size >> 2;
+    char *src_y = src;
+    char *src_u = src + src_y_size;
+    char *src_v = src + src_y_size + src_u_size;
+
+    char *dst_rgba = dst;
+    I420ToABGR((unsigned char *) src_y, width,
+               (unsigned char *) src_u, width >> 1,
+               (unsigned char *) src_v, width >> 1,
+               (unsigned char *) dst_rgba, width * 4,
+               width, height);
 }
 
 

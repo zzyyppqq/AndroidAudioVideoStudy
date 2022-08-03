@@ -38,7 +38,8 @@ add_library( # Sets the name of the library.
         src/main/cpp/ffmpeg_filter.c
         src/main/cpp/ffmpeg_hw.c
         src/main/cpp/ffmpeg_opt.c
-        src/main/cpp/ffmpeglib.cpp)
+        src/main/cpp/ffmpeglib.cpp
+        src/main/cpp/NativewindRender.cpp)
 
 
 # 添加库——外部引入的库
