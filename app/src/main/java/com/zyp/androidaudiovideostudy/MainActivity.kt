@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(FdkAACActivity::class.java),
         MainItem(ANativeWindowActivity::class.java),
         MainItem(RgbaPlayerActivity::class.java),
+        MainItem(YUViewActivity::class.java),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

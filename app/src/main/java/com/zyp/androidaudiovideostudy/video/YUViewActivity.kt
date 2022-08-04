@@ -3,35 +3,45 @@ package com.zyp.androidaudiovideostudy.video
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY
 import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.zyp.androidaudiovideostudy.databinding.ActivitySurfaceViewBinding
+import com.zyp.androidaudiovideostudy.databinding.ActivityGlsurfaceviewBinding
+import com.zyp.androidaudiovideostudy.opengl.MyGLRender
 import com.zyp.androidaudiovideostudy.pref.ECGPref
-import com.zyp.androidaudiovideostudy.util.Const
-import com.zyp.ffmpeglib.ANativeWindowRender
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.IOException
 
 /**
  * https://blog.csdn.net/u012459903/article/details/118224506
  * ffmpeg -i test_video.mp4 -pix_fmt rgba -s 640x360 test_video.rgb
  * ffmpeg -i dongfengpo_352x240.mp4 -t 5 -s 320x240 -pix_fmt rgba dongfengpo_320x240_rgba.rgb
  */
-class ANativeWindowActivity : AppCompatActivity() {
-    private var _binding: ActivitySurfaceViewBinding? = null
+class YUViewActivity : AppCompatActivity() {
+    private var _binding: ActivityGlsurfaceviewBinding? = null
     private val mBinding get() = _binding!!
-    private val renderer = ANativeWindowRender()
+    private lateinit var mRenderer: MyGLRender
+    private var mThread: MyThread? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivitySurfaceViewBinding.inflate(layoutInflater)
+        _binding = ActivityGlsurfaceviewBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         initData()
 
+        mRenderer = MyGLRender(mBinding.surfaceView)
+        mBinding.surfaceView.setEGLContextClientVersion(2);
+        mBinding.surfaceView.setRenderer(mRenderer)
+        mBinding.surfaceView.setRenderMode(RENDERMODE_WHEN_DIRTY);
 
-        mBinding.etUrl.setText(ECGPref.native_window_agba_url)
-        renderer.setSurface(mBinding.surfaceView.holder.surface)
+        mBinding.etUrl.setText(ECGPref.yuv_view_url)
+
         mBinding.btnPlay.setOnClickListener {
             try {
                 val url = mBinding.etUrl.text.toString()
@@ -39,7 +49,11 @@ class ANativeWindowActivity : AppCompatActivity() {
                 val height = mBinding.etHeight.text.toString().toInt()
                 val frameRate = mBinding.etFramerate.text.toString().toInt()
                 mBinding.surfaceView.layoutParams = LinearLayout.LayoutParams(width, height)
-                renderer.start(url, width, height, frameRate)
+                if (mThread == null) {
+                    mThread = MyThread(url, mRenderer, width, height)
+                }
+                mRenderer.update(width, height)
+                mThread?.start()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -47,7 +61,7 @@ class ANativeWindowActivity : AppCompatActivity() {
 
         mBinding.btnStop.setOnClickListener {
             try {
-                renderer.stop()
+                mThread?.stopRun()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -61,9 +75,49 @@ class ANativeWindowActivity : AppCompatActivity() {
         }
     }
 
+    class MyThread(val url: String, val render: MyGLRender, val width: Int, val height: Int) :
+        Thread() {
+        var isStop = false
+        override fun run() {
+            super.run()
+
+            val yuvFile = File(url)
+            var fis: FileInputStream? = null
+            try {
+                fis = FileInputStream(yuvFile)
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
+            val size: Int = width * height * 3 / 2
+            val input = ByteArray(size)
+            var hasRead = 0
+            while (!isStop) {
+                try {
+                    hasRead = fis!!.read(input)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+                if (hasRead == -1) {
+                    break
+                }
+                render.update(input)
+                Log.i("thread", "thread is executing hasRead: $hasRead")
+                try {
+                    sleep(100)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
+        fun stopRun() {
+            isStop = true
+        }
+    }
+
     private fun initData() {
         try {
-            val url = ECGPref.native_window_agba_url
+            val url = ECGPref.yuv_view_url
             if (url.isBlank()) {
                 return
             }
@@ -95,7 +149,7 @@ class ANativeWindowActivity : AppCompatActivity() {
                     }
                     val url = uri.path.toString()
                     mBinding.etUrl.setText(url.toString())
-                    ECGPref.native_window_agba_url = url
+                    ECGPref.yuv_view_url = url
                     initData()
                 }
             }
@@ -105,7 +159,7 @@ class ANativeWindowActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         try {
-            renderer.stop()
+            mThread?.stopRun()
         } catch (e: Exception) {
             e.printStackTrace()
         }

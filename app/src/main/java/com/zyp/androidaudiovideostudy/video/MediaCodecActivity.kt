@@ -7,7 +7,11 @@ import android.view.Surface
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityMediaCodecBinding
+import com.zyp.androidaudiovideostudy.mediacoder.AvcDecoder
 import java.io.IOException
+import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 
 /**
@@ -21,6 +25,9 @@ class MediaCodecActivity : AppCompatActivity() {
 
     private var _binding: ActivityMediaCodecBinding? = null
     private val mBinding get() = _binding!!
+
+    private val executors = Executors.newSingleThreadExecutor()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMediaCodecBinding.inflate(layoutInflater)
@@ -45,6 +52,23 @@ class MediaCodecActivity : AppCompatActivity() {
 
             MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible
             MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Planar
+        }
+
+        val avcDecoder = AvcDecoder()
+        mBinding.btnMediaDecoderYuv.setOnClickListener {
+            avcDecoder.setDecoderParams("/sdcard/test_video.mp4", "/sdcard/test_video_decoder_640x360.yuv",
+                AvcDecoder.FILE_TypeI420)
+            executors.execute {
+                avcDecoder.videoDecode()
+            }
+        }
+
+        mBinding.btnMediaEncoderSync.setOnClickListener {
+
+        }
+
+        mBinding.btnMediaEncoderAsync.setOnClickListener {
+
         }
     }
 
