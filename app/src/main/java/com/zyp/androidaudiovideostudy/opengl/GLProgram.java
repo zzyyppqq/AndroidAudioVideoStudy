@@ -1,5 +1,6 @@
 package com.zyp.androidaudiovideostudy.opengl;
 
+import android.graphics.Paint;
 import android.opengl.GLES20;
 import android.util.Log;
 
@@ -112,50 +113,57 @@ public class GLProgram {
         return isProgBuilt;
     }
 
-    public void buildProgram() {
+    public void buildProgram(int yuvType) {
         createBuffers(_vertices, coordVertices);
-        if (_program <= 0) {
-            _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER);
-        }
-        Log.d(TAG,"_program = " + _program);
 
-    /*
-     * get handle for "vPosition" and "a_texCoord"
-     */
+        if (yuvType == MyGLRender.YUV_TYPE) {
+            _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER);
+        } else if (yuvType == MyGLRender.Y_TYPE) {
+            _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_Y);
+        } else if (yuvType == MyGLRender.U_TYPE) {
+            _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_U);
+        } else if (yuvType == MyGLRender.V_TYPE) {
+            _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_V);
+        }
+        Log.d(TAG, "_program = " + _program);
+
+        /*
+         * get handle for "vPosition" and "a_texCoord"
+         */
         _positionHandle = GLES20.glGetAttribLocation(_program, "vPosition");
-        Log.d(TAG,"_positionHandle = " + _positionHandle);
+        Log.d(TAG, "_positionHandle = " + _positionHandle);
         checkGlError("glGetAttribLocation vPosition");
         if (_positionHandle == -1) {
             throw new RuntimeException("Could not get attribute location for vPosition");
         }
         _coordHandle = GLES20.glGetAttribLocation(_program, "a_texCoord");
-        Log.d(TAG,"_coordHandle = " + _coordHandle);
+        Log.d(TAG, "_coordHandle = " + _coordHandle);
         checkGlError("glGetAttribLocation a_texCoord");
         if (_coordHandle == -1) {
             throw new RuntimeException("Could not get attribute location for a_texCoord");
         }
 
-    /*
-     * get uniform location for y/u/v, we pass data through these uniforms
-     */
+        /*
+         * get uniform location for y/u/v, we pass data through these uniforms
+         */
         _yhandle = GLES20.glGetUniformLocation(_program, "tex_y");
-        Log.d(TAG,"_yhandle = " + _yhandle);
+        Log.d(TAG, "_yhandle = " + _yhandle);
         checkGlError("glGetUniformLocation tex_y");
-        if (_yhandle == -1) {
-            throw new RuntimeException("Could not get uniform location for tex_y");
-        }
+//        if (_yhandle == -1) {
+//            throw new RuntimeException("Could not get uniform location for tex_y");
+//        }
         _uhandle = GLES20.glGetUniformLocation(_program, "tex_u");
-        Log.d(TAG,"_uhandle = " + _uhandle);
+        Log.d(TAG, "_uhandle = " + _uhandle);
         checkGlError("glGetUniformLocation tex_u");
-        if (_uhandle == -1) {
-            throw new RuntimeException("Could not get uniform location for tex_u");
-        }
+//        if (_uhandle == -1) {
+//            throw new RuntimeException("Could not get uniform location for tex_u");
+//        }
         _vhandle = GLES20.glGetUniformLocation(_program, "tex_v");
-        Log.d(TAG,"_vhandle = " + _vhandle);
+        Log.d(TAG, "_vhandle = " + _vhandle);
         checkGlError("glGetUniformLocation tex_v");
-        if (_vhandle == -1) {
-            throw new RuntimeException("Could not get uniform location for tex_v");
-        }
+//        if (_vhandle == -1) {
+//            throw new RuntimeException("Could not get uniform location for tex_v");
+//        }
 
         isProgBuilt = true;
     }
@@ -168,13 +176,13 @@ public class GLProgram {
         if (videoSizeChanged) {
             _video_width = width;
             _video_height = height;
-            Log.d(TAG,"buildTextures videoSizeChanged: w=" + _video_width + " h=" + _video_height);
+            Log.d(TAG, "buildTextures videoSizeChanged: w=" + _video_width + " h=" + _video_height);
         }
 
         // building texture for Y data
         if (_ytid < 0 || videoSizeChanged) {
             if (_ytid >= 0) {
-                Log.d(TAG,"glDeleteTextures Y");
+                Log.d(TAG, "glDeleteTextures Y");
                 GLES20.glDeleteTextures(1, new int[]{_ytid}, 0);
                 checkGlError("glDeleteTextures");
             }
@@ -183,7 +191,7 @@ public class GLProgram {
             GLES20.glGenTextures(1, textures, 0);
             checkGlError("glGenTextures");
             _ytid = textures[0];
-            Log.d(TAG,"glGenTextures Y = " + _ytid);
+            Log.d(TAG, "glGenTextures Y = " + _ytid);
         }
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _ytid);
         checkGlError("glBindTexture");
@@ -198,7 +206,7 @@ public class GLProgram {
         // building texture for U data
         if (_utid < 0 || videoSizeChanged) {
             if (_utid >= 0) {
-                Log.d(TAG,"glDeleteTextures U");
+                Log.d(TAG, "glDeleteTextures U");
                 GLES20.glDeleteTextures(1, new int[]{_utid}, 0);
                 checkGlError("glDeleteTextures");
             }
@@ -206,7 +214,7 @@ public class GLProgram {
             GLES20.glGenTextures(1, textures, 0);
             checkGlError("glGenTextures");
             _utid = textures[0];
-            Log.d(TAG,"glGenTextures U = " + _utid);
+            Log.d(TAG, "glGenTextures U = " + _utid);
         }
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _utid);
         GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_LUMINANCE, _video_width / 2, _video_height / 2, 0,
@@ -219,7 +227,7 @@ public class GLProgram {
         // building texture for V data
         if (_vtid < 0 || videoSizeChanged) {
             if (_vtid >= 0) {
-                Log.d(TAG,"glDeleteTextures V");
+                Log.d(TAG, "glDeleteTextures V");
                 GLES20.glDeleteTextures(1, new int[]{_vtid}, 0);
                 checkGlError("glDeleteTextures");
             }
@@ -227,7 +235,7 @@ public class GLProgram {
             GLES20.glGenTextures(1, textures, 0);
             checkGlError("glGenTextures");
             _vtid = textures[0];
-            Log.d(TAG,"glGenTextures V = " + _vtid);
+            Log.d(TAG, "glGenTextures V = " + _vtid);
         }
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _vtid);
         GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_LUMINANCE, _video_width / 2, _video_height / 2, 0,
@@ -282,8 +290,8 @@ public class GLProgram {
         int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexSource);
         int pixelShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentSource);
         // just check
-        Log.d(TAG,"vertexShader = " + vertexShader);
-        Log.d(TAG,"pixelShader = " + pixelShader);
+        Log.d(TAG, "vertexShader = " + vertexShader);
+        Log.d(TAG, "pixelShader = " + pixelShader);
 
         int program = GLES20.glCreateProgram();
         if (program != 0) {
@@ -295,8 +303,8 @@ public class GLProgram {
             int[] linkStatus = new int[1];
             GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0);
             if (linkStatus[0] != GLES20.GL_TRUE) {
-                Log.e(TAG,"Could not link program: ", null);
-                Log.e(TAG,GLES20.glGetProgramInfoLog(program), null);
+                Log.e(TAG, "Could not link program: ", null);
+                Log.e(TAG, GLES20.glGetProgramInfoLog(program), null);
                 GLES20.glDeleteProgram(program);
                 program = 0;
             }
@@ -315,8 +323,8 @@ public class GLProgram {
             int[] compiled = new int[1];
             GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0);
             if (compiled[0] == 0) {
-                Log.e(TAG,"Could not compile shader " + shaderType + ":", null);
-                Log.e(TAG,GLES20.glGetShaderInfoLog(shader), null);
+                Log.e(TAG, "Could not compile shader " + shaderType + ":", null);
+                Log.e(TAG, GLES20.glGetShaderInfoLog(shader), null);
                 GLES20.glDeleteShader(shader);
                 shader = 0;
             }
@@ -344,26 +352,106 @@ public class GLProgram {
     private void checkGlError(String op) {
         int error;
         while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
-            Log.e(TAG,"***** " + op + ": glError " + error, null);
+            Log.e(TAG, "***** " + op + ": glError " + error, null);
             throw new RuntimeException(op + ": glError " + error);
         }
     }
 
-    private static float[] squareVertices =  {-1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f,}; // fullscreen
-    private static float[] squareVertices1 = { -1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 1.0f, }; // left-top
-    private static float[] squareVertices2 = { 0.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, }; // right-bottom
-    private static float[] squareVertices3 = { -1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,}; // left-bottom
-    private static float[] squareVertices4 = { 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, }; // right-top
+    private static float[] squareVertices = {-1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f,}; // fullscreen
+    private static float[] squareVertices1 = {-1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 1.0f,}; // left-top
+    private static float[] squareVertices2 = {0.0f, -1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,}; // right-bottom
+    private static float[] squareVertices3 = {-1.0f, -1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,}; // left-bottom
+    private static float[] squareVertices4 = {0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,}; // right-top
 
     private static float[] coordVertices = {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,};// whole-texture
 
-    private static final String VERTEX_SHADER = "attribute vec4 vPosition;\n" + "attribute vec2 a_texCoord;\n"
-            + "varying vec2 tc;\n" + "void main() {\n" + "gl_Position = vPosition;\n" + "tc = a_texCoord;\n" + "}\n";
+    private static final String VERTEX_SHADER = "attribute vec4 vPosition;\n"
+            + "attribute vec2 a_texCoord;\n"
+            + "varying vec2 tc;\n"
+            + "void main() {\n"
+            + "gl_Position = vPosition;\n"
+            + "tc = a_texCoord;\n"
+            + "}\n";
 
-    private static final String FRAGMENT_SHADER = "precision mediump float;\n" + "uniform sampler2D tex_y;\n"
-            + "uniform sampler2D tex_u;\n" + "uniform sampler2D tex_v;\n" + "varying vec2 tc;\n" + "void main() {\n"
-            + "vec4 c = vec4((texture2D(tex_y, tc).r - 16./255.) * 1.164);\n"
+    /**
+     * BT.601 YUV转 RGB
+     * YCbCr => YUV
+     * <p>
+     * R = 1.164(Y-16)                 + 1.596(Cr-128)
+     * G = 1.164(Y-16) - 0.391(Cb-128) - 0.813(Cr-128)
+     * B = 1.164(Y-16) + 2.018(Cb-128)
+     * <p>
+     * 灰度图 = 0.299 * R + 0.578 * G + 0.114 * B
+     */
+    private static final String FRAGMENT_SHADER = "precision mediump float;\n"
+            + "uniform sampler2D tex_y;\n"
+            + "uniform sampler2D tex_u;\n"
+            + "uniform sampler2D tex_v;\n"
+            + "varying vec2 tc;\n"
+            + "void main() {\n"
+            + "vec4 Y = vec4(texture2D(tex_y, tc).r - 16./255.);\n"
             + "vec4 U = vec4(texture2D(tex_u, tc).r - 128./255.);\n"
-            + "vec4 V = vec4(texture2D(tex_v, tc).r - 128./255.);\n" + "c += V * vec4(1.596, -0.813, 0, 0);\n"
-            + "c += U * vec4(0, -0.392, 2.017, 0);\n" + "c.a = 1.0;\n" + "gl_FragColor = c;\n" + "}\n";
+            + "vec4 V = vec4(texture2D(tex_v, tc).r - 128./255.);\n"
+            + "vec4 color;\n"
+            + "color += Y * vec4(1.164, 1, 1, 1);\n"
+            + "color += V * vec4(1.596, -0.813, 0, 0);\n"
+            + "color += U * vec4(0, -0.392, 2.017, 0);\n"
+            + "color.a = 1.0;\n"
+            + "gl_FragColor = color;\n"
+            + "}\n";
+
+    private static final String FRAGMENT_SHADER_GRAY = "precision mediump float;\n"
+            + "uniform sampler2D tex_y;\n"
+            + "uniform sampler2D tex_u;\n"
+            + "uniform sampler2D tex_v;\n"
+            + "varying vec2 tc;\n"
+            + "void main() {\n"
+            + "vec4 Y = vec4(texture2D(tex_y, tc).r - 16./255.);\n"
+            + "vec4 U = vec4(texture2D(tex_u, tc).r - 128./255.);\n"
+            + "vec4 V = vec4(texture2D(tex_v, tc).r - 128./255.);\n"
+            + "vec4 color;\n"
+            + "color += Y * vec4(1.164, 1, 1, 1);\n"
+            + "color += V * vec4(1.596, -0.813, 0, 0);\n"
+            + "color += U * vec4(0, -0.392, 2.017, 0);\n"
+            + "color.a = 1.0;\n"
+            + "float result = dot(color.rgb, vec3(0.2125, 0.7154, 0.0721));\n"
+            + "gl_FragColor = vec4(vec3(result), 1.0);\n"
+            + "}\n";
+
+    private static final String FRAGMENT_SHADER_Y = "precision mediump float;\n"
+            + "uniform sampler2D tex_y;\n"
+            + "uniform sampler2D tex_u;\n"
+            + "uniform sampler2D tex_v;\n"
+            + "varying vec2 tc;\n"
+            + "void main() {\n"
+            + "vec4 Y = vec4(texture2D(tex_y, tc).r);\n"
+            + "vec4 color = Y;\n"
+            + "color.a = 1.0;\n"
+            + "gl_FragColor = color;\n"
+            + "}\n";
+
+    private static final String FRAGMENT_SHADER_U = "precision mediump float;\n"
+            + "uniform sampler2D tex_y;\n"
+            + "uniform sampler2D tex_u;\n"
+            + "uniform sampler2D tex_v;\n"
+            + "varying vec2 tc;\n"
+            + "void main() {\n"
+            + "vec4 U = vec4(texture2D(tex_u, tc).r);\n"
+            + "vec4 color = U;\n"
+            + "color.a = 1.0;\n"
+            + "gl_FragColor = color;\n"
+            + "}\n";
+
+    private static final String FRAGMENT_SHADER_V = "precision mediump float;\n"
+            + "uniform sampler2D tex_y;\n"
+            + "uniform sampler2D tex_u;\n"
+            + "uniform sampler2D tex_v;\n"
+            + "varying vec2 tc;\n"
+            + "void main() {\n"
+            + "vec4 V = vec4(texture2D(tex_v, tc).r);\n"
+            + "vec4 color = V;\n"
+            + "color.a = 1.0;\n"
+            + "gl_FragColor = color;\n"
+            + "}\n";
+
 }

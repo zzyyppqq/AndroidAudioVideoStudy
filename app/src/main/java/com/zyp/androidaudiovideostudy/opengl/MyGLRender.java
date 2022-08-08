@@ -10,8 +10,13 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 
-public class MyGLRender implements GLSurfaceView.Renderer{
+public class MyGLRender implements GLSurfaceView.Renderer {
     static final String TAG = "MyGLRender";
+
+    public static final int YUV_TYPE = 0;
+    public static final int Y_TYPE = 1;
+    public static final int U_TYPE = 2;
+    public static final int V_TYPE = 3;
 
     private GLSurfaceView mTargetSurface;
     private GLProgram prog = new GLProgram(1);
@@ -20,22 +25,30 @@ public class MyGLRender implements GLSurfaceView.Renderer{
     private ByteBuffer u;
     private ByteBuffer v;
 
+    private int mYUVType = YUV_TYPE;
+
     public MyGLRender(GLSurfaceView surface) {
         mTargetSurface = surface;
     }
 
+    public void updateProgram(int yuvType) {
+        this.mYUVType = yuvType;
+        prog.buildProgram(mYUVType);
+        Log.d(TAG, "GLFrameRenderer :: buildProgram done");
+    }
+
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        Log.d(TAG,"GLFrameRenderer :: onSurfaceCreated");
+        Log.d(TAG, "GLFrameRenderer :: onSurfaceCreated");
         if (!prog.isProgramBuilt()) {
-            prog.buildProgram();
-            Log.d(TAG,"GLFrameRenderer :: buildProgram done");
+            prog.buildProgram(mYUVType);
+            Log.d(TAG, "GLFrameRenderer :: buildProgram done");
         }
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        Log.d(TAG,"GLFrameRenderer :: onSurfaceChanged");
+        Log.d(TAG, "GLFrameRenderer :: onSurfaceChanged");
         GLES20.glViewport(0, 0, width, height);
     }
 
@@ -60,7 +73,7 @@ public class MyGLRender implements GLSurfaceView.Renderer{
      * the video size changes.
      */
     public void update(int w, int h) {
-        Log.d(TAG,"update window size=> w:"+w+" h:"+h);
+        Log.d(TAG, "update window size=> w:" + w + " h:" + h);
         if (w > 0 && h > 0) {
             if (w != mVideoWidth && h != mVideoHeight) {
                 this.mVideoWidth = w;
@@ -81,12 +94,18 @@ public class MyGLRender implements GLSurfaceView.Renderer{
      */
     public void update(byte[] ydata, byte[] udata, byte[] vdata) {
         synchronized (this) {
-            y.clear();
-            u.clear();
-            v.clear();
-            y.put(ydata, 0, ydata.length);
-            u.put(udata, 0, udata.length);
-            v.put(vdata, 0, vdata.length);
+            if (ydata != null) {
+                y.clear();
+                y.put(ydata, 0, ydata.length);
+            }
+            if (udata != null) {
+                u.clear();
+                u.put(udata, 0, udata.length);
+            }
+            if (vdata != null) {
+                v.clear();
+                v.put(vdata, 0, vdata.length);
+            }
         }
 
         // request to render
@@ -102,12 +121,13 @@ public class MyGLRender implements GLSurfaceView.Renderer{
             y.clear();
             u.clear();
             v.clear();
-            y.put(yuvdata,0,ylen);
-            u.put(yuvdata,ylen,ylen/4);
-            v.put(yuvdata,ylen*5/4,ylen/4);
+            y.put(yuvdata, 0, ylen);
+            u.put(yuvdata, ylen, ylen / 4);
+            v.put(yuvdata, ylen * 5 / 4, ylen / 4);
         }
 
         // request to render
         mTargetSurface.requestRender();
     }
+
 }

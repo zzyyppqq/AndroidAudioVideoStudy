@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy.video;
+package com.zyp.androidaudiovideostudy.yuv.util;
 
 public class YuvRotate {
     public static byte[] rotateYUVDegree90(byte[] data, int imageWidth, int imageHeight) {

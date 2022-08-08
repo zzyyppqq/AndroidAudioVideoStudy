@@ -16,6 +16,8 @@ import com.zyp.androidaudiovideostudy.ffmpeg.FFmpegActivity
 import com.zyp.androidaudiovideostudy.rtmp.CameraMediaCodecRtmpActivity
 import com.zyp.androidaudiovideostudy.video.*
 import com.zyp.androidaudiovideostudy.x264.X264Activity
+import com.zyp.androidaudiovideostudy.yuv.YUVTestActivity
+import com.zyp.androidaudiovideostudy.yuv.YUViewActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(ANativeWindowActivity::class.java),
         MainItem(RgbaPlayerActivity::class.java),
         MainItem(YUViewActivity::class.java),
+        MainItem(YUVTestActivity::class.java),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

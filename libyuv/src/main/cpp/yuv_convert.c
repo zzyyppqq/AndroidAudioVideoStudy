@@ -94,3 +94,15 @@ void rgb24_to_i420(char *src, char *dst, int width, int height){
                 (unsigned char *) dst_v, width >> 1,
                 width, height);
 }
+
+int argb_to_i420(const uint8* src_frame, int src_stride_frame,
+                 uint8* dst_y, int dst_stride_y,
+                 uint8* dst_u, int dst_stride_u,
+                 uint8* dst_v, int dst_stride_v,
+                 int width, int height) {
+    return ABGRToI420(src_frame, src_stride_frame,
+                      dst_y, dst_stride_y,
+                      dst_u, dst_stride_u,
+                      dst_v, dst_stride_v,
+                      width, height);
+}

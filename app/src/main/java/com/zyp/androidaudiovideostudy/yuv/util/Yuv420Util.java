@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy.video;
+package com.zyp.androidaudiovideostudy.yuv.util;
 
 public class Yuv420Util {
     public static void Nv21ToI420(byte[] data, byte[] dstData, int w, int h) {

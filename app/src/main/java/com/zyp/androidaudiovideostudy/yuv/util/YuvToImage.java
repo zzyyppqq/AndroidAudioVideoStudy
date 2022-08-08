@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy.video;
+package com.zyp.androidaudiovideostudy.yuv.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

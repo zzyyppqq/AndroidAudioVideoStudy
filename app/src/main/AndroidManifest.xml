@@ -58,7 +58,8 @@
         <activity android:name=".x264.X264Activity" />
         <activity android:name=".rtmp.CameraMediaCodecRtmpActivity" />
         <activity android:name=".video.ANativeWindowActivity" />
-        <activity android:name=".video.YUViewActivity" />
+        <activity android:name=".yuv.YUViewActivity" />
+        <activity android:name=".yuv.YUVTestActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

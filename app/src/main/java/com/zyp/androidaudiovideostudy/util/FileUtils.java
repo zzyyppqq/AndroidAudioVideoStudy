@@ -19,6 +19,18 @@ import java.io.InputStreamReader;
  */
 public class FileUtils {
 
+    public static void saveFile(byte[] datas, String filePath){
+        File file = new File(filePath);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(datas);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void saveBitmap(Context context , Bitmap bitmap){
         File file = new File(context.getExternalCacheDir(),System.currentTimeMillis()+".jpg");
         try {

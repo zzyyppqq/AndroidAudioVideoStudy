@@ -1,5 +1,7 @@
 package com.zyp.yuvlib
 
+import android.graphics.Bitmap
+
 class YuvLib {
 
     /**
@@ -18,6 +20,10 @@ class YuvLib {
     external fun rgb24ToI420(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
 
     external fun rotateI420(src: ByteArray?, dst: ByteArray?, width: Int, height: Int, degree: Int)
+
+    external fun bitmapToI420(src: ByteArray?, bitmap: Bitmap, width: Int, height: Int)
+
+    external fun argbToI420(src: ByteArray?, width: Int, height: Int, size: Int)
 
     companion object {
         // Used to load the 'nativelib' library on application startup.
