@@ -55,7 +55,13 @@ class YUViewActivity : AppCompatActivity() {
 
     private fun initListener() {
         mBinding.btnPlayYuv.setOnClickListener {
-            playYUV {
+            playYUV(YUV_TYPE) {
+                mRenderer.update(it)
+            }
+        }
+
+        mBinding.btnPlayGrayYuv.setOnClickListener {
+            playYUV(YUV_GRAY_TYPE) {
                 mRenderer.update(it)
             }
         }
@@ -134,7 +140,7 @@ class YUViewActivity : AppCompatActivity() {
     }
 
 
-    private fun playYUV(renderBlock: (ByteArray) -> Unit) {
+    private fun playYUV(type: Int, renderBlock: (ByteArray) -> Unit) {
         try {
             val url = mBinding.etUrl.text.toString()
             val width = mBinding.etWidth.text.toString().toInt()
@@ -144,7 +150,7 @@ class YUViewActivity : AppCompatActivity() {
             mThread?.stopRun()
             mThread = MyThread(url, size, renderBlock)
             mBinding.surfaceView.queueEvent {
-                mRenderer.updateProgram(YUV_TYPE)
+                mRenderer.updateProgram(type)
             }
             mRenderer.update(width, height)
             mThread?.start()

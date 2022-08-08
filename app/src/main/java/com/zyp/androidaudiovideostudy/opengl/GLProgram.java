@@ -1,6 +1,5 @@
 package com.zyp.androidaudiovideostudy.opengl;
 
-import android.graphics.Paint;
 import android.opengl.GLES20;
 import android.util.Log;
 
@@ -124,6 +123,8 @@ public class GLProgram {
             _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_U);
         } else if (yuvType == MyGLRender.V_TYPE) {
             _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_V);
+        } else if (yuvType == MyGLRender.YUV_GRAY_TYPE) {
+            _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_GRAY);
         }
         Log.d(TAG, "_program = " + _program);
 
@@ -397,6 +398,25 @@ public class GLProgram {
             + "color += V * vec4(1.596, -0.813, 0, 0);\n"
             + "color += U * vec4(0, -0.392, 2.017, 0);\n"
             + "color.a = 1.0;\n"
+            + "gl_FragColor = color;\n"
+            + "}\n";
+
+    /**
+     * 与FRAGMENT_SHADER 等价
+     */
+    private static final String FRAGMENT_SHADER2 = "precision mediump float;\n"
+            + "uniform sampler2D tex_y;\n"
+            + "uniform sampler2D tex_u;\n"
+            + "uniform sampler2D tex_v;\n"
+            + "varying vec2 tc;\n"
+            + "void main() {\n"
+            + "float Y = texture2D(tex_y, tc).r - 16./255.;\n"
+            + "float U = texture2D(tex_u, tc).r - 128./255.;\n"
+            + "float V = texture2D(tex_v, tc).r - 128./255.;\n"
+            + "float r = Y * 1.164 + V * 1.596;\n"
+            + "float g = Y * 1.164 + U * -0.392 + V * -0.813;\n"
+            + "float b = Y * 1.164 + U * 2.017;\n"
+            + "vec4 color = vec4(r, g, b, 1.0);\n"
             + "gl_FragColor = color;\n"
             + "}\n";
 

@@ -17,6 +17,7 @@ public class MyGLRender implements GLSurfaceView.Renderer {
     public static final int Y_TYPE = 1;
     public static final int U_TYPE = 2;
     public static final int V_TYPE = 3;
+    public static final int YUV_GRAY_TYPE = 4;
 
     private GLSurfaceView mTargetSurface;
     private GLProgram prog = new GLProgram(1);
