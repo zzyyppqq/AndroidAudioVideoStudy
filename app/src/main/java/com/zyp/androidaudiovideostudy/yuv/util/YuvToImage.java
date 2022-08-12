@@ -9,15 +9,18 @@ import android.hardware.Camera;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class YuvToImage {
+    public static final String TAG = "YuvToImage";
     private int count = 0;
 
     public void image(final byte[] data, final int width,int height) {
@@ -25,18 +28,31 @@ public class YuvToImage {
         try {
             YuvImage image = new YuvImage(data, ImageFormat.NV21, width, height, null);
             Bitmap bmp = null;
-            Log.d("eric", "count : " + count);
-            if (count <= 50 && image != null) {
-                Log.d("eric", "enabled");
+            Log.d(TAG, "count : " + count);
+            if (count <= 10 && image != null) {
+                Log.d(TAG, "enabled");
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 image.compressToJpeg(new Rect(0, 0, width, height), 80, bos);
-                bmp = BitmapFactory.decodeByteArray(bos.toByteArray(), 0, bos.size());
+                byte[] bytes = bos.toByteArray();
+                Log.d(TAG, "bytes.length: " + bytes.length + ", bos.size(): " +  bos.size());
+                // decodeByteArray易OOM
+                // bmp = BitmapFactory.decodeByteArray(bytes, 0, bos.size());
+                BitmapFactory.Options options=new BitmapFactory.Options();
+                options.inSampleSize = 8;
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                ByteArrayInputStream input = new ByteArrayInputStream(bytes);
+                Bitmap bitmap = BitmapFactory.decodeStream(input, null, options);
+                SoftReference softRef = new SoftReference(bitmap);
+                bmp = (Bitmap)softRef.get();
                 saveBitmap(bmp, "sssssssssssssss");
-                Log.d("eric", "saveBitmap");
+                Log.d(TAG, "saveBitmap");
                 count++;
 
                 bos.close();
             }
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,7 +62,7 @@ public class YuvToImage {
      * 保存方法
      */
     public void saveBitmap(Bitmap bmp, String picName) {
-        Log.e("eric", "保存图片");
+        Log.e(TAG, "保存图片");
         File f = getOutputMediaFile(1);
         if (f.exists()) {
             f.delete();
@@ -56,7 +72,7 @@ public class YuvToImage {
             bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.flush();
             out.close();
-            Log.i("eric", "已经保存");
+            Log.i(TAG, "已经保存");
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -82,7 +98,7 @@ public class YuvToImage {
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d("eric", "failed to create directory");
+                Log.d(TAG, "failed to create directory");
                 return null;
             }
         }
@@ -103,11 +119,11 @@ public class YuvToImage {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
                     "YUV_" + count + ".yuv");
         } else {
-            Log.d("eric", "null : ");
+            Log.d(TAG, "null : ");
             return null;
         }
 
-        Log.d("eric", "path : " + mediaFile.getAbsolutePath());
+        Log.d(TAG, "path : " + mediaFile.getAbsolutePath());
         return mediaFile;
     }
 }

@@ -12,8 +12,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import javax.microedition.khronos.opengles.GL10;
-
 /**
  * 描述：
  * 作者：@author alex
@@ -42,6 +40,24 @@ public class OpenGLHelper {
             "    void main() {\n" +
             "        gl_FragColor = texture2D(vTexture,aCoord);\n" +
             "    }";
+
+    private String frag_black_white = "" +
+            //使用外部纹理必须支持此扩展
+            "#extension GL_OES_EGL_image_external : require\n" +
+            "precision mediump float;\n" +
+            "varying vec2 aCoord;\n" +
+            //外部纹理采样器
+            "uniform samplerExternalOES vTexture;\n" +
+            "void main() \n" +
+            "{\n" +
+            //获取此纹理（预览图像）对应坐标的颜色值
+            "  vec4 vCameraColor = texture2D(vTexture, aCoord);\n" +
+            //求此颜色的灰度值
+            "  float fGrayColor = (0.3*vCameraColor.r + 0.59*vCameraColor.g + 0.11*vCameraColor.b);\n" +
+            //将此灰度值作为输出颜色的RGB值，这样就会变成黑白滤镜
+            "  gl_FragColor = vec4(fGrayColor, fGrayColor, fGrayColor, 1.0);\n" +
+            "}\n";
+
     private int vPosition;
     private int vCoord;
     private int vMatrix;
@@ -110,8 +126,12 @@ public class OpenGLHelper {
         mGLTextureBuffer.put(TEXTURE);
     }
 
+    public enum FilterType {
+        NONE,
+        BLACK_WHITE
+    }
 
-    public void surfaceCreate(final GLSurfaceView glSurfaceview) {
+    public void surfaceCreate(final GLSurfaceView glSurfaceview, FilterType filterType) {
         mTexture = new int[1];
         GLES20.glGenTextures(1, mTexture, 0); // 创建一个纹理id
         //将纹理id传入成功创建SurfaceTexture
@@ -127,7 +147,11 @@ public class OpenGLHelper {
         mCameraHelper.startPreview(mSurfaceTexture); //这个是设置相机的预览画面
 
         //创建着色器程序 并且获取着色器程序中的部分属性
-        mProgramId = creatProgram(vertex, frag);
+        if (filterType == FilterType.BLACK_WHITE) {
+            mProgramId = creatProgram(vertex, frag_black_white);
+        } else {
+            mProgramId = creatProgram(vertex, frag);
+        }
         vPosition = GLES20.glGetAttribLocation(mProgramId, "vPosition");
         vCoord = GLES20.glGetAttribLocation(mProgramId, "vCoord");
         vMatrix = GLES20.glGetUniformLocation(mProgramId, "vMatrix");

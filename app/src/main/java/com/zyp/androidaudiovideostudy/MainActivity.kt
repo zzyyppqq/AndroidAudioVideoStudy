@@ -10,12 +10,15 @@ import com.zyp.androidaudiovideostudy.adapter.MainItem
 import com.zyp.androidaudiovideostudy.audio.AudioActivity
 import com.zyp.androidaudiovideostudy.audio.LiblameActivity
 import com.zyp.androidaudiovideostudy.audio.LibmadActivity
+import com.zyp.androidaudiovideostudy.camera.Camera2Activity
+import com.zyp.androidaudiovideostudy.camera.CameraActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityMainBinding
 import com.zyp.androidaudiovideostudy.fdkaac.FdkAACActivity
 import com.zyp.androidaudiovideostudy.ffmpeg.FFmpegActivity
 import com.zyp.androidaudiovideostudy.rtmp.CameraMediaCodecRtmpActivity
 import com.zyp.androidaudiovideostudy.video.*
 import com.zyp.androidaudiovideostudy.x264.X264Activity
+import com.zyp.androidaudiovideostudy.yuv.CameraYuvActivity
 import com.zyp.androidaudiovideostudy.yuv.YUVTestActivity
 import com.zyp.androidaudiovideostudy.yuv.YUViewActivity
 
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(LibmadActivity::class.java),
         MainItem(MediaCodecActivity::class.java),
         MainItem(CameraActivity::class.java),
+        MainItem(Camera2Activity::class.java),
         MainItem(CameraMediaCodecActivity::class.java),
         MainItem(MediaPlayerActivity::class.java),
         MainItem(VideoViewActivity::class.java),
@@ -43,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(FdkAACActivity::class.java),
         MainItem(ANativeWindowActivity::class.java),
         MainItem(RgbaPlayerActivity::class.java),
+        MainItem(CameraYuvActivity::class.java),
         MainItem(YUViewActivity::class.java),
         MainItem(YUVTestActivity::class.java),
     )

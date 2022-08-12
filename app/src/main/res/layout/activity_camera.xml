@@ -1,60 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".video.CameraActivity">
+    android:orientation="vertical"
+    tools:context="com.lb377463323.camera1.MainActivity">
 
-
-    <SurfaceView
-        android:id="@+id/surfaceView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/bt_start_record_video"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="start_record_video" />
-
-        <Button
-            android:id="@+id/bt_stop_record_video"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="stop_record_video" />
-    </LinearLayout>
+    <TextureView
+        android:id="@+id/camera_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="50dp"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
-
         <Button
-            android:id="@+id/bt_start_media_record_video"
-            android:layout_width="0dp"
+            android:id="@+id/btn_switchCam"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="start_media_record_video" />
-
+            android:text="切换"/>
         <Button
-            android:id="@+id/bt_stop_media_record_video"
-            android:layout_width="0dp"
+            android:id="@+id/btn_capture"
+            android:text="拍照"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_pictureSize"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="stop_media_record_video" />
-
-
+            android:text="拍照尺寸"/>
     </LinearLayout>
 
-</FrameLayout>
+
+</RelativeLayout>

@@ -25,7 +25,7 @@ class CameraOpenGLActivity : AppCompatActivity() {
 class MyRenderer(private val glSurfaceView: GLSurfaceView): GLSurfaceView.Renderer {
     private val openGLHelper = OpenGLHelper()
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-        openGLHelper.surfaceCreate(glSurfaceView)
+        openGLHelper.surfaceCreate(glSurfaceView, OpenGLHelper.FilterType.BLACK_WHITE)
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {

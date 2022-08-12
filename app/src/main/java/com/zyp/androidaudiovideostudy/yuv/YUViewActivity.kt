@@ -1,14 +1,18 @@
 package com.zyp.androidaudiovideostudy.yuv
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
+import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.zyp.androidaudiovideostudy.app
 import com.zyp.androidaudiovideostudy.databinding.ActivityGlsurfaceviewBinding
 import com.zyp.androidaudiovideostudy.opengl.MyGLRender
 import com.zyp.androidaudiovideostudy.opengl.MyGLRender.*
@@ -145,7 +149,8 @@ class YUViewActivity : AppCompatActivity() {
             val url = mBinding.etUrl.text.toString()
             val width = mBinding.etWidth.text.toString().toInt()
             val height = mBinding.etHeight.text.toString().toInt()
-            mBinding.surfaceView.layoutParams = LinearLayout.LayoutParams(width, height)
+            val viewSize = app().getViewSize(width, height)
+            mBinding.surfaceView.layoutParams = LinearLayout.LayoutParams(viewSize.width, viewSize.height)
             val size = width * height * 3 / 2
             mThread?.stopRun()
             mThread = MyThread(url, size, renderBlock)
@@ -166,7 +171,7 @@ class YUViewActivity : AppCompatActivity() {
             val height = mBinding.etHeightY.text.toString().toInt()
             mBinding.surfaceViewY.layoutParams = LinearLayout.LayoutParams(width, height)
             val size = width * height
-            val urlPath = url.substring(0, url.length - 11) + "${width}x${height}_y.y"
+            val urlPath = url.substring(0, url.length - 5 - width.toString().length - height.toString().length) + "${width}x${height}_y.y"
             mThreadY?.stopRun()
             mThreadY = MyThread(urlPath, size, renderBlock)
             mBinding.surfaceViewY.queueEvent {
@@ -186,7 +191,7 @@ class YUViewActivity : AppCompatActivity() {
             val height = mBinding.etHeightY.text.toString().toInt()
             mBinding.surfaceViewU.layoutParams = LinearLayout.LayoutParams(width, height)
             val size = width / 2 * height / 2
-            val urlPath = url.substring(0, url.length - 11) + "${width / 2}x${height / 2}_u.y"
+            val urlPath = url.substring(0, url.length - 5 - width.toString().length - height.toString().length) + "${width / 2}x${height / 2}_u.y"
             mThreadU?.stopRun()
             mThreadU = MyThread(urlPath, size, renderBlock)
             mBinding.surfaceViewU.queueEvent {
@@ -206,7 +211,7 @@ class YUViewActivity : AppCompatActivity() {
             val height = mBinding.etHeightY.text.toString().toInt()
             mBinding.surfaceViewV.layoutParams = LinearLayout.LayoutParams(width, height)
             val size = width / 2 * height / 2
-            val urlPath = url.substring(0, url.length - 11) + "${width / 2}x${height / 2}_v.y"
+            val urlPath = url.substring(0, url.length - 5 - width.toString().length - height.toString().length) + "${width / 2}x${height / 2}_v.y"
             mThreadV?.stopRun()
             mThreadV = MyThread(urlPath, size, renderBlock)
             mBinding.surfaceViewV.queueEvent {

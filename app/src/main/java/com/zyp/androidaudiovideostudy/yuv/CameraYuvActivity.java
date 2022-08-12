@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy.video;
+package com.zyp.androidaudiovideostudy.yuv;
 
 
 import android.content.Context;
@@ -19,19 +19,19 @@ import android.view.View;
 
 import com.zyp.androidaudiovideostudy.R;
 import com.zyp.androidaudiovideostudy.util.CameraUtil;
-import com.zyp.androidaudiovideostudy.yuv.util.YuvRotate;
+import com.zyp.androidaudiovideostudy.util.ToastUtil;
 import com.zyp.androidaudiovideostudy.yuv.util.YuvToFile;
 import com.zyp.androidaudiovideostudy.yuv.util.YuvToImage;
 import com.zyp.yuvlib.YuvLib;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class CameraActivity extends AppCompatActivity {
+public class CameraYuvActivity extends AppCompatActivity {
 
-    private static final String TAG = CameraActivity.class.getSimpleName();
+    private static final String TAG = CameraYuvActivity.class.getSimpleName();
 
     private SurfaceView surfaceView;
 
@@ -40,9 +40,7 @@ public class CameraActivity extends AppCompatActivity {
     private YuvToImage yuvToImage = new YuvToImage();
     private volatile boolean isRecord;
 
-    private String fileName = "aaa" + System.currentTimeMillis() + "_myVideo.mp4";
-    final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-    final String yuvFilePath = "aaa" + timeStamp + ".yuv";
+    private String fileName = "camera_video.mp4";
 
     private CameraUtil cameraUtil = new CameraUtil();
 
@@ -51,7 +49,7 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
+        setContentView(R.layout.activity_yuv_camera);
 
         surfaceView = findViewById(R.id.surfaceView);
 
@@ -61,19 +59,34 @@ public class CameraActivity extends AppCompatActivity {
         cameraUtil.init(this);
         cameraUtil.setPreviewCallback(previewCallback);
 
-        findViewById(R.id.bt_start_record_video).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bt_start_record_yuv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Camera.Size size = cameraUtil.camera.getParameters().getPreviewSize();
+                int width = size.width;
+                int height = size.height;
+                String fileName = String.format("camera_%dx%d_yuv420p.yuv",height ,width);
+                File file = new File(Environment.getExternalStorageDirectory(), fileName);
+                boolean isExist = file.exists();
+                if (isExist) {
+                    file.delete();
+                }
                 isRecord = true;
-                cameraUtil.startPreviewDisplay(surfaceHolder);
+                if (isExist) {
+                    ToastUtil.INSTANCE.show("delete exist file and start record yuv");
+                } else {
+                    ToastUtil.INSTANCE.show("start record yuv");
+                }
+                //cameraUtil.startPreviewDisplay(surfaceHolder);
             }
         });
 
-        findViewById(R.id.bt_stop_record_video).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bt_stop_record_yuv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isRecord = false;
-                cameraUtil.stopPreviewDisplay();
+                ToastUtil.INSTANCE.show("stop record yuv");
+                //cameraUtil.stopPreviewDisplay();
             }
         });
 
@@ -97,39 +110,54 @@ public class CameraActivity extends AppCompatActivity {
         });
     }
 
-    private byte[] mBytes;
+    private byte[] mI420Data;
 
-    private void init() {
-        if (mBytes == null) {
-            //int size = 720 * 1440 * ImageFormat.getBitsPerPixel(ImageFormat.NV21) / 8;
-//            mBytes = new byte[size];
-        }
-    }
+    private ExecutorService executors = Executors.newSingleThreadExecutor();
 
     private Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
         @Override
         public void onPreviewFrame(byte[] data, Camera camera) {
-            if (isRecord) {
-                Log.d(TAG, "onPreviewFrame: data: " + data.length);
-                // yuvToImage.image(data, previewSize.width, previewSize.height);
-                data = YuvRotate.rotateYUVDegree90(data, cameraUtil.previewSize.width, cameraUtil.previewSize.height);
-                yuvToFile.append(data, yuvFilePath);
-
-                Camera.Size size = camera.getParameters().getPreviewSize();
-                int width = size.width;
-                int height = size.height;
-                mBytes = new byte[data.length];
-                yuvLib.nv21ToI420(data, mBytes, width, height);
-                if (cameraUtil.cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
-                    yuvLib.rotateI420(mBytes, data, width, height, 90);
-                } else {
-                    yuvLib.rotateI420(mBytes, data, width, height, 270);
+            // Main
+            executors.execute(new Runnable() {
+                @Override
+                public void run() {
+                    if (data != null) {
+                        // data.length = width * height * 3/2
+                        Log.d(TAG, "onPreviewFrame data: " + data + ", data size: " + data.length);
+                        startPreviewFrame(data, camera);
+                    }
                 }
-            }
-
+            });
         }
     };
 
+    private void startPreviewFrame(byte[] data, Camera camera) {
+        if (isRecord) {
+            Log.d(TAG, "onPreviewFrame Record data: " + data.length);
+
+            Camera.Size size = camera.getParameters().getPreviewSize();
+            int width = size.width;
+            int height = size.height;
+            // yuv转换图片保存
+            // yuvToImage.image(data, width, height);
+            // yuv旋转90度
+            // data = YuvRotate.rotateYUVDegree90(data, width, height);
+
+            if (mI420Data == null || mI420Data.length != data.length) {
+                mI420Data = new byte[data.length];
+            }
+
+            yuvLib.nv21ToI420(data, mI420Data, width, height);
+
+            if (cameraUtil.cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                yuvLib.rotateI420(mI420Data, data, width, height, 90);
+            } else {
+                yuvLib.rotateI420(mI420Data, data, width, height, 270);
+            }
+            // 旋转后名称宽高要互换
+            yuvToFile.append(data, String.format("camera_%dx%d_yuv420p.yuv", height, width));
+        }
+    }
 
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
@@ -148,7 +176,7 @@ public class CameraActivity extends AppCompatActivity {
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
             Log.d(TAG, "surfaceDestroyed: ");
-
+            cameraUtil.stopPreviewDisplay();
         }
     };
 
@@ -212,7 +240,6 @@ public class CameraActivity extends AppCompatActivity {
 
         try {
             mMediaRecorder.prepare();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -232,12 +259,12 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isRecord = false;
         if (yuvToFile != null) {
             yuvToFile.close();
         }
         releaseMediaRecorder();
         cameraUtil.releaseCamera();
-
     }
 
 
