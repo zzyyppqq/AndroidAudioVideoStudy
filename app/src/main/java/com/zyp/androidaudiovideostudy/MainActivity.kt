@@ -15,6 +15,7 @@ import com.zyp.androidaudiovideostudy.camera.CameraActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityMainBinding
 import com.zyp.androidaudiovideostudy.fdkaac.FdkAACActivity
 import com.zyp.androidaudiovideostudy.ffmpeg.FFmpegActivity
+import com.zyp.androidaudiovideostudy.gpuimage.GpuImageActivity
 import com.zyp.androidaudiovideostudy.rtmp.CameraMediaCodecRtmpActivity
 import com.zyp.androidaudiovideostudy.video.*
 import com.zyp.androidaudiovideostudy.x264.X264Activity
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(CameraYuvActivity::class.java),
         MainItem(YUViewActivity::class.java),
         MainItem(YUVTestActivity::class.java),
+        MainItem(GpuImageActivity::class.java),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

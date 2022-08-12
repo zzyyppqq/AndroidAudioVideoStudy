@@ -68,6 +68,10 @@
         <activity android:name=".yuv.YUViewActivity" />
         <activity android:name=".yuv.YUVTestActivity" />
 
+        <activity
+            android:name=".gpuimage.GpuImageActivity"
+            android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

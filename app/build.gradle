@@ -52,6 +52,8 @@ dependencies {
 
     // mp4合成
     implementation 'com.googlecode.mp4parser:isoparser:1.1.22'
+    // gpuimage
+    implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
 
     implementation project(':libmad')
     implementation project(':liblame')
