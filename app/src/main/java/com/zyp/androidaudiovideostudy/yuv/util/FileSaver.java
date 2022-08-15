@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class YuvToFile {
+public class FileSaver {
 
     // 创建FileOutputStream对象
     private FileOutputStream outputStream = null;

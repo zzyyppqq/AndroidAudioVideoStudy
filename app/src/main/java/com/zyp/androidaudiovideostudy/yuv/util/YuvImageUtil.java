@@ -19,7 +19,7 @@ import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class YuvToImage {
+public class YuvImageUtil {
     public static final String TAG = "YuvToImage";
     private int count = 0;
 

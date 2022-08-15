@@ -18,6 +18,8 @@ public class MyGLRender implements GLSurfaceView.Renderer {
     public static final int U_TYPE = 2;
     public static final int V_TYPE = 3;
     public static final int YUV_GRAY_TYPE = 4;
+    public static final int RGB_TYPE = 5;
+    public static final int RGBA_TYPE = 6;
 
     private GLSurfaceView mTargetSurface;
     private GLProgram prog = new GLProgram(1);
@@ -25,6 +27,8 @@ public class MyGLRender implements GLSurfaceView.Renderer {
     private ByteBuffer y;
     private ByteBuffer u;
     private ByteBuffer v;
+    private ByteBuffer rgb;
+    private ByteBuffer rgba;
 
     private int mYUVType = YUV_TYPE;
 
@@ -62,6 +66,10 @@ public class MyGLRender implements GLSurfaceView.Renderer {
                 u.position(0);
                 v.position(0);
                 prog.buildTextures(y, u, v, mVideoWidth, mVideoHeight);
+                rgb.position(0);
+                rgba.position(0);
+                v.position(0);
+                prog.buildTexturesRGB(rgb, rgba, mVideoWidth, mVideoHeight);
                 GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
                 GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
                 prog.drawFrame();
@@ -85,6 +93,8 @@ public class MyGLRender implements GLSurfaceView.Renderer {
                     y = ByteBuffer.allocate(yarraySize);
                     u = ByteBuffer.allocate(uvarraySize);
                     v = ByteBuffer.allocate(uvarraySize);
+                    rgb = ByteBuffer.allocate(w * h * 3);
+                    rgba = ByteBuffer.allocate(w * h * 4);
                 }
             }
         }
@@ -125,6 +135,33 @@ public class MyGLRender implements GLSurfaceView.Renderer {
             y.put(yuvdata, 0, ylen);
             u.put(yuvdata, ylen, ylen / 4);
             v.put(yuvdata, ylen * 5 / 4, ylen / 4);
+        }
+
+        // request to render
+        mTargetSurface.requestRender();
+    }
+
+    /**
+     * this method is for update yuv420 data
+     */
+    public void updateRGB(byte[] rgbdata) {
+        synchronized (this) {
+            int rgbLen = this.mVideoHeight * this.mVideoWidth * 3;
+            rgb.clear();
+            rgb.put(rgbdata, 0, rgbLen);
+        }
+        // request to render
+        mTargetSurface.requestRender();
+    }
+
+    /**
+     * this method is for update yuv420 data
+     */
+    public void updateRGBA(byte[] rgbadata) {
+        synchronized (this) {
+            int rgbaLen = this.mVideoHeight * this.mVideoWidth * 4;
+            rgba.clear();
+            rgba.put(rgbadata, 0, rgbaLen);
         }
 
         // request to render

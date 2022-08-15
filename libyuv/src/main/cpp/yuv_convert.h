@@ -10,6 +10,8 @@
 
 void i420_to_rgba(char *src, char *dst, int width, int height);
 
+void i420_to_rgb24(char *src, char *dst, int width, int height);
+
 void i420_to_abgr(char *src, char *dst, int width, int height);
 /**
  * i420 convert to nv21

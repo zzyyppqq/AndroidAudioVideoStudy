@@ -19,16 +19,22 @@ public class GLProgram {
     private int _textureI;
     private int _textureII;
     private int _textureIII;
+    private int _texture4;
+    private int _texture5;
     // texture index in gles
     private int _tIindex;
     private int _tIIindex;
     private int _tIIIindex;
+    private int _t4index;
+    private int _t5index;
     // vertices on screen
     private float[] _vertices;
     // handles
     private int _positionHandle = -1, _coordHandle = -1;
     private int _yhandle = -1, _uhandle = -1, _vhandle = -1;
+    private int _rgbhandle = -1, _rgbahandle = -1;
     private int _ytid = -1, _utid = -1, _vtid = -1;
+    private int _rgbtid = -1, _rgbatid = -1;
     // vertices buffer
     private ByteBuffer _vertice_buffer;
     private ByteBuffer _coord_buffer;
@@ -64,9 +70,13 @@ public class GLProgram {
                 _textureI = GLES20.GL_TEXTURE0;
                 _textureII = GLES20.GL_TEXTURE1;
                 _textureIII = GLES20.GL_TEXTURE2;
+                _texture4 = GLES20.GL_TEXTURE3;
+                _texture5 = GLES20.GL_TEXTURE4;
                 _tIindex = 0;
                 _tIIindex = 1;
                 _tIIIindex = 2;
+                _t4index = 3;
+                _t5index = 4;
                 break;
             case 2:
                 _vertices = squareVertices2;
@@ -125,20 +135,24 @@ public class GLProgram {
             _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_V);
         } else if (yuvType == MyGLRender.YUV_GRAY_TYPE) {
             _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_GRAY);
+        } else if (yuvType == MyGLRender.RGB_TYPE) {
+            _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_RGB);
+        }  else if (yuvType == MyGLRender.RGBA_TYPE) {
+            _program = createProgram(VERTEX_SHADER, FRAGMENT_SHADER_RGBA);
         }
-        Log.d(TAG, "_program = " + _program);
+        Log.i(TAG, "_program = " + _program);
 
         /*
          * get handle for "vPosition" and "a_texCoord"
          */
         _positionHandle = GLES20.glGetAttribLocation(_program, "vPosition");
-        Log.d(TAG, "_positionHandle = " + _positionHandle);
+        Log.i(TAG, "_positionHandle = " + _positionHandle);
         checkGlError("glGetAttribLocation vPosition");
         if (_positionHandle == -1) {
             throw new RuntimeException("Could not get attribute location for vPosition");
         }
         _coordHandle = GLES20.glGetAttribLocation(_program, "a_texCoord");
-        Log.d(TAG, "_coordHandle = " + _coordHandle);
+        Log.i(TAG, "_coordHandle = " + _coordHandle);
         checkGlError("glGetAttribLocation a_texCoord");
         if (_coordHandle == -1) {
             throw new RuntimeException("Could not get attribute location for a_texCoord");
@@ -148,23 +162,31 @@ public class GLProgram {
          * get uniform location for y/u/v, we pass data through these uniforms
          */
         _yhandle = GLES20.glGetUniformLocation(_program, "tex_y");
-        Log.d(TAG, "_yhandle = " + _yhandle);
-        checkGlError("glGetUniformLocation tex_y");
+        Log.i(TAG, "_yhandle = " + _yhandle);
+//        checkGlError("glGetUniformLocation tex_y");
 //        if (_yhandle == -1) {
 //            throw new RuntimeException("Could not get uniform location for tex_y");
 //        }
         _uhandle = GLES20.glGetUniformLocation(_program, "tex_u");
-        Log.d(TAG, "_uhandle = " + _uhandle);
-        checkGlError("glGetUniformLocation tex_u");
+        Log.i(TAG, "_uhandle = " + _uhandle);
+//        checkGlError("glGetUniformLocation tex_u");
 //        if (_uhandle == -1) {
 //            throw new RuntimeException("Could not get uniform location for tex_u");
 //        }
         _vhandle = GLES20.glGetUniformLocation(_program, "tex_v");
-        Log.d(TAG, "_vhandle = " + _vhandle);
-        checkGlError("glGetUniformLocation tex_v");
+        Log.i(TAG, "_vhandle = " + _vhandle);
+//        checkGlError("glGetUniformLocation tex_v");
 //        if (_vhandle == -1) {
 //            throw new RuntimeException("Could not get uniform location for tex_v");
 //        }
+
+        _rgbhandle = GLES20.glGetUniformLocation(_program, "tex_rgb");
+        Log.i(TAG, "_rgbhandle = " + _rgbhandle);
+//        checkGlError("glGetUniformLocation tex_rgb");
+
+        _rgbahandle = GLES20.glGetUniformLocation(_program, "tex_rgba");
+        Log.i(TAG, "_rgbahandle = " + _rgbahandle);
+//        checkGlError("glGetUniformLocation tex_rgba");
 
         isProgBuilt = true;
     }
@@ -177,13 +199,13 @@ public class GLProgram {
         if (videoSizeChanged) {
             _video_width = width;
             _video_height = height;
-            Log.d(TAG, "buildTextures videoSizeChanged: w=" + _video_width + " h=" + _video_height);
+            Log.i(TAG, "buildTextures videoSizeChanged: w=" + _video_width + " h=" + _video_height);
         }
 
         // building texture for Y data
         if (_ytid < 0 || videoSizeChanged) {
             if (_ytid >= 0) {
-                Log.d(TAG, "glDeleteTextures Y");
+                Log.i(TAG, "glDeleteTextures Y");
                 GLES20.glDeleteTextures(1, new int[]{_ytid}, 0);
                 checkGlError("glDeleteTextures");
             }
@@ -192,7 +214,7 @@ public class GLProgram {
             GLES20.glGenTextures(1, textures, 0);
             checkGlError("glGenTextures");
             _ytid = textures[0];
-            Log.d(TAG, "glGenTextures Y = " + _ytid);
+            Log.i(TAG, "glGenTextures Y = " + _ytid);
         }
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _ytid);
         checkGlError("glBindTexture");
@@ -207,7 +229,7 @@ public class GLProgram {
         // building texture for U data
         if (_utid < 0 || videoSizeChanged) {
             if (_utid >= 0) {
-                Log.d(TAG, "glDeleteTextures U");
+                Log.i(TAG, "glDeleteTextures U");
                 GLES20.glDeleteTextures(1, new int[]{_utid}, 0);
                 checkGlError("glDeleteTextures");
             }
@@ -215,7 +237,7 @@ public class GLProgram {
             GLES20.glGenTextures(1, textures, 0);
             checkGlError("glGenTextures");
             _utid = textures[0];
-            Log.d(TAG, "glGenTextures U = " + _utid);
+            Log.i(TAG, "glGenTextures U = " + _utid);
         }
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _utid);
         GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_LUMINANCE, _video_width / 2, _video_height / 2, 0,
@@ -228,7 +250,7 @@ public class GLProgram {
         // building texture for V data
         if (_vtid < 0 || videoSizeChanged) {
             if (_vtid >= 0) {
-                Log.d(TAG, "glDeleteTextures V");
+                Log.i(TAG, "glDeleteTextures V");
                 GLES20.glDeleteTextures(1, new int[]{_vtid}, 0);
                 checkGlError("glDeleteTextures");
             }
@@ -236,7 +258,7 @@ public class GLProgram {
             GLES20.glGenTextures(1, textures, 0);
             checkGlError("glGenTextures");
             _vtid = textures[0];
-            Log.d(TAG, "glGenTextures V = " + _vtid);
+            Log.i(TAG, "glGenTextures V = " + _vtid);
         }
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _vtid);
         GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_LUMINANCE, _video_width / 2, _video_height / 2, 0,
@@ -247,10 +269,68 @@ public class GLProgram {
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
     }
 
-    /**
-     * render the frame
-     * the YUV data will be converted to RGB by shader.
-     */
+    public void buildTexturesRGB(Buffer rgb, Buffer rgba, int width, int height) {
+        boolean videoSizeChanged = (width != _video_width || height != _video_height);
+        if (videoSizeChanged) {
+            _video_width = width;
+            _video_height = height;
+            Log.i(TAG, "buildTextures videoSizeChanged: w=" + _video_width + " h=" + _video_height);
+        }
+
+        // building texture for rgba data
+        if (_rgbtid < 0 || videoSizeChanged) {
+            if (_rgbtid >= 0) {
+                Log.i(TAG, "glDeleteTextures rgb");
+                GLES20.glDeleteTextures(1, new int[]{_rgbtid}, 0);
+                checkGlError("glDeleteTextures");
+            }
+            // GLES20.glPixelStorei(GLES20.GL_UNPACK_ALIGNMENT, 1);
+            int[] textures = new int[1];
+            GLES20.glGenTextures(1, textures, 0);
+            checkGlError("glGenTextures");
+            _rgbtid = textures[0];
+            Log.i(TAG, "glGenTextures rgb = " + _rgbtid);
+        }
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _rgbtid);
+        checkGlError("glBindTexture");
+        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGB, _video_width, _video_height, 0,
+                GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, rgb);
+        checkGlError("glTexImage2D");
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
+
+
+        // building texture for rgba data
+        if (_rgbatid < 0 || videoSizeChanged) {
+            if (_rgbatid >= 0) {
+                Log.i(TAG, "glDeleteTextures rgba");
+                GLES20.glDeleteTextures(1, new int[]{_rgbatid}, 0);
+                checkGlError("glDeleteTextures");
+            }
+            // GLES20.glPixelStorei(GLES20.GL_UNPACK_ALIGNMENT, 1);
+            int[] textures = new int[1];
+            GLES20.glGenTextures(1, textures, 0);
+            checkGlError("glGenTextures");
+            _rgbatid = textures[0];
+            Log.i(TAG, "glGenTextures rgba = " + _rgbatid);
+        }
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _rgbatid);
+        checkGlError("glBindTexture");
+        GLES20.glTexImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, _video_width, _video_height, 0,
+                GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, rgba);
+        checkGlError("glTexImage2D");
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
+    }
+
+        /**
+         * render the frame
+         * the YUV data will be converted to RGB by shader.
+         */
     public void drawFrame() {
         GLES20.glUseProgram(_program);
         checkGlError("glUseProgram");
@@ -276,6 +356,14 @@ public class GLProgram {
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _vtid);
         GLES20.glUniform1i(_vhandle, _tIIIindex);
 
+        GLES20.glActiveTexture(_texture4);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _rgbtid);
+        GLES20.glUniform1i(_rgbhandle, _t4index);
+
+        GLES20.glActiveTexture(_texture5);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, _rgbatid);
+        GLES20.glUniform1i(_rgbahandle, _t5index);
+
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
         GLES20.glFinish();
 
@@ -291,8 +379,8 @@ public class GLProgram {
         int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexSource);
         int pixelShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentSource);
         // just check
-        Log.d(TAG, "vertexShader = " + vertexShader);
-        Log.d(TAG, "pixelShader = " + pixelShader);
+        Log.i(TAG, "vertexShader = " + vertexShader);
+        Log.i(TAG, "pixelShader = " + pixelShader);
 
         int program = GLES20.glCreateProgram();
         if (program != 0) {
@@ -473,5 +561,20 @@ public class GLProgram {
             + "color.a = 1.0;\n"
             + "gl_FragColor = color;\n"
             + "}\n";
+
+    private static final String FRAGMENT_SHADER_RGB = "precision mediump float;\n"
+            + "uniform sampler2D tex_rgb;\n"
+            + "varying vec2 tc;\n"
+            + "void main() {\n"
+            + "gl_FragColor = texture2D(tex_rgb, tc);\n"
+            + "}\n";
+
+    private static final String FRAGMENT_SHADER_RGBA = "precision mediump float;\n"
+            + "uniform sampler2D tex_rgba;\n"
+            + "varying vec2 tc;\n"
+            + "void main() {\n"
+            + "gl_FragColor = texture2D(tex_rgba, tc);\n"
+            + "}\n";
+
 
 }

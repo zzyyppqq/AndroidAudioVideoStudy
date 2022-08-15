@@ -1,19 +1,16 @@
 package com.zyp.androidaudiovideostudy.yuv
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
-import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.zyp.androidaudiovideostudy.app
-import com.zyp.androidaudiovideostudy.databinding.ActivityGlsurfaceviewBinding
+import com.zyp.androidaudiovideostudy.databinding.ActivityYuvViewBinding
 import com.zyp.androidaudiovideostudy.opengl.MyGLRender
 import com.zyp.androidaudiovideostudy.opengl.MyGLRender.*
 import com.zyp.androidaudiovideostudy.pref.ECGPref
@@ -29,7 +26,7 @@ import java.io.IOException
  * ffmpeg -i dongfengpo_352x240.mp4 -t 5 -s 320x240 -pix_fmt rgba dongfengpo_320x240_rgba.rgb
  */
 class YUViewActivity : AppCompatActivity() {
-    private var _binding: ActivityGlsurfaceviewBinding? = null
+    private var _binding: ActivityYuvViewBinding? = null
     private val mBinding get() = _binding!!
     private lateinit var mRenderer: MyGLRender
     private lateinit var mRendererY: MyGLRender
@@ -42,7 +39,7 @@ class YUViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityGlsurfaceviewBinding.inflate(layoutInflater)
+        _binding = ActivityYuvViewBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         initData()

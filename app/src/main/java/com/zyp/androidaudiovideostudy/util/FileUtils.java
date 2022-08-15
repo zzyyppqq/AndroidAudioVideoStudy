@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +19,46 @@ import java.io.InputStreamReader;
  * @datetime: 21-4-10
  */
 public class FileUtils {
+
+    //保存文本文件
+    public static void saveText(String path, String txt) {
+        try {
+            FileOutputStream fos = new FileOutputStream(path);
+            fos.write(txt.getBytes());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //读取文本文件
+    public static String readString(String path) {
+        String readStr = "";
+        try {
+            FileInputStream fis = new FileInputStream(path);
+            byte[] b = new byte[fis.available()];
+            fis.read(b);
+            readStr = new String(b);
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return readStr;
+    }
+
+    //读取文本文件
+    public static byte[] readBytes(String path) {
+        try {
+            FileInputStream fis = new FileInputStream(path);
+            byte[] b = new byte[fis.available()];
+            fis.read(b);
+            fis.close();
+            return b;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static void saveFile(byte[] datas, String filePath){
         File file = new File(filePath);

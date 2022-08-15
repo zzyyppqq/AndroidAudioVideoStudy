@@ -60,12 +60,13 @@
         <activity android:name=".audio.AudioActivity" />
         <activity android:name=".audio.LibmadActivity" />
         <activity android:name=".audio.LiblameActivity" />
-        <activity android:name=".yuv.CameraYuvActivity" />
+        <activity android:name=".yuv.YuvCameraActivity" />
         <activity android:name=".video.CameraMediaCodecActivity" />
         <activity android:name=".x264.X264Activity" />
         <activity android:name=".rtmp.CameraMediaCodecRtmpActivity" />
         <activity android:name=".video.ANativeWindowActivity" />
         <activity android:name=".yuv.YUViewActivity" />
+        <activity android:name=".yuv.RGBViewActivity" />
         <activity android:name=".yuv.YUVTestActivity" />
 
         <activity

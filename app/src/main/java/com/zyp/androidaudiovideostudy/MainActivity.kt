@@ -19,7 +19,8 @@ import com.zyp.androidaudiovideostudy.gpuimage.GpuImageActivity
 import com.zyp.androidaudiovideostudy.rtmp.CameraMediaCodecRtmpActivity
 import com.zyp.androidaudiovideostudy.video.*
 import com.zyp.androidaudiovideostudy.x264.X264Activity
-import com.zyp.androidaudiovideostudy.yuv.CameraYuvActivity
+import com.zyp.androidaudiovideostudy.yuv.RGBViewActivity
+import com.zyp.androidaudiovideostudy.yuv.YuvCameraActivity
 import com.zyp.androidaudiovideostudy.yuv.YUVTestActivity
 import com.zyp.androidaudiovideostudy.yuv.YUViewActivity
 
@@ -48,8 +49,9 @@ class MainActivity : AppCompatActivity() {
         MainItem(FdkAACActivity::class.java),
         MainItem(ANativeWindowActivity::class.java),
         MainItem(RgbaPlayerActivity::class.java),
-        MainItem(CameraYuvActivity::class.java),
+        MainItem(YuvCameraActivity::class.java),
         MainItem(YUViewActivity::class.java),
+        MainItem(RGBViewActivity::class.java),
         MainItem(YUVTestActivity::class.java),
         MainItem(GpuImageActivity::class.java),
     )

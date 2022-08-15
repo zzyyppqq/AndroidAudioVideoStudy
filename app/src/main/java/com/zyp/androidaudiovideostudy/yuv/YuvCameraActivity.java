@@ -4,6 +4,7 @@ package com.zyp.androidaudiovideostudy.yuv;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
@@ -16,12 +17,14 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.zyp.androidaudiovideostudy.R;
 import com.zyp.androidaudiovideostudy.util.CameraUtil;
 import com.zyp.androidaudiovideostudy.util.ToastUtil;
-import com.zyp.androidaudiovideostudy.yuv.util.YuvToFile;
-import com.zyp.androidaudiovideostudy.yuv.util.YuvToImage;
+import com.zyp.androidaudiovideostudy.yuv.util.RgbToBitmap;
+import com.zyp.androidaudiovideostudy.yuv.util.FileSaver;
+import com.zyp.androidaudiovideostudy.yuv.util.YuvImageUtil;
 import com.zyp.yuvlib.YuvLib;
 
 import java.io.File;
@@ -29,15 +32,16 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CameraYuvActivity extends AppCompatActivity {
+public class YuvCameraActivity extends AppCompatActivity {
 
-    private static final String TAG = CameraYuvActivity.class.getSimpleName();
+    private static final String TAG = YuvCameraActivity.class.getSimpleName();
 
     private SurfaceView surfaceView;
+    private ImageView ivFrame;
 
     private SurfaceHolder surfaceHolder;
-    private YuvToFile yuvToFile = new YuvToFile();
-    private YuvToImage yuvToImage = new YuvToImage();
+    private FileSaver fileSaver = new FileSaver();
+    private YuvImageUtil yuvImageUtil = new YuvImageUtil();
     private volatile boolean isRecord;
 
     private String fileName = "camera_video.mp4";
@@ -52,6 +56,7 @@ public class CameraYuvActivity extends AppCompatActivity {
         setContentView(R.layout.activity_yuv_camera);
 
         surfaceView = findViewById(R.id.surfaceView);
+        ivFrame = findViewById(R.id.iv_frame);
 
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(callback);
@@ -62,22 +67,8 @@ public class CameraYuvActivity extends AppCompatActivity {
         findViewById(R.id.bt_start_record_yuv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Camera.Size size = cameraUtil.camera.getParameters().getPreviewSize();
-                int width = size.width;
-                int height = size.height;
-                String fileName = String.format("camera_%dx%d_yuv420p.yuv",height ,width);
-                File file = new File(Environment.getExternalStorageDirectory(), fileName);
-                boolean isExist = file.exists();
-                if (isExist) {
-                    file.delete();
-                }
+                deleteFile();
                 isRecord = true;
-                if (isExist) {
-                    ToastUtil.INSTANCE.show("delete exist file and start record yuv");
-                } else {
-                    ToastUtil.INSTANCE.show("start record yuv");
-                }
-                //cameraUtil.startPreviewDisplay(surfaceHolder);
             }
         });
 
@@ -86,7 +77,6 @@ public class CameraYuvActivity extends AppCompatActivity {
             public void onClick(View v) {
                 isRecord = false;
                 ToastUtil.INSTANCE.show("stop record yuv");
-                //cameraUtil.stopPreviewDisplay();
             }
         });
 
@@ -105,12 +95,40 @@ public class CameraYuvActivity extends AppCompatActivity {
                 mMediaRecorder.stop();  // stop the recording
                 releaseMediaRecorder(); // release the MediaRecorder object
                 cameraUtil.lock();      // take camera access back from MediaRecorder
-
             }
         });
     }
 
+    private void deleteFile() {
+        Camera.Size size = cameraUtil.camera.getParameters().getPreviewSize();
+        int width = size.width;
+        int height = size.height;
+        String yuvFileName = String.format("camera_%dx%d_yuv420p.yuv",height ,width);
+        String rgbFileName = String.format("camera_%dx%d_rgb.rgb",height ,width);
+        String rgbaFileName = String.format("camera_%dx%d_rgba.rgb",height ,width);
+        File yuvFile = new File(Environment.getExternalStorageDirectory(), yuvFileName);
+        File rgbFile = new File(Environment.getExternalStorageDirectory(), rgbFileName);
+        File rgbaFile = new File(Environment.getExternalStorageDirectory(), rgbaFileName);
+        boolean isExist = yuvFile.exists();
+        if (isExist) {
+            yuvFile.delete();
+        }
+        if (rgbFile.exists()) {
+            rgbFile.delete();
+        }
+        if (rgbaFile.exists()) {
+            rgbaFile.delete();
+        }
+        if (isExist) {
+            ToastUtil.INSTANCE.show("delete exist file and start record yuv");
+        } else {
+            ToastUtil.INSTANCE.show("start record yuv");
+        }
+    }
+
     private byte[] mI420Data;
+    private byte[] mRGBData;
+    private byte[] mRGBAData;
 
     private ExecutorService executors = Executors.newSingleThreadExecutor();
 
@@ -139,7 +157,7 @@ public class CameraYuvActivity extends AppCompatActivity {
             int width = size.width;
             int height = size.height;
             // yuv转换图片保存
-            // yuvToImage.image(data, width, height);
+            // yuvImageUtil.image(data, width, height);
             // yuv旋转90度
             // data = YuvRotate.rotateYUVDegree90(data, width, height);
 
@@ -155,9 +173,36 @@ public class CameraYuvActivity extends AppCompatActivity {
                 yuvLib.rotateI420(mI420Data, data, width, height, 270);
             }
             // 旋转后名称宽高要互换
-            yuvToFile.append(data, String.format("camera_%dx%d_yuv420p.yuv", height, width));
+            fileSaver.append(data, String.format("camera_%dx%d_yuv420p.yuv", height, width));
+
+
+            if (mRGBData == null) {
+                mRGBData = new byte[width * height * 3];
+            }
+            if (mRGBAData == null) {
+                mRGBAData = new byte[width * height * 4];
+            }
+            /** libyuv中，rgba表示abgr abgr abgr这样的顺序写入文件，java使用的时候习惯rgba表示rgba rgba rgba写入文件 */
+            yuvLib.i420ToABGR(data, mRGBAData, height, width);
+            yuvLib.i420ToRGB24(data, mRGBData, height, width);
+
+            if (isConvertBitmap) {
+                rgbToFile.append(mRGBData, String.format("camera_%dx%d_rgb.rgb", height, width));
+                rgbaToFile.append(mRGBAData, String.format("camera_%dx%d_rgba.rgb", height, width));
+                isConvertBitmap = false;
+                Bitmap bitmap = RgbToBitmap.rgbaToBitmap(mRGBAData, height, width);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ivFrame.setImageBitmap(bitmap);
+                    }
+                });
+            }
         }
     }
+    private boolean isConvertBitmap = true;
+    private FileSaver rgbaToFile = new FileSaver();
+    private FileSaver rgbToFile = new FileSaver();
 
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
@@ -251,7 +296,6 @@ public class CameraYuvActivity extends AppCompatActivity {
             mMediaRecorder.reset();   // clear recorder configuration
             mMediaRecorder.release(); // release the recorder object
             mMediaRecorder = null;
-            cameraUtil.lock(); // lock camera for later use
         }
     }
 
@@ -260,10 +304,17 @@ public class CameraYuvActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         isRecord = false;
-        if (yuvToFile != null) {
-            yuvToFile.close();
+        if (fileSaver != null) {
+            fileSaver.close();
+        }
+        if (rgbaToFile != null) {
+            rgbaToFile.close();
+        }
+        if (rgbToFile != null) {
+            rgbToFile.close();
         }
         releaseMediaRecorder();
+        surfaceHolder.removeCallback(callback);
         cameraUtil.releaseCamera();
     }
 

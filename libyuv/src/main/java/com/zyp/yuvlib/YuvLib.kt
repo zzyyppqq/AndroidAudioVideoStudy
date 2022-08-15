@@ -13,6 +13,10 @@ class YuvLib {
 
     external fun i420ToRGBA(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
 
+    external fun i420ToABGR(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
+
+    external fun i420ToRGB24(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
+
     external fun i420ToNv21(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
 
     external fun nv21ToI420(src: ByteArray?, dst: ByteArray?, width: Int, height: Int)
@@ -24,6 +28,8 @@ class YuvLib {
     external fun bitmapToI420(src: ByteArray?, bitmap: Bitmap, width: Int, height: Int)
 
     external fun argbToI420(src: ByteArray?, width: Int, height: Int, size: Int)
+
+    external fun getBitmap(bitmap: Bitmap)
 
     companion object {
         // Used to load the 'nativelib' library on application startup.

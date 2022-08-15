@@ -6,6 +6,7 @@ import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import java.io.IOException;
 import java.util.List;
@@ -82,7 +83,9 @@ public class CameraUtil {
 
     public void releaseCamera() {
         if (camera != null) {
+            camera.setPreviewCallback(null);
             camera.stopPreview();
+            camera.lock(); // lock camera for later use
             camera.release();
             camera = null;
         }

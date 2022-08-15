@@ -13,7 +13,10 @@ object ECGPref {
     var native_window_agba_url by prefName("native_window_agba_url","", "pref_audio_video_study")
 
     var yuv_view_url by prefName("yuv_view_url","", "pref_audio_video_study")
+
     var y_view_url by prefName("y_view_url","", "pref_audio_video_study")
+
+    var rgb_view_url by prefName("rgb_view_url","", "pref_audio_video_study")
 
 }
 

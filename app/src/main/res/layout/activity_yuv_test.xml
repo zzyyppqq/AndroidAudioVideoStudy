@@ -15,4 +15,41 @@
         android:text="ImageRead test"
         android:textAllCaps="false" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_rgb_to_bitmap_test"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="rgb to bitmap test"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_rgba_to_bitmap_test"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="rgba to bitmap test"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_get_bitmap_test"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="get bitmap test"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true" />
+
 </LinearLayout>
