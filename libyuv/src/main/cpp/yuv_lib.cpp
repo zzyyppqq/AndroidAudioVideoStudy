@@ -80,7 +80,7 @@ Java_com_zyp_yuvlib_YuvLib_i420ToRGBA(JNIEnv *env, jclass clazz, jbyteArray src,
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_zyp_yuvlib_YuvLib_i420ToABGR(JNIEnv *env, jclass clazz, jbyteArray src,
-                                       jbyteArray dst, jint width, jint height) {
+                                      jbyteArray dst, jint width, jint height) {
     if (src == NULL || dst == NULL) {
         throw_exception(env, "java/lang/RuntimeException", "Src or dst byte array cannot be NULL!");
     }
@@ -117,6 +117,76 @@ Java_com_zyp_yuvlib_YuvLib_i420ToRGB24(JNIEnv *env, jclass clazz, jbyteArray src
 
     env->ReleaseByteArrayElements(src, i420_data, 0);
     env->ReleaseByteArrayElements(dst, rgb24_data, 0);
+}
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_zyp_yuvlib_YuvLib_i420ToMirror(JNIEnv *env, jclass clazz, jbyteArray src,
+                                        jbyteArray dst, jint width, jint height) {
+    if (src == NULL || dst == NULL) {
+        throw_exception(env, "java/lang/RuntimeException", "Src or dst byte array cannot be NULL!");
+    }
+    if (width <= 0 || height <= 0) {
+        throw_exception(env, "java/lang/RuntimeException",
+                        "Width and height must be greater than 0!");
+    }
+
+    jbyte *i420_data = env->GetByteArrayElements(src, JNI_FALSE);
+    jbyte *rgb24_data = env->GetByteArrayElements(dst, JNI_FALSE);
+
+    int ret = i420_to_mirror((char *) i420_data, (char *) rgb24_data, width, height);
+
+    env->ReleaseByteArrayElements(src, i420_data, 0);
+    env->ReleaseByteArrayElements(dst, rgb24_data, 0);
+}
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_zyp_yuvlib_YuvLib_i420ToScale(JNIEnv *env, jclass clazz, jbyteArray src,
+                                       jint width, jint height, jbyteArray dst, jint scale_width,
+                                       jint scale_height) {
+    if (src == NULL || dst == NULL) {
+        throw_exception(env, "java/lang/RuntimeException", "Src or dst byte array cannot be NULL!");
+    }
+    if (width <= 0 || height <= 0) {
+        throw_exception(env, "java/lang/RuntimeException",
+                        "Width and height must be greater than 0!");
+    }
+
+    jbyte *i420_data = env->GetByteArrayElements(src, JNI_FALSE);
+    jbyte *scale_data = env->GetByteArrayElements(dst, JNI_FALSE);
+
+    int ret = i420_to_scale((char *) i420_data, width, height, (char *) scale_data, scale_width,
+                            scale_height, libyuv::kFilterNone);
+
+    env->ReleaseByteArrayElements(src, i420_data, 0);
+    env->ReleaseByteArrayElements(dst, scale_data, 0);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_zyp_yuvlib_YuvLib_i420ToCrop(JNIEnv *env, jclass clazz, jbyteArray src,
+                                      jint width, jint height, jbyteArray dst, jint crop_width,
+                                      jint crop_height, jint left, jint top) {
+    if (src == NULL || dst == NULL) {
+        throw_exception(env, "java/lang/RuntimeException", "Src or dst byte array cannot be NULL!");
+    }
+    if (width <= 0 || height <= 0) {
+        throw_exception(env, "java/lang/RuntimeException",
+                        "Width and height must be greater than 0!");
+    }
+
+    jbyte *i420_data = env->GetByteArrayElements(src, JNI_FALSE);
+    jbyte *crop_data = env->GetByteArrayElements(dst, JNI_FALSE);
+
+    int src_length = env->GetArrayLength(src);
+    int ret = i420_to_crop((char *) i420_data, src_length, width, height, (char *) crop_data,
+                           crop_width, crop_height, left, top);
+
+    env->ReleaseByteArrayElements(src, i420_data, 0);
+    env->ReleaseByteArrayElements(dst, crop_data, 0);
 }
 
 extern "C"

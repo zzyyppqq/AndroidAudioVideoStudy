@@ -37,6 +37,90 @@ void i420_to_rgb24(char *src, char *dst, int width, int height) {
                width, height);
 }
 
+int i420_to_mirror(char *src, char *dst, int width, int height) {
+    int src_i420_y_size = width * height;
+    int src_i420_u_size = (width >> 1) * (height >> 1);
+
+    char *src_i420_y_data = src;
+    char *src_i420_u_data = src + src_i420_y_size;
+    char *src_i420_v_data = src + src_i420_y_size + src_i420_u_size;
+
+    char *dst_i420_y_data = dst;
+    char *dst_i420_u_data = dst + src_i420_y_size;
+    char *dst_i420_v_data = dst + src_i420_y_size + src_i420_u_size;
+
+    return I420Mirror((const uint8 *) src_i420_y_data, width,
+                       (const uint8 *) src_i420_u_data, width >> 1,
+                       (const uint8 *) src_i420_v_data, width >> 1,
+                       (uint8 *) dst_i420_y_data, width,
+                       (uint8 *) dst_i420_u_data, width >> 1,
+                       (uint8 *) dst_i420_v_data, width >> 1,
+                       width, height);
+}
+
+
+int i420_to_scale(char *src, int width, int height, char *dst, int dst_width,
+               int dst_height, int mode) {
+
+    int src_i420_y_size = width * height;
+    int src_i420_u_size = (width >> 1) * (height >> 1);
+    char *src_i420_y_data = src;
+    char *src_i420_u_data = src + src_i420_y_size;
+    char *src_i420_v_data = src + src_i420_y_size + src_i420_u_size;
+
+    int dst_i420_y_size = dst_width * dst_height;
+    int dst_i420_u_size = (dst_width >> 1) * (dst_height >> 1);
+    char *dst_i420_y_data = dst;
+    char *dst_i420_u_data = dst + dst_i420_y_size;
+    char *dst_i420_v_data = dst + dst_i420_y_size + dst_i420_u_size;
+
+    return I420Scale((const uint8 *) src_i420_y_data, width,
+                      (const uint8 *) src_i420_u_data, width >> 1,
+                      (const uint8 *) src_i420_v_data, width >> 1,
+                      width, height,
+                      (uint8 *) dst_i420_y_data, dst_width,
+                      (uint8 *) dst_i420_u_data, dst_width >> 1,
+                      (uint8 *) dst_i420_v_data, dst_width >> 1,
+                      dst_width, dst_height,
+                      mode);
+}
+
+int i420_to_crop(char* src, int src_length, int width,int height,
+                 char* dst, int dst_width, int dst_height,
+                 int left, int top) {
+    //裁剪的区域大小不对
+    if (left + dst_width > width || top + dst_height > height) {
+        return -1;
+    }
+
+    //left和top必须为偶数，否则显示会有问题
+    if (left % 2 != 0 || top % 2 != 0) {
+        return -1;
+    }
+
+    char *src_i420_data = src;
+    char *dst_i420_data = dst;
+
+    int dst_i420_y_size = dst_width * dst_height;
+    int dst_i420_u_size = (dst_width >> 1) * (dst_height >> 1);
+
+    char *dst_i420_y_data = dst_i420_data;
+    char *dst_i420_u_data = dst_i420_data + dst_i420_y_size;
+    char *dst_i420_v_data = dst_i420_data + dst_i420_y_size + dst_i420_u_size;
+
+    ConvertToI420((const uint8 *) src_i420_data, src_length,
+                          (uint8 *) dst_i420_y_data, dst_width,
+                          (uint8 *) dst_i420_u_data, dst_width >> 1,
+                          (uint8 *) dst_i420_v_data, dst_width >> 1,
+                          left, top,
+                          width, height,
+                          dst_width, dst_height,
+                          kRotate0, FOURCC_I420);
+
+}
+
+
+
 void i420_to_abgr(char *src, char *dst, int width, int height) {
     int src_y_size = width * height;
     int src_u_size = src_y_size >> 2;

@@ -13,6 +13,7 @@ import android.os.Environment;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.WorkSource;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -99,36 +100,27 @@ public class YuvCameraActivity extends AppCompatActivity {
         });
     }
 
+    int scaleWidth = 720, scaleHeight = 1280;
+    int cropWidth = 720, cropHeight = 720;
     private void deleteFile() {
         Camera.Size size = cameraUtil.camera.getParameters().getPreviewSize();
         int width = size.width;
         int height = size.height;
-        String yuvFileName = String.format("camera_%dx%d_yuv420p.yuv",height ,width);
-        String rgbFileName = String.format("camera_%dx%d_rgb.rgb",height ,width);
-        String rgbaFileName = String.format("camera_%dx%d_rgba.rgb",height ,width);
-        File yuvFile = new File(Environment.getExternalStorageDirectory(), yuvFileName);
-        File rgbFile = new File(Environment.getExternalStorageDirectory(), rgbFileName);
-        File rgbaFile = new File(Environment.getExternalStorageDirectory(), rgbaFileName);
-        boolean isExist = yuvFile.exists();
-        if (isExist) {
-            yuvFile.delete();
-        }
-        if (rgbFile.exists()) {
-            rgbFile.delete();
-        }
-        if (rgbaFile.exists()) {
-            rgbaFile.delete();
-        }
-        if (isExist) {
+        File yuvFile = new File(Environment.getExternalStorageDirectory(), String.format("camera_%dx%d_yuv420p.yuv",height ,width));
+        new File(Environment.getExternalStorageDirectory(),String.format("camera_%dx%d_rgb.rgb",width ,height)).delete();
+        new File(Environment.getExternalStorageDirectory(),String.format("camera_%dx%d_rgba.rgb",width ,height)).delete();
+        new File(Environment.getExternalStorageDirectory(),String.format("camera_%dx%d_rgb.rgb",scaleWidth ,scaleHeight)).delete();
+        new File(Environment.getExternalStorageDirectory(),String.format("camera_%dx%d_rgba.rgb",scaleWidth ,scaleHeight)).delete();
+        new File(Environment.getExternalStorageDirectory(),String.format("camera_%dx%d_rgb.rgb",cropWidth ,cropHeight)).delete();
+        new File(Environment.getExternalStorageDirectory(),String.format("camera_%dx%d_rgba.rgb",cropWidth ,cropHeight)).delete();
+        if (yuvFile.exists()) {
             ToastUtil.INSTANCE.show("delete exist file and start record yuv");
+            yuvFile.delete();
         } else {
             ToastUtil.INSTANCE.show("start record yuv");
         }
     }
 
-    private byte[] mI420Data;
-    private byte[] mRGBData;
-    private byte[] mRGBAData;
 
     private ExecutorService executors = Executors.newSingleThreadExecutor();
 
@@ -148,6 +140,48 @@ public class YuvCameraActivity extends AppCompatActivity {
             });
         }
     };
+
+    private boolean isConvertBitmap = true;
+    private FileSaver rgbaToFile = new FileSaver();
+    private FileSaver rgbToFile = new FileSaver();
+    private FileSaver rgbScaleToFile = new FileSaver();
+    private FileSaver rgbaScaleToFile = new FileSaver();
+    private FileSaver rgbCropToFile = new FileSaver();
+    private FileSaver rgbaCropToFile = new FileSaver();
+    private void closeStream() {
+        if (fileSaver != null) {
+            fileSaver.close();
+        }
+        if (rgbaToFile != null) {
+            rgbaToFile.close();
+        }
+        if (rgbToFile != null) {
+            rgbToFile.close();
+        }
+        if (rgbScaleToFile != null) {
+            rgbScaleToFile.close();
+        }
+        if (rgbaScaleToFile != null) {
+            rgbaScaleToFile.close();
+        }
+        if (rgbCropToFile != null) {
+            rgbCropToFile.close();
+        }
+        if (rgbaCropToFile != null) {
+            rgbaCropToFile.close();
+        }
+    }
+
+
+    private byte[] mI420Data;
+    private byte[] mRGBData;
+    private byte[] mRGBAData;
+    private byte[] mScaleData;
+    private byte[] mScaleRGBData;
+    private byte[] mScaleRGBAData;
+    private byte[] mCropData;
+    private byte[] mCropRGBData;
+    private byte[] mCropRGBAData;
 
     private void startPreviewFrame(byte[] data, Camera camera) {
         if (isRecord) {
@@ -175,34 +209,65 @@ public class YuvCameraActivity extends AppCompatActivity {
             // 旋转后名称宽高要互换
             fileSaver.append(data, String.format("camera_%dx%d_yuv420p.yuv", height, width));
 
-
-            if (mRGBData == null) {
-                mRGBData = new byte[width * height * 3];
-            }
-            if (mRGBAData == null) {
-                mRGBAData = new byte[width * height * 4];
-            }
-            /** libyuv中，rgba表示abgr abgr abgr这样的顺序写入文件，java使用的时候习惯rgba表示rgba rgba rgba写入文件 */
-            yuvLib.i420ToABGR(data, mRGBAData, height, width);
-            yuvLib.i420ToRGB24(data, mRGBData, height, width);
-
             if (isConvertBitmap) {
+                isConvertBitmap = false;
+                if (mRGBData == null) {
+                    mRGBData = new byte[width * height * 3];
+                }
+                if (mRGBAData == null) {
+                    mRGBAData = new byte[width * height * 4];
+                }
+                yuvLib.i420ToRGB24(data, mRGBData, height, width);
+                /** libyuv中，rgba表示abgr abgr abgr这样的顺序写入文件，java使用的时候习惯rgba表示rgba rgba rgba写入文件 */
+                yuvLib.i420ToABGR(data, mRGBAData, height, width);
                 rgbToFile.append(mRGBData, String.format("camera_%dx%d_rgb.rgb", height, width));
                 rgbaToFile.append(mRGBAData, String.format("camera_%dx%d_rgba.rgb", height, width));
-                isConvertBitmap = false;
-                Bitmap bitmap = RgbToBitmap.rgbaToBitmap(mRGBAData, height, width);
+                Bitmap originBitmap = RgbToBitmap.rgbaToBitmap(mRGBAData, height, width);
+                // 缩放实现
+                if (mScaleData == null) {
+                    mScaleData = new byte[scaleWidth * scaleHeight * 3 / 2];
+                }
+                if (mScaleRGBData == null) {
+                    mScaleRGBData = new byte[scaleWidth * scaleHeight * 3];
+                }
+                if (mScaleRGBAData == null) {
+                    mScaleRGBAData = new byte[scaleWidth * scaleHeight * 4];
+                }
+                yuvLib.i420ToScale(data, height, width, mScaleData, scaleWidth, scaleHeight);
+                yuvLib.i420ToRGB24(mScaleData, mScaleRGBData, scaleWidth, scaleHeight);
+                yuvLib.i420ToABGR(mScaleData, mScaleRGBAData, scaleWidth, scaleHeight);
+
+                rgbScaleToFile.append(mScaleRGBData, String.format("camera_%dx%d_rgb.rgb", scaleWidth, scaleHeight));
+                rgbaScaleToFile.append(mScaleRGBAData, String.format("camera_%dx%d_rgba.rgb", scaleWidth, scaleHeight));
+                Bitmap scaleBitmap = RgbToBitmap.rgbaToBitmap(mScaleRGBAData, scaleWidth, scaleHeight);
+                // 裁剪实现
+                if (mCropData == null) {
+                    mCropData = new byte[cropWidth * cropHeight * 3 / 2];
+                }
+                if (mCropRGBData == null) {
+                    mCropRGBData = new byte[cropWidth * cropHeight * 3];
+                }
+                if (mCropRGBAData == null) {
+                    mCropRGBAData = new byte[cropWidth * cropHeight * 4];
+                }
+                // 用缩放的data去裁剪
+                yuvLib.i420ToCrop(mScaleData, scaleWidth, scaleHeight, mCropData, cropWidth, cropHeight, 0, 0);
+                yuvLib.i420ToRGB24(mCropData, mCropRGBData, cropWidth, cropHeight);
+                yuvLib.i420ToABGR(mCropData, mCropRGBAData, cropWidth, cropHeight);
+
+                rgbCropToFile.append(mCropRGBData, String.format("camera_%dx%d_rgb.rgb", cropWidth, cropHeight));
+                rgbaCropToFile.append(mCropRGBAData, String.format("camera_%dx%d_rgba.rgb", cropWidth, cropHeight));
+                Bitmap cropBitmap = RgbToBitmap.rgbaToBitmap(mCropRGBAData, cropWidth, cropHeight);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ivFrame.setImageBitmap(bitmap);
+                        ivFrame.setImageBitmap(cropBitmap);
                     }
                 });
             }
         }
     }
-    private boolean isConvertBitmap = true;
-    private FileSaver rgbaToFile = new FileSaver();
-    private FileSaver rgbToFile = new FileSaver();
+
 
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
@@ -304,15 +369,7 @@ public class YuvCameraActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         isRecord = false;
-        if (fileSaver != null) {
-            fileSaver.close();
-        }
-        if (rgbaToFile != null) {
-            rgbaToFile.close();
-        }
-        if (rgbToFile != null) {
-            rgbToFile.close();
-        }
+        closeStream();
         releaseMediaRecorder();
         surfaceHolder.removeCallback(callback);
         cameraUtil.releaseCamera();
