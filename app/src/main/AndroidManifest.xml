@@ -27,7 +27,7 @@
             android:name=".camera.Camera2Activity"
             android:exported="false" />
         <activity
-            android:name=".video.CameraGLFilterActivity"
+            android:name=".video.CameraOpenGLFilterActivity"
             android:exported="false" />
 
         <activity

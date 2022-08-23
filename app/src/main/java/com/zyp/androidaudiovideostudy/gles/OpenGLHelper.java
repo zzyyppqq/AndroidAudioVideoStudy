@@ -131,7 +131,7 @@ public class OpenGLHelper {
         BLACK_WHITE
     }
 
-    public void surfaceCreate(final GLSurfaceView glSurfaceview, FilterType filterType) {
+    public void surfaceCreate(final GLSurfaceView glSurfaceview) {
         mTexture = new int[1];
         GLES20.glGenTextures(1, mTexture, 0); // 创建一个纹理id
         //将纹理id传入成功创建SurfaceTexture
@@ -146,6 +146,10 @@ public class OpenGLHelper {
         mCameraHelper = new CameraHelper(Camera.CameraInfo.CAMERA_FACING_BACK);
         mCameraHelper.startPreview(mSurfaceTexture); //这个是设置相机的预览画面
 
+        initVertexBuffer();
+    }
+
+    public void createProgram(FilterType filterType) {
         //创建着色器程序 并且获取着色器程序中的部分属性
         if (filterType == FilterType.BLACK_WHITE) {
             mProgramId = creatProgram(vertex, frag_black_white);
@@ -157,7 +161,6 @@ public class OpenGLHelper {
         vMatrix = GLES20.glGetUniformLocation(mProgramId, "vMatrix");
         vTexture = GLES20.glGetUniformLocation(mProgramId, "vTexture");
 
-        initVertexBuffer();
     }
 
     public void surfaceChanged(int width, int height) {

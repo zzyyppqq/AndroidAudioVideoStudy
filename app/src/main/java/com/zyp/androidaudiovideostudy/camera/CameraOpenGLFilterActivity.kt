@@ -1,25 +1,20 @@
 package com.zyp.androidaudiovideostudy.video
 
-import android.opengl.GLSurfaceView
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.zyp.androidaudiovideostudy.databinding.ActivityCameraGlFilterActivityBinding
-import com.zyp.androidaudiovideostudy.databinding.ActivityCameraOpenGlactivityBinding
-import com.zyp.androidaudiovideostudy.gles.CameraOpenGLRenderer
+import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.databinding.ActivityCameraOpenglFilterActivityBinding
 import com.zyp.androidaudiovideostudy.util.Const
 import com.zyp.androidaudiovideostudy.util.ToastUtil
-import javax.microedition.khronos.egl.EGLConfig
-import javax.microedition.khronos.opengles.GL10
 
 /**
  * OpenGL显示相机数据, 并进行滤波、保存相机数据
  */
-class CameraGLFilterActivity : AppCompatActivity() {
-    private var _binding: ActivityCameraGlFilterActivityBinding? = null
+class CameraOpenGLFilterActivity : AppCompatActivity() {
+    private var _binding: ActivityCameraOpenglFilterActivityBinding? = null
     private val mBinding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityCameraGlFilterActivityBinding.inflate(layoutInflater)
+        _binding = ActivityCameraOpenglFilterActivityBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         mBinding.btStartFilterRecord.setOnClickListener {
