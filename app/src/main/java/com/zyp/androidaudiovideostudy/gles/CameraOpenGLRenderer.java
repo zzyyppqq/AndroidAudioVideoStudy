@@ -11,7 +11,7 @@ import android.util.Log;
 import com.zyp.androidaudiovideostudy.gles.filter.CameraFilter;
 import com.zyp.androidaudiovideostudy.gles.filter.ScreenFilter;
 import com.zyp.androidaudiovideostudy.gles.filter.TimeFilter;
-import com.zyp.androidaudiovideostudy.util.CameraHelper;
+import com.zyp.androidaudiovideostudy.util.camera.CameraHelper;
 
 import java.io.IOException;
 
@@ -25,6 +25,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
     private CameraGLSurfaceView mGLSurfaceView;
+    private int mRotation;
     private int mWidth;
     private int mHeight;
     private SurfaceTexture mSurfaceTexture;
@@ -37,8 +38,9 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
     private TimeFilter timeFilter;
 
     private CameraMediaRecorder mCameraMediaRecorder;
-    public CameraOpenGLRenderer(CameraGLSurfaceView cameraGLSurfaceView) {
+    public CameraOpenGLRenderer(CameraGLSurfaceView cameraGLSurfaceView, int rotation) {
         this.mGLSurfaceView = cameraGLSurfaceView;
+        this.mRotation = rotation;
     }
 
     @Override
@@ -58,9 +60,9 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
             }
         });
         //这个是我的camera工具类
-        mCameraHelper = new CameraHelper(Camera.CameraInfo.CAMERA_FACING_BACK);
+        mCameraHelper = new CameraHelper(Camera.CameraInfo.CAMERA_FACING_BACK, mRotation);
         mCameraHelper.setPreviewCallback(mPreviewCallback);
-        mCameraHelper.startPreview(mSurfaceTexture); //这个是设置相机的预览画面
+        // mCameraHelper.setCameraListener();
 
         //注意：必须在gl线程操作opengl
         mCameraFilter = new CameraFilter(context);
@@ -68,13 +70,16 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
         timeFilter = new TimeFilter(context);
 
         //MediaRecorder
-        mCameraMediaRecorder = new CameraMediaRecorder(context, CameraHelper.HEIGHT, CameraHelper.WIDTH);
+        mCameraMediaRecorder = new CameraMediaRecorder(context);
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         mWidth = width;
         mHeight = height;
+        //开启预览
+        mCameraHelper.startPreview(mSurfaceTexture, width, height);
+        mCameraMediaRecorder.setMediaRecorderSize(width, height);
         mCameraFilter.onReady(width, height);
         mScreenFilter.onReady(width, height);
         timeFilter.onReady(width, height);

@@ -20,7 +20,8 @@ class CameraOpenGLActivity : AppCompatActivity() {
         _binding = ActivityCameraOpenglActivityBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        mRenderer = MyRenderer(mBinding.glSurfaceView)
+        val rotation = windowManager.getDefaultDisplay().getRotation();
+        mRenderer = MyRenderer(mBinding.glSurfaceView, rotation)
         mBinding.glSurfaceView.setEGLContextClientVersion(2)
         mBinding.glSurfaceView.setRenderer(mRenderer)
 
@@ -38,10 +39,10 @@ class CameraOpenGLActivity : AppCompatActivity() {
     }
 }
 
-class MyRenderer(private val glSurfaceView: GLSurfaceView): GLSurfaceView.Renderer {
+class MyRenderer(private val glSurfaceView: GLSurfaceView, private val rotation: Int): GLSurfaceView.Renderer {
     private val openGLHelper = OpenGLHelper()
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-        openGLHelper.surfaceCreate(glSurfaceView)
+        openGLHelper.surfaceCreate(glSurfaceView, rotation)
         openGLHelper.createProgram(OpenGLHelper.FilterType.NONE)
     }
 

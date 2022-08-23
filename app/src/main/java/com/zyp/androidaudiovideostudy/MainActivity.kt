@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(MediaCodecActivity::class.java),
         MainItem(CameraActivity::class.java),
         MainItem(Camera2Activity::class.java),
+        MainItem(CameraTextureActivity::class.java),
         MainItem(CameraOpenGLActivity::class.java),
         MainItem(CameraOpenGLFilterActivity::class.java),
         MainItem(CameraMediaCodecActivity::class.java),

@@ -6,7 +6,7 @@ import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
-import com.zyp.androidaudiovideostudy.util.CameraHelper;
+import com.zyp.androidaudiovideostudy.util.camera.CameraHelper;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -117,11 +117,18 @@ public class OpenGLHelper {
         mGLVertexBuffer.put(VERTEX);
         mGLTextureBuffer = ByteBuffer.allocateDirect(4 * 2 * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
         mGLTextureBuffer.clear();
+//        float[] TEXTURE = {   //屏幕坐标
+//                0.0f, 1.0f,
+//                1.0f, 1.0f,
+//                0.0f, 0.0f,
+//                1.0f, 0.0f
+//        };
+
         float[] TEXTURE = {   //屏幕坐标
-                1.0f, 0.0f,
-                1.0f, 1.0f,
                 0.0f, 0.0f,
+                1.0f, 0.0f,
                 0.0f, 1.0f,
+                1.0f, 1.0f,
         };
         mGLTextureBuffer.put(TEXTURE);
     }
@@ -131,7 +138,7 @@ public class OpenGLHelper {
         BLACK_WHITE
     }
 
-    public void surfaceCreate(final GLSurfaceView glSurfaceview) {
+    public void surfaceCreate(final GLSurfaceView glSurfaceview, int rotation) {
         mTexture = new int[1];
         GLES20.glGenTextures(1, mTexture, 0); // 创建一个纹理id
         //将纹理id传入成功创建SurfaceTexture
@@ -143,8 +150,7 @@ public class OpenGLHelper {
             }
         });
         //这个是我的camera工具类
-        mCameraHelper = new CameraHelper(Camera.CameraInfo.CAMERA_FACING_BACK);
-        mCameraHelper.startPreview(mSurfaceTexture); //这个是设置相机的预览画面
+        mCameraHelper = new CameraHelper(Camera.CameraInfo.CAMERA_FACING_BACK, rotation);
 
         initVertexBuffer();
     }
@@ -166,6 +172,7 @@ public class OpenGLHelper {
     public void surfaceChanged(int width, int height) {
         mWidth = width;
         mHeight = height;
+        mCameraHelper.startPreview(mSurfaceTexture, width, height); //这个是设置相机的预览画面
     }
 
     public void drawFrame() {

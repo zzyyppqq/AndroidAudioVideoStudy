@@ -10,8 +10,198 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class OpenGLUtils {
+public class GLUtil {
 
+    /**
+     * 显示的顶点
+     */
+    static final float[] SQUARE_VERTICES = {
+            -1.0f, -1.0f,
+            1.0f, -1.0f,
+            -1.0f, 1.0f,
+            1.0f, 1.0f
+    };
+    /**
+     * 原数据显示
+     * 0,1***********1,1
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * 0,0***********1,0
+     */
+    static final float[] COORD_VERTICES = {
+            0.0f, 1.0f,
+            1.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 0.0f
+    };
+
+    /**
+     * 逆时针旋转90度显示
+     * 1,1***********1,0
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * 0,1***********0,0
+     */
+    static final float[] ROTATE_90_COORD_VERTICES = {
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            0.0f, 1.0f,
+            0.0f, 0.0f
+    };
+
+    /**
+     * 逆时针旋转180度显示
+     * 0,1***********1,1
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * 0,0***********1,0
+     */
+    static final float[] ROTATE_180_COORD_VERTICES = {
+            1.0f, 0.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f
+    };
+
+    /**
+     * 逆时针旋转270度显示
+     * 0,1***********1,1
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * 0,0***********1,0
+     */
+    static final float[] ROTATE_270_COORD_VERTICES = {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f
+    };
+
+    /**
+     * 镜像显示
+     * 1,1***********0,1
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * 1,0***********0,0
+     */
+    static final float[] MIRROR_COORD_VERTICES = {
+            1.0f, 1.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            0.0f, 0.0f
+    };
+
+    /**
+     * 镜像并逆时针旋转90度显示
+     * 0,1***********0,0
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * 1,1***********1,0
+     */
+    static final float[] ROTATE_90_MIRROR_COORD_VERTICES = {
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f
+    };
+    /**
+     * 镜像并逆时针旋转180度显示
+     * 1,0***********0,0
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * 1,1***********0,1
+     */
+    static final float[] ROTATE_180_MIRROR_COORD_VERTICES = {
+            1.0f, 0.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f
+    };
+    /**
+     * 镜像并逆时针旋转270度显示
+     * 1,0***********1,1
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * *             *
+     * 0,0***********0,1
+     */
+    static final float[] ROTATE_270_MIRROR_COORD_VERTICES = {
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 0.0f,
+            0.0f, 1.0f
+    };
+
+
+    /**
+     * 通过旋转角度获取不同的纹理坐标
+     * @return
+     */
+    public static float[] getTextureCoords(int rotateDegree, boolean isMirror) {
+        float[] coordVertice;
+        //纹理坐标
+        if (isMirror) {
+            switch (rotateDegree) {
+                case 0:
+                    coordVertice = MIRROR_COORD_VERTICES;
+                    break;
+                case 90:
+                    coordVertice = ROTATE_90_MIRROR_COORD_VERTICES;
+                    break;
+                case 180:
+                    coordVertice = ROTATE_180_MIRROR_COORD_VERTICES;
+                    break;
+                case 270:
+                    coordVertice = ROTATE_270_MIRROR_COORD_VERTICES;
+                    break;
+                default:
+                    coordVertice = MIRROR_COORD_VERTICES;
+                    break;
+            }
+        } else {
+            switch (rotateDegree) {
+                case 0:
+                    coordVertice = COORD_VERTICES;
+                    break;
+                case 90:
+                    coordVertice = ROTATE_90_COORD_VERTICES;
+                    break;
+                case 180:
+                    coordVertice = ROTATE_180_COORD_VERTICES;
+                    break;
+                case 270:
+                    coordVertice = ROTATE_270_COORD_VERTICES;
+                    break;
+                default:
+                    coordVertice = COORD_VERTICES;
+                    break;
+            }
+        }
+        return coordVertice;
+    }
 
     /**
      * 创建纹理并配置

@@ -23,8 +23,8 @@ import java.nio.ByteBuffer;
 public class CameraMediaRecorder {
 
     private final Context mContext;
-    private final int mWidth;
-    private final int mHeight;
+    private int mWidth;
+    private int mHeight;
     private final EGLContext mEglContext;
     private MediaCodec mMediaCodec;
     private Surface mInputSurface;
@@ -42,14 +42,16 @@ public class CameraMediaRecorder {
      * @param height  视频高
      *                还可以让人家传递帧率 fps、码率等参数
      */
-    public CameraMediaRecorder(Context context, int width, int height) {
+    public CameraMediaRecorder(Context context) {
         mContext = context.getApplicationContext();
-        mWidth = width;
-        mHeight = height;
         mEglContext = EGL14.eglGetCurrentContext();
     }
 
 
+    public void setMediaRecorderSize(int width, int height) {
+        mWidth = width;
+        mHeight = height;
+    }
     /**
      * 开始录制视频
      *

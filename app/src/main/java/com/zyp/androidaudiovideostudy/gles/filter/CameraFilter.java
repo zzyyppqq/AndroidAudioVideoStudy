@@ -40,13 +40,23 @@ public class CameraFilter extends AbstractFrameFilter {
 //                0.0f, 1.0f,
 //        };
         //修复旋转 逆时针旋转90度
-        float[] TEXTURE = {
-                0.0f, 0.0f,
-                0.0f, 1.0f,
-                1.0f, 0.0f,
-                1.0f, 1.0f,
-        };
-        mGLTextureBuffer.put(TEXTURE);
+//        float[] TEXTURE = {
+//                0.0f, 0.0f,
+//                0.0f, 1.0f,
+//                1.0f, 0.0f,
+//                1.0f, 1.0f,
+//        };
+
+//        /**
+//         * 原始显示
+//         */
+//        float[] TEXTURE = {
+//                0.0f, 1.0f,
+//                1.0f, 1.0f,
+//                0.0f, 0.0f,
+//                1.0f, 0.0f
+//        };
+//        mGLTextureBuffer.put(TEXTURE);
     }
 
 

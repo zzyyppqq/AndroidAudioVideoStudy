@@ -29,6 +29,9 @@
         <activity
             android:name=".video.CameraOpenGLFilterActivity"
             android:exported="false" />
+        <activity
+            android:name=".video.CameraTextureActivity"
+            android:exported="false" />
 
         <activity
             android:name=".video.RgbaPlayerActivity"

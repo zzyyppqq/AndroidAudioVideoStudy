@@ -3,7 +3,7 @@ package com.zyp.androidaudiovideostudy.gles.filter;
 import android.content.Context;
 import android.opengl.GLES20;
 
-import com.zyp.androidaudiovideostudy.gles.OpenGLUtils;
+import com.zyp.androidaudiovideostudy.gles.GLUtil;
 
 
 /**
@@ -34,7 +34,7 @@ public class AbstractFrameFilter extends AbstractFilter {
         //2、创建属于fbo的纹理
         mFrameBufferTextures = new int[1]; //用来记录纹理id
         //创建纹理
-        OpenGLUtils.glGenTextures(mFrameBufferTextures);
+        GLUtil.glGenTextures(mFrameBufferTextures);
 
 
         //让fbo与 纹理发生关系

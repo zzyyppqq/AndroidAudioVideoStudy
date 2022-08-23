@@ -1,6 +1,8 @@
 package com.zyp.androidaudiovideostudy.video
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityCameraOpenglFilterActivityBinding
 import com.zyp.androidaudiovideostudy.util.Const
@@ -16,6 +18,12 @@ class CameraOpenGLFilterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityCameraOpenglFilterActivityBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+
+        val rotation = windowManager.getDefaultDisplay().getRotation();
+        mBinding.cameraSurfaceView.init(rotation)
 
         mBinding.btStartFilterRecord.setOnClickListener {
             mBinding.cameraSurfaceView.startRecord("${Const.sdPath}/${System.currentTimeMillis()}.mp4", 1.0f)

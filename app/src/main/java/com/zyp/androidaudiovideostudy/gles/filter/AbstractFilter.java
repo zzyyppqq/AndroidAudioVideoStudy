@@ -3,7 +3,7 @@ package com.zyp.androidaudiovideostudy.gles.filter;
 import android.content.Context;
 import android.opengl.GLES20;
 
-import com.zyp.androidaudiovideostudy.gles.OpenGLUtils;
+import com.zyp.androidaudiovideostudy.gles.GLUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -88,9 +88,9 @@ public abstract class AbstractFilter {
 
 
     protected void initilize(Context context) {
-        String vertexSharder = OpenGLUtils.readRawTextFile(context, mVertexShaderId);
-        String framentShader = OpenGLUtils.readRawTextFile(context, mFragmentShaderId);
-        mGLProgramId = OpenGLUtils.loadProgram(vertexSharder, framentShader);
+        String vertexSharder = GLUtil.readRawTextFile(context, mVertexShaderId);
+        String framentShader = GLUtil.readRawTextFile(context, mFragmentShaderId);
+        mGLProgramId = GLUtil.loadProgram(vertexSharder, framentShader);
         // 获得着色器中的 attribute 变量 position 的索引值
         vPosition = GLES20.glGetAttribLocation(mGLProgramId, "vPosition");
         vCoord = GLES20.glGetAttribLocation(mGLProgramId,

@@ -12,7 +12,7 @@ import android.opengl.GLUtils;
 
 
 import com.zyp.androidaudiovideostudy.R;
-import com.zyp.androidaudiovideostudy.gles.OpenGLUtils;
+import com.zyp.androidaudiovideostudy.gles.GLUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -141,7 +141,7 @@ public class TimeFilter extends AbstractFrameFilter {
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         int[] mTextureId = new int[1];
-        OpenGLUtils.glGenTextures(mTextureId);
+        GLUtil.glGenTextures(mTextureId);
         //表示后续的操作 就是作用于这个纹理上
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId[0]);
         // 将 Bitmap与纹理id 绑定起来
