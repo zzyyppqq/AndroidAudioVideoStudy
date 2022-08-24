@@ -55,12 +55,13 @@ dependencies {
     // gpuimage
     implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
 
-    implementation project(':libmad')
-    implementation project(':liblame')
+    implementation project(path: ':libmad')
+    implementation project(path: ':liblame')
     implementation project(path: ':libffmpeg')
     implementation project(path: ':libx264')
     implementation project(path: ':libfdk-aac')
     implementation project(path: ':librtmp')
     implementation project(path: ':libyuv')
+    implementation project(path: ':libopencv')
 }
 

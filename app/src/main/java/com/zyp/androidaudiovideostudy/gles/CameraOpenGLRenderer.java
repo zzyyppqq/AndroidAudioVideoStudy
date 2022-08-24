@@ -110,15 +110,16 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
         mSurfaceTexture.getTransformMatrix(mtx);
         mCameraFilter.setMatrix(mtx);
         //责任链
-        int id = mCameraFilter.onDrawFrame(mTextures[0]);
         //加效果滤镜
         // id  = 效果1.onDrawFrame(id);
         // id = 效果2.onDrawFrame(id);
         //....
 
+        // fbo 绘制相机数据
+        int id = mCameraFilter.onDrawFrame(mTextures[0]);
+        // fbo 混合模式绘制时间水印（每帧刷新时间）
         id = timeFilter.onDrawFrame(id);
-
-        //加完之后再显示到屏幕中去
+        // 加完水印 纹理id显示到屏幕
         mScreenFilter.onDrawFrame(id);
 
         //进行录制
