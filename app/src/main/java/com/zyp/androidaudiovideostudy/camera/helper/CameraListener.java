@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy.util.camera;
+package com.zyp.androidaudiovideostudy.camera.helper;
 
 import android.hardware.Camera;
 

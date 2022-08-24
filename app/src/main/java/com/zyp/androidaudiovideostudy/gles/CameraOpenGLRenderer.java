@@ -11,7 +11,7 @@ import android.util.Log;
 import com.zyp.androidaudiovideostudy.gles.filter.CameraFilter;
 import com.zyp.androidaudiovideostudy.gles.filter.ScreenFilter;
 import com.zyp.androidaudiovideostudy.gles.filter.TimeFilter;
-import com.zyp.androidaudiovideostudy.util.camera.CameraHelper;
+import com.zyp.androidaudiovideostudy.camera.helper.CameraHelper;
 
 import java.io.IOException;
 

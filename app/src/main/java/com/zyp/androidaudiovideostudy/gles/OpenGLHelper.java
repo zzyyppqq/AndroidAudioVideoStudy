@@ -6,7 +6,7 @@ import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
-import com.zyp.androidaudiovideostudy.util.camera.CameraHelper;
+import com.zyp.androidaudiovideostudy.camera.helper.CameraHelper;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.zyp.androidaudiovideostudy.app
 import com.zyp.androidaudiovideostudy.databinding.ActivityYuvViewBinding
-import com.zyp.androidaudiovideostudy.opengl.MyGLRender
-import com.zyp.androidaudiovideostudy.opengl.MyGLRender.*
+import com.zyp.androidaudiovideostudy.yuv.opengl.MyGLRender
+import com.zyp.androidaudiovideostudy.yuv.opengl.MyGLRender.*
 import com.zyp.androidaudiovideostudy.pref.ECGPref
 import java.io.File
 import java.io.FileInputStream

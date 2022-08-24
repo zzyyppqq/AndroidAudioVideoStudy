@@ -8,7 +8,7 @@ import android.view.TextureView
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityCameraTextureActivityBinding
-import com.zyp.androidaudiovideostudy.util.camera.CameraHelper
+import com.zyp.androidaudiovideostudy.camera.helper.CameraHelper
 
 /**
  * CameraTextureActivity
@@ -27,10 +27,11 @@ class CameraTextureActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
 
         val rotation = windowManager.getDefaultDisplay().getRotation();
-        mCameraHelper = CameraHelper(
-            Camera.CameraInfo.CAMERA_FACING_BACK,
-            rotation
-        )
+        mCameraHelper =
+            CameraHelper(
+                Camera.CameraInfo.CAMERA_FACING_BACK,
+                rotation
+            )
 
         if (isMirror) {
             mBinding.textureView.setScaleX(-1.0f);

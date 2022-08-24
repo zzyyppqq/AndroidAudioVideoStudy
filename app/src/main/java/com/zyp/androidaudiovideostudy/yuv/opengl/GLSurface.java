@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy.opengl;
+package com.zyp.androidaudiovideostudy.yuv.opengl;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

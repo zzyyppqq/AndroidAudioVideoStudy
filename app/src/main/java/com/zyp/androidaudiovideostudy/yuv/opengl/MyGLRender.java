@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy.opengl;
+package com.zyp.androidaudiovideostudy.yuv.opengl;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;

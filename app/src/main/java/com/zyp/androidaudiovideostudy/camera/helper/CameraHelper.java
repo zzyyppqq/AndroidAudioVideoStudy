@@ -1,10 +1,7 @@
-package com.zyp.androidaudiovideostudy.util.camera;
+package com.zyp.androidaudiovideostudy.camera.helper;
 
 import static android.view.OrientationEventListener.ORIENTATION_UNKNOWN;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
