@@ -25,6 +25,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
     private CameraGLSurfaceView mGLSurfaceView;
+    private int mCameraId;
     private int mRotation;
     private int mWidth;
     private int mHeight;
@@ -38,9 +39,11 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
     private TimeFilter timeFilter;
 
     private CameraMediaRecorder mCameraMediaRecorder;
-    public CameraOpenGLRenderer(CameraGLSurfaceView cameraGLSurfaceView, int rotation) {
+
+    public CameraOpenGLRenderer(CameraGLSurfaceView cameraGLSurfaceView, int cameraId, int rotation) {
         this.mGLSurfaceView = cameraGLSurfaceView;
         this.mRotation = rotation;
+        this.mCameraId = cameraId;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
             }
         });
         //这个是我的camera工具类
-        mCameraHelper = new CameraHelper(Camera.CameraInfo.CAMERA_FACING_BACK, mRotation);
+        mCameraHelper = new CameraHelper(mCameraId, mRotation);
         mCameraHelper.setPreviewCallback(mPreviewCallback);
         // mCameraHelper.setCameraListener();
 
@@ -71,6 +74,10 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
 
         //MediaRecorder
         mCameraMediaRecorder = new CameraMediaRecorder(context);
+    }
+
+    public void switchCamera(int cameraId) {
+        mCameraHelper.switchCamera(cameraId, mWidth, mHeight);
     }
 
     @Override

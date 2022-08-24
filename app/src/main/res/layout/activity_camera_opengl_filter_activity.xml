@@ -12,6 +12,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_camera_front"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="前置"/>
+
+        <Button
+            android:id="@+id/bt_camera_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="后置"/>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,14 +43,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="start_record_video" />
+            android:text="start_record" />
 
         <Button
             android:id="@+id/bt_stop_filter_record"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="stop_record_video" />
+            android:text="stop_record" />
     </LinearLayout>
 
 

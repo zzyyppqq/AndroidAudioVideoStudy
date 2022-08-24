@@ -124,7 +124,7 @@ public class OpenGLHelper {
 //                1.0f, 0.0f
 //        };
 
-        float[] TEXTURE = {   //屏幕坐标
+        float[] TEXTURE = {   //逆时针旋转180 然后沿Y轴镜像
                 0.0f, 0.0f,
                 1.0f, 0.0f,
                 0.0f, 1.0f,

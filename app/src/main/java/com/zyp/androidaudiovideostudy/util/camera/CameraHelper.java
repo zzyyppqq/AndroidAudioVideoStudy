@@ -293,6 +293,15 @@ public class CameraHelper implements Camera.PreviewCallback {
         return null;
     }
 
+    public void switchCamera(int cameraId, int width, int height) {
+        if (cameraId == specificCameraId) {
+            return;
+        }
+        specificCameraId = cameraId;
+        stopPreview();
+        startPreview(mSurfaceTexture, width, height);
+    }
+
     public void switchCamera(int width, int height) {
         if (mCameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
             mCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;

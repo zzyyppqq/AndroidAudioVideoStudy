@@ -1,6 +1,7 @@
 package com.zyp.androidaudiovideostudy.video
 
 import android.content.pm.ActivityInfo
+import android.hardware.Camera
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +24,15 @@ class CameraOpenGLFilterActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
 
         val rotation = windowManager.getDefaultDisplay().getRotation();
-        mBinding.cameraSurfaceView.init(rotation)
+        mBinding.cameraSurfaceView.init(Camera.CameraInfo.CAMERA_FACING_BACK, rotation)
+
+        mBinding.btCameraFront.setOnClickListener {
+            mBinding.cameraSurfaceView.switchCamera(Camera.CameraInfo.CAMERA_FACING_FRONT)
+        }
+
+        mBinding.btCameraBack.setOnClickListener {
+            mBinding.cameraSurfaceView.switchCamera(Camera.CameraInfo.CAMERA_FACING_BACK)
+        }
 
         mBinding.btStartFilterRecord.setOnClickListener {
             mBinding.cameraSurfaceView.startRecord("${Const.sdPath}/${System.currentTimeMillis()}.mp4", 1.0f)
