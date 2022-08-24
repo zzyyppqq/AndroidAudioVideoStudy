@@ -1,17 +1,16 @@
 package com.zyp.androidaudiovideostudy
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zyp.androidaudiovideostudy.adapter.MainAdapter
 import com.zyp.androidaudiovideostudy.adapter.MainItem
 import com.zyp.androidaudiovideostudy.audio.AudioActivity
 import com.zyp.androidaudiovideostudy.audio.LiblameActivity
 import com.zyp.androidaudiovideostudy.audio.LibmadActivity
-import com.zyp.androidaudiovideostudy.camera.Camera2Activity
-import com.zyp.androidaudiovideostudy.camera.CameraActivity
+import com.zyp.androidaudiovideostudy.camera.*
 import com.zyp.androidaudiovideostudy.databinding.ActivityMainBinding
 import com.zyp.androidaudiovideostudy.fdkaac.FdkAACActivity
 import com.zyp.androidaudiovideostudy.ffmpeg.FFmpegActivity
@@ -20,9 +19,9 @@ import com.zyp.androidaudiovideostudy.rtmp.CameraMediaCodecRtmpActivity
 import com.zyp.androidaudiovideostudy.video.*
 import com.zyp.androidaudiovideostudy.x264.X264Activity
 import com.zyp.androidaudiovideostudy.yuv.RGBViewActivity
-import com.zyp.androidaudiovideostudy.yuv.YuvCameraActivity
 import com.zyp.androidaudiovideostudy.yuv.YUVTestActivity
 import com.zyp.androidaudiovideostudy.yuv.YUViewActivity
+import com.zyp.androidaudiovideostudy.yuv.YuvCameraActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(CameraActivity::class.java),
         MainItem(Camera2Activity::class.java),
         MainItem(CameraTextureActivity::class.java),
+        MainItem(Camera2TextureActivity::class.java),
         MainItem(CameraOpenGLActivity::class.java),
         MainItem(CameraOpenGLFilterActivity::class.java),
         MainItem(CameraMediaCodecActivity::class.java),

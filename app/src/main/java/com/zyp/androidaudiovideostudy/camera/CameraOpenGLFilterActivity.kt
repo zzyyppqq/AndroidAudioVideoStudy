@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy.video
+package com.zyp.androidaudiovideostudy.camera
 
 import android.content.pm.ActivityInfo
 import android.hardware.Camera
@@ -11,6 +11,7 @@ import com.zyp.androidaudiovideostudy.util.ToastUtil
 
 /**
  * OpenGL显示相机数据, 并进行滤波、保存相机数据
+ * github： OpenglRecoder、GLCameraDemo
  */
 class CameraOpenGLFilterActivity : AppCompatActivity() {
     private var _binding: ActivityCameraOpenglFilterActivityBinding? = null

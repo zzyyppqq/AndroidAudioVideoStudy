@@ -27,12 +27,14 @@
             android:name=".camera.Camera2Activity"
             android:exported="false" />
         <activity
-            android:name=".video.CameraOpenGLFilterActivity"
+            android:name=".camera.CameraOpenGLFilterActivity"
             android:exported="false" />
         <activity
-            android:name=".video.CameraTextureActivity"
+            android:name=".camera.CameraTextureActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".camera.Camera2TextureActivity"
+            android:exported="false" />
         <activity
             android:name=".video.RgbaPlayerActivity"
             android:exported="false" />

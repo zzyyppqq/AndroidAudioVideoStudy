@@ -1,4 +1,4 @@
-package com.zyp.androidaudiovideostudy.video
+package com.zyp.androidaudiovideostudy.camera
 
 import android.content.pm.ActivityInfo
 import android.graphics.SurfaceTexture

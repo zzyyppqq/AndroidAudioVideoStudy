@@ -38,6 +38,7 @@ import java.util.List;
 
 /**
  * https://github.com/lb377463323/GraphicsTestBed
+ * camera通过TextureView展示相机画面
  */
 public class CameraActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener, View.OnClickListener, AdapterView.OnItemClickListener{
     private String TAG = "MainActivity";
