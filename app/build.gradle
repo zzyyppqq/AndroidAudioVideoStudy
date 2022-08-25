@@ -63,5 +63,6 @@ dependencies {
     implementation project(path: ':librtmp')
     implementation project(path: ':libyuv')
     implementation project(path: ':libopencv')
+    implementation project(path: ':libassimp')
 }
 

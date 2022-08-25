@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zyp.androidaudiovideostudy.adapter.MainAdapter
 import com.zyp.androidaudiovideostudy.adapter.MainItem
+import com.zyp.androidaudiovideostudy.assimp.AssimpActivity
 import com.zyp.androidaudiovideostudy.audio.AudioActivity
 import com.zyp.androidaudiovideostudy.audio.LiblameActivity
 import com.zyp.androidaudiovideostudy.audio.LibmadActivity
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(CameraOpenGLActivity::class.java),
         MainItem(CameraOpenGLFilterActivity::class.java),
         MainItem(CameraMediaCodecActivity::class.java),
+        MainItem(AssimpActivity::class.java),
         MainItem(MediaPlayerActivity::class.java),
         MainItem(VideoViewActivity::class.java),
         MainItem(MediaCodecVideoActivity::class.java),

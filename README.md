@@ -73,7 +73,7 @@ adb pull /data/anr/trace.txt .
        ${SOPATH}  		//so库路径 
        ${Address}		//需要转换的堆栈错误信息地址，可以添加多个，但是中间要用空格隔开
 
-      自己编译的jni库位置：app/build/intermediates/cmake/debug/obj/armeabi-v7a/xxx.so
+      自己编译的jni库位置：app/build/intermediates/cmake/debug/obj/assimp.libs.armeabi-v7a/xxx.so
       里面有符号
 
       $ arm-linux-androideabi-addr2line -C -f -e libxxx.so 000033a3(对应的地址)
@@ -81,7 +81,7 @@ adb pull /data/anr/trace.txt .
       例子：
       $ arm-linux-androideabi-addr2line -C -f -e libopengl.so 0x00020dca
       ImageRender::DoDraw()
-      /Users/zhangyipeng/Documents/NaLongProject/BlogDemo/app/.cxx/cmake/debug/armeabi-v7a/../../../../src/main/cpp/render/image_render.cpp:34
+      /Users/zhangyipeng/Documents/NaLongProject/BlogDemo/app/.cxx/cmake/debug/assimp.libs.armeabi-v7a/../../../../src/main/cpp/render/image_render.cpp:34
       ```
   - objdump 是 gcc 工具，用来查看编译后目标文件的组成。
 
@@ -100,11 +100,11 @@ adb pull /data/anr/trace.txt .
 
     - ndk-bundle/ndk-stack
     - ```
-      ndk-stack -sym app/build/intermediates/cmake/debug/obj/armeabi-v7a -dump error.log
+      ndk-stack -sym app/build/intermediates/cmake/debug/obj/assimp.libs.armeabi-v7a -dump error.log
       ```
 
 
-ndk-stack -sym libfdk-aac/build/intermediates/cmake/debug/obj/armeabi-v7a -dump tombstone_07
+ndk-stack -sym libfdk-aac/build/intermediates/cmake/debug/obj/assimp.libs.armeabi-v7a -dump tombstone_07
 
 
 # camera风格、Assimp模型动画 参考：

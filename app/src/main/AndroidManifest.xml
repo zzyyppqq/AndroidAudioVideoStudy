@@ -36,6 +36,9 @@
             android:name=".camera.Camera2TextureActivity"
             android:exported="false" />
         <activity
+            android:name=".assimp.AssimpActivity"
+            android:exported="false" />
+        <activity
             android:name=".video.RgbaPlayerActivity"
             android:exported="false" />
         <activity
