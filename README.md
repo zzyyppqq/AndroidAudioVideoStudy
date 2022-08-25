@@ -105,3 +105,7 @@ adb pull /data/anr/trace.txt .
 
 
 ndk-stack -sym libfdk-aac/build/intermediates/cmake/debug/obj/armeabi-v7a -dump tombstone_07
+
+
+# camera风格、Assimp模型动画 参考：
+AiyaEffectSDK
