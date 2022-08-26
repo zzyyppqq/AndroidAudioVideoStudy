@@ -87,6 +87,6 @@ public class AssimpActivity extends AppCompatActivity {
      * load libModelAssimpNative.so since it has all the native functions
      */
     static {
-        System.loadLibrary("ModelAssimpNative");
+        System.loadLibrary("assimp-lib");
     }
 }

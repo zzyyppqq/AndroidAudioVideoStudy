@@ -21,7 +21,7 @@ import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.util.Log;
 
-class NativeGLSurfaceView extends GLSurfaceView {
+public class NativeGLSurfaceView extends GLSurfaceView {
 
     private NativeGLRenderer mRenderer;
 

@@ -45,13 +45,13 @@ SET_TARGET_PROPERTIES(
 include_directories(assimp/include)
 
 add_library(
-        opencv
+        opencv_java4
         SHARED
         IMPORTED
 )
 
 SET_TARGET_PROPERTIES(
-        opencv
+        opencv_java4
         PROPERTIES IMPORTED_LOCATION
         ${CMAKE_SOURCE_DIR}/opencv/libs/${CMAKE_ANDROID_ARCH_ABI}/libopencv_java4.so
 )
@@ -72,9 +72,7 @@ message("GLM_FILES: ${GLM_FILES}")
 
 file(GLOB SOURE_SRC
         jniCalls/*.cpp
-        nativeCode/common/*.h
         nativeCode/common/*.cpp
-        nativeCode/modelAssimp/*.h
         nativeCode/modelAssimp/*.cpp
         )
 # 排除可执行文件
@@ -116,7 +114,7 @@ find_library( # Sets the name of the path variable.
 target_link_libraries( # Specifies the target library.
         assimp-lib
         assimp
-        opencv
+        opencv_java4
         android
 #        native_app_glue
         EGL
