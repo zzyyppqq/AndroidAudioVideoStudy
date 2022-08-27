@@ -5,7 +5,7 @@ import android.graphics.SurfaceTexture
 import android.os.Bundle
 import android.view.TextureView
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import com.zyp.androidaudiovideostudy.camera.helper.Camera2Helper
 import com.zyp.androidaudiovideostudy.databinding.ActivityCamera2TextureActivityBinding
 
@@ -14,7 +14,7 @@ import com.zyp.androidaudiovideostudy.databinding.ActivityCamera2TextureActivity
  * https://juejin.cn/post/6844903534610087943
  * https://juejin.cn/post/6844903966556291079
  */
-class Camera2TextureActivity : AppCompatActivity() {
+class Camera2TextureActivity : BaseActivity() {
     private var _binding: ActivityCamera2TextureActivityBinding? = null
     private val mBinding get() = _binding!!
     private lateinit var mCamera2Helper: Camera2Helper

@@ -1,6 +1,6 @@
 package com.zyp.androidaudiovideostudy.ffmpeg
 
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.zyp.androidaudiovideostudy.databinding.ActivityFfmpegBinding
@@ -10,7 +10,7 @@ import com.zyp.ffmpeglib.FFmpegLib
 import java.io.File
 import java.util.concurrent.Executors
 
-class FFmpegActivity : AppCompatActivity() {
+class FFmpegActivity : BaseActivity() {
     private var _binding: ActivityFfmpegBinding? = null
     private val mBinding get() = _binding!!
     private val ffmpegLib = FFmpegLib()

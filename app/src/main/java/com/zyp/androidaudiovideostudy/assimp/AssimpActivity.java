@@ -18,13 +18,15 @@ package com.zyp.androidaudiovideostudy.assimp;
 
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.zyp.androidaudiovideostudy.base.BaseActivity;
 
 import com.zyp.androidaudiovideostudy.R;
 
 
-public class AssimpActivity extends AppCompatActivity {
+public class AssimpActivity extends BaseActivity {
+    public static final String TAG = "AssimpActivity";
     private NativeGLSurfaceView mGLView = null;
     private native void CreateObjectNative(AssetManager assetManager, String pathToInternalDir);
     private native void DeleteObjectNative();
@@ -36,7 +38,8 @@ public class AssimpActivity extends AppCompatActivity {
 
         AssetManager assetManager = getAssets();
         String pathToInternalDir = getFilesDir().getAbsolutePath();
-
+        Log.i(TAG, "pathToInternalDir: " + pathToInternalDir);
+        // /data/user/0/com.zyp.androidaudiovideostudy/files
         // call the native constructors to create an object
         CreateObjectNative(assetManager, pathToInternalDir);
 
@@ -51,7 +54,6 @@ public class AssimpActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
         super.onResume();
 
         // Android suggests that we call onResume on GLSurfaceView
@@ -63,7 +65,6 @@ public class AssimpActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-
         super.onPause();
 
         // Android suggests that we call onPause on GLSurfaceView
@@ -74,7 +75,6 @@ public class AssimpActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
 
         // We are exiting the activity, let's delete the native objects

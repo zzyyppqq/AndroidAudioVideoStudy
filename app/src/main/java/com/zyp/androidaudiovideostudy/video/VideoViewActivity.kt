@@ -4,7 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.widget.MediaController
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import androidx.core.content.FileProvider
 import com.zyp.androidaudiovideostudy.R
 import com.zyp.androidaudiovideostudy.databinding.ActivityVideoViewBinding
@@ -12,7 +12,7 @@ import com.zyp.androidaudiovideostudy.util.Const
 import java.io.File
 import java.lang.Exception
 
-class VideoViewActivity : AppCompatActivity() {
+class VideoViewActivity : BaseActivity() {
     private var _binding: ActivityVideoViewBinding? = null
     private val mBinding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {

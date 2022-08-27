@@ -1,22 +1,22 @@
 package com.zyp.androidaudiovideostudy.audio;
 
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zyp.androidaudiovideostudy.R;
+import com.zyp.androidaudiovideostudy.base.BaseActivity;
 import com.zyp.androidaudiovideostudy.util.RecMicToMp3;
 
 /**
  * liblame mp3编码
  */
-public class LiblameActivity extends AppCompatActivity {
+public class LiblameActivity extends BaseActivity {
 
     private RecMicToMp3 mRecMicToMp3 = new RecMicToMp3(
             Environment.getExternalStorageDirectory() + "/bbb.mp3", 8000);

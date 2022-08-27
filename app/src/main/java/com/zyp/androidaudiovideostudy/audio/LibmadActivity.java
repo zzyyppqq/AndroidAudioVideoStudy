@@ -5,7 +5,6 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Environment;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.zyp.androidaudiovideostudy.R;
+import com.zyp.androidaudiovideostudy.base.BaseActivity;
 import com.zyp.androidaudiovideostudy.util.FileHelper;
 import com.zyp.libmad.NativeMP3Decoder;
 
@@ -21,7 +21,7 @@ import java.io.File;
 /**
  * libmad mp3编码
  */
-public class LibmadActivity extends AppCompatActivity implements View.OnClickListener {
+public class LibmadActivity extends BaseActivity implements View.OnClickListener {
 
     private String TAG = "LibmadActivity";
     private String assertFolderName = "Android";

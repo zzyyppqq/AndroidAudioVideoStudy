@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import com.zyp.androidaudiovideostudy.util.Const.sdPath
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import com.zyp.x264lib.X264EncodeLib
 import com.zyp.androidaudiovideostudy.annotation.YUVFormat
 import com.googlecode.mp4parser.authoring.tracks.h264.H264TrackImpl
@@ -22,7 +22,7 @@ import java.util.concurrent.Executors
 /**
  * YUV转h264
  */
-class X264Activity : AppCompatActivity() {
+class X264Activity : BaseActivity() {
     // yuv 和 h264路径
     private var yuvPath = sdPath + File.separator + "test.yuv"
     private var h264Path = sdPath + File.separator + "test.h264"

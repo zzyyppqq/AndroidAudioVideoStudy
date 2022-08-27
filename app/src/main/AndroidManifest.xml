@@ -27,7 +27,13 @@
             android:name=".camera.Camera2Activity"
             android:exported="false" />
         <activity
+            android:name=".camera.CameraOpenGLActivity"
+            android:exported="false" />
+        <activity
             android:name=".camera.CameraOpenGLFilterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".camera.CameraOpenGLLookupActivity"
             android:exported="false" />
         <activity
             android:name=".camera.CameraTextureActivity"
@@ -46,9 +52,6 @@
             android:exported="false" />
         <activity
             android:name=".ffmpeg.FFmpegActivity"
-            android:exported="false" />
-        <activity
-            android:name=".video.CameraOpenGLActivity"
             android:exported="false" />
         <activity
             android:name=".video.MediaCodecVideoActivity"

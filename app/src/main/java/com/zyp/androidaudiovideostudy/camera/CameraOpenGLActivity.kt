@@ -1,8 +1,8 @@
-package com.zyp.androidaudiovideostudy.video
+package com.zyp.androidaudiovideostudy.camera
 
 import android.opengl.GLSurfaceView
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityCameraOpenglActivityBinding
 import com.zyp.androidaudiovideostudy.gles.OpenGLHelper
 import javax.microedition.khronos.egl.EGLConfig
@@ -11,7 +11,7 @@ import javax.microedition.khronos.opengles.GL10
 /**
  * 黑白滤镜切换
  */
-class CameraOpenGLActivity : AppCompatActivity() {
+class CameraOpenGLActivity : BaseActivity() {
     private var _binding: ActivityCameraOpenglActivityBinding? = null
     private val mBinding get() = _binding!!
     private lateinit var mRenderer: MyRenderer

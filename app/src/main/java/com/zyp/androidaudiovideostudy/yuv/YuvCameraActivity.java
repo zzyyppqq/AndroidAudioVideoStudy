@@ -10,7 +10,7 @@ import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Environment;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.zyp.androidaudiovideostudy.base.BaseActivity;
 
 import android.os.Bundle;
 import android.os.WorkSource;
@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class YuvCameraActivity extends AppCompatActivity {
+public class YuvCameraActivity extends BaseActivity {
 
     private static final String TAG = YuvCameraActivity.class.getSimpleName();
 

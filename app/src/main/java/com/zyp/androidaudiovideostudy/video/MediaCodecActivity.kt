@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Surface
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityMediaCodecBinding
 import com.zyp.androidaudiovideostudy.mediacoder.AvcDecoder
 import java.io.IOException
@@ -17,7 +17,7 @@ import java.util.concurrent.Executors
 /**
  * MediaCodec params learn
  */
-class MediaCodecActivity : AppCompatActivity() {
+class MediaCodecActivity : BaseActivity() {
 
     companion object {
         val TAG = MediaCodecActivity::class.java.simpleName

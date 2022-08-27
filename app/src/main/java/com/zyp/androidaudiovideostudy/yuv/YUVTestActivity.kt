@@ -3,7 +3,7 @@ package com.zyp.androidaudiovideostudy.yuv
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityYuvTestBinding
 import com.zyp.androidaudiovideostudy.util.Const
 import com.zyp.androidaudiovideostudy.util.FileUtils
@@ -16,7 +16,7 @@ import java.io.FileInputStream
 import java.util.concurrent.Executors
 
 
-class YUVTestActivity : AppCompatActivity() {
+class YUVTestActivity : BaseActivity() {
     private var _binding: ActivityYuvTestBinding? = null
     private val mBinding get() = _binding!!
 

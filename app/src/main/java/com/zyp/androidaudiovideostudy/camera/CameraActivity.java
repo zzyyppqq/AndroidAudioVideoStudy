@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.zyp.androidaudiovideostudy.base.BaseActivity;
 
 import com.zyp.androidaudiovideostudy.R;
 
@@ -40,7 +40,7 @@ import java.util.List;
  * https://github.com/lb377463323/GraphicsTestBed
  * camera通过TextureView展示相机画面
  */
-public class CameraActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener, View.OnClickListener, AdapterView.OnItemClickListener{
+public class CameraActivity extends BaseActivity implements TextureView.SurfaceTextureListener, View.OnClickListener, AdapterView.OnItemClickListener{
     private String TAG = "MainActivity";
     public static final String STORAGE_PATH = Environment.getExternalStorageDirectory().toString();
 

@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import androidx.core.content.FileProvider
 import com.zyp.androidaudiovideostudy.databinding.ActivityMediaPlayerBinding
 import com.zyp.androidaudiovideostudy.util.Const
 import java.io.File
 
-class MediaPlayerActivity : AppCompatActivity() {
+class MediaPlayerActivity : BaseActivity() {
     //媒体播放控制器
     private var mediaPlayer: MediaPlayer? = null
 

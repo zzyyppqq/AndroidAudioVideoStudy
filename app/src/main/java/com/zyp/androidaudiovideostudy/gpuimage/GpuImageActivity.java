@@ -1,6 +1,6 @@
 package com.zyp.androidaudiovideostudy.gpuimage;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.zyp.androidaudiovideostudy.base.BaseActivity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,7 +28,7 @@ import jp.co.cyberagent.android.gpuimage.filter.GPUImageSaturationFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageSharpenFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageToonFilter;
 
-public class GpuImageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener {
+public class GpuImageActivity extends BaseActivity implements AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener {
 
     private static final String TAG = GpuImageActivity.class.getSimpleName();
     private GPUImage gpuImage;

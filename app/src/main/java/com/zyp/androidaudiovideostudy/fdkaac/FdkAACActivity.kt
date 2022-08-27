@@ -1,6 +1,6 @@
 package com.zyp.androidaudiovideostudy.fdkaac
 
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import android.os.Bundle
 import android.widget.Button
 import com.zyp.androidaudiovideostudy.R
@@ -12,7 +12,7 @@ import com.zyp.x264lib.X264EncodeLib
 import java.io.File
 import java.util.concurrent.Executors
 
-class FdkAACActivity : AppCompatActivity() {
+class FdkAACActivity : BaseActivity() {
     private var aacPath = Const.sdPath + File.separator + "mine.aac"
     private var pcmPath = Const.sdPath + File.separator + "mine.pcm"
     override fun onCreate(savedInstanceState: Bundle?) {

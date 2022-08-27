@@ -1,6 +1,7 @@
 package com.zyp.androidaudiovideostudy.gles;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.opengl.GLES20;
@@ -9,6 +10,7 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import com.zyp.androidaudiovideostudy.gles.filter.CameraFilter;
+import com.zyp.androidaudiovideostudy.gles.filter.LookUpFilter;
 import com.zyp.androidaudiovideostudy.gles.filter.ScreenFilter;
 import com.zyp.androidaudiovideostudy.gles.filter.TimeFilter;
 import com.zyp.androidaudiovideostudy.camera.helper.CameraHelper;
@@ -35,15 +37,19 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
     private CameraHelper mCameraHelper;
 
     private ScreenFilter mScreenFilter;
+    private LookUpFilter mLookUpFilter;
     private CameraFilter mCameraFilter;
     private TimeFilter timeFilter;
 
     private CameraMediaRecorder mCameraMediaRecorder;
 
-    public CameraOpenGLRenderer(CameraGLSurfaceView cameraGLSurfaceView, int cameraId, int rotation) {
+    private Bitmap lookupBitmap;
+
+    public CameraOpenGLRenderer(CameraGLSurfaceView cameraGLSurfaceView, int cameraId, int rotation, Bitmap lookupBitmap) {
         this.mGLSurfaceView = cameraGLSurfaceView;
         this.mRotation = rotation;
         this.mCameraId = cameraId;
+        this.lookupBitmap = lookupBitmap;
     }
 
     @Override
@@ -70,6 +76,7 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
         //注意：必须在gl线程操作opengl
         mCameraFilter = new CameraFilter(context);
         mScreenFilter = new ScreenFilter(context);
+        mLookUpFilter = new LookUpFilter(context, lookupBitmap);
         timeFilter = new TimeFilter(context);
 
         //MediaRecorder
@@ -78,6 +85,10 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
 
     public void switchCamera(int cameraId) {
         mCameraHelper.switchCamera(cameraId, mWidth, mHeight);
+    }
+
+    public void setLookup(Bitmap lookupBitmap) {
+        mLookUpFilter.setLookup(lookupBitmap);
     }
 
     @Override
@@ -89,6 +100,7 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
         mCameraMediaRecorder.setMediaRecorderSize(width, height);
         mCameraFilter.onReady(width, height);
         mScreenFilter.onReady(width, height);
+        mLookUpFilter.onReady(width, height);
         timeFilter.onReady(width, height);
         Log.i("ZYP", "surfaceChanged() " + width + ", " + height);
     }
@@ -114,9 +126,10 @@ public class CameraOpenGLRenderer implements GLSurfaceView.Renderer {
         // id  = 效果1.onDrawFrame(id);
         // id = 效果2.onDrawFrame(id);
         //....
-
         // fbo 绘制相机数据
         int id = mCameraFilter.onDrawFrame(mTextures[0]);
+        // fbo lookup table处理图片风格
+        id = mLookUpFilter.onDrawFrame(id);
         // fbo 混合模式绘制时间水印（每帧刷新时间）
         id = timeFilter.onDrawFrame(id);
         // 加完水印 纹理id显示到屏幕

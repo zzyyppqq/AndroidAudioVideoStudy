@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import androidx.core.app.ActivityCompat
 import com.zyp.androidaudiovideostudy.databinding.ActivitySurfaceViewBinding
 import com.zyp.androidaudiovideostudy.pref.ECGPref
@@ -18,7 +18,7 @@ import java.io.File
  * ffmpeg -i test_video.mp4 -pix_fmt rgba -s 640x360 test_video.rgb
  * ffmpeg -i dongfengpo_352x240.mp4 -t 5 -s 320x240 -pix_fmt rgba dongfengpo_320x240_rgba.rgb
  */
-class ANativeWindowActivity : AppCompatActivity() {
+class ANativeWindowActivity : BaseActivity() {
     private var _binding: ActivitySurfaceViewBinding? = null
     private val mBinding get() = _binding!!
     private val renderer = ANativeWindowRender()

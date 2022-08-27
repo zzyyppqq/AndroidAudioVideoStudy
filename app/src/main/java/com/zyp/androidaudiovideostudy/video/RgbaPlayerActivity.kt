@@ -1,6 +1,6 @@
 package com.zyp.androidaudiovideostudy.video
 
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import android.os.Bundle
 import com.zyp.androidaudiovideostudy.R
 import java.io.FileInputStream;
@@ -20,7 +20,7 @@ import android.view.SurfaceView;
 /**
  * 使用Android中的SurfaceView播放RGB视频数据
  */
-class RgbaPlayerActivity : AppCompatActivity() {
+class RgbaPlayerActivity : BaseActivity() {
 
     private lateinit var mMySurfaceView: MySurfaceView
     override fun onCreate(savedInstanceState: Bundle?) {

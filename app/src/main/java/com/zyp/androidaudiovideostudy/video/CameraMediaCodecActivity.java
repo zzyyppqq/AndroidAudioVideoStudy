@@ -20,7 +20,7 @@ import android.media.MediaRecorder;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+import com.zyp.androidaudiovideostudy.base.BaseActivity;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -53,7 +53,7 @@ import static android.media.MediaFormat.KEY_MAX_INPUT_SIZE;
  * 基于Camera、AudioRecord 、MediaCodec 和 MediaMuxer 录制 MP4
  */
 
-public class CameraMediaCodecActivity extends AppCompatActivity implements SurfaceHolder.Callback2 {
+public class CameraMediaCodecActivity extends BaseActivity implements SurfaceHolder.Callback2 {
 
     private static final String TAG = "MainActivity";
 

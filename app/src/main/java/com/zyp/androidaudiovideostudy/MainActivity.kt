@@ -3,7 +3,7 @@ package com.zyp.androidaudiovideostudy
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.BaseAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zyp.androidaudiovideostudy.adapter.MainAdapter
 import com.zyp.androidaudiovideostudy.adapter.MainItem
@@ -11,6 +11,7 @@ import com.zyp.androidaudiovideostudy.assimp.AssimpActivity
 import com.zyp.androidaudiovideostudy.audio.AudioActivity
 import com.zyp.androidaudiovideostudy.audio.LiblameActivity
 import com.zyp.androidaudiovideostudy.audio.LibmadActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import com.zyp.androidaudiovideostudy.camera.*
 import com.zyp.androidaudiovideostudy.databinding.ActivityMainBinding
 import com.zyp.androidaudiovideostudy.fdkaac.FdkAACActivity
@@ -24,7 +25,7 @@ import com.zyp.androidaudiovideostudy.yuv.YUVTestActivity
 import com.zyp.androidaudiovideostudy.yuv.YUViewActivity
 import com.zyp.androidaudiovideostudy.yuv.YuvCameraActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val mBinding get() = _binding!!
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         MainItem(Camera2TextureActivity::class.java),
         MainItem(CameraOpenGLActivity::class.java),
         MainItem(CameraOpenGLFilterActivity::class.java),
+        MainItem(CameraOpenGLLookupActivity::class.java),
         MainItem(CameraMediaCodecActivity::class.java),
         MainItem(AssimpActivity::class.java),
         MainItem(MediaPlayerActivity::class.java),

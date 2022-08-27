@@ -10,17 +10,20 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.zyp.androidaudiovideostudy.R;
+import com.zyp.androidaudiovideostudy.base.BaseActivity;
 import com.zyp.androidaudiovideostudy.util.AudioRecordManager;
 import com.zyp.androidaudiovideostudy.util.MediaRecordManager;
 import com.zyp.androidaudiovideostudy.util.PcmUtil;
 import com.zyp.liblame.NativeLameMP3Encoder;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 
-public class AudioActivity extends AppCompatActivity {
+public class AudioActivity extends BaseActivity {
 
 
     private static final String TAG = AudioActivity.class.getSimpleName();

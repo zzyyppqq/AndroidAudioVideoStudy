@@ -6,14 +6,14 @@ import android.hardware.Camera
 import android.os.Bundle
 import android.view.TextureView
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityCameraTextureActivityBinding
 import com.zyp.androidaudiovideostudy.camera.helper.CameraHelper
 
 /**
  * CameraTextureActivity
  */
-class CameraTextureActivity : AppCompatActivity() {
+class CameraTextureActivity : BaseActivity() {
     private var _binding: ActivityCameraTextureActivityBinding? = null
     private val mBinding get() = _binding!!
     private lateinit var mCameraHelper: CameraHelper

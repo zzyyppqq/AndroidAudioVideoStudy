@@ -6,14 +6,14 @@ import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import com.zyp.androidaudiovideostudy.base.BaseActivity
 import com.zyp.androidaudiovideostudy.databinding.ActivityMediaCodecVideoBinding
 import com.zyp.androidaudiovideostudy.util.Const
 import com.zyp.androidaudiovideostudy.util.SimplePlayer
 import java.io.IOException
 
 
-class MediaCodecVideoActivity : AppCompatActivity() {
+class MediaCodecVideoActivity : BaseActivity() {
 
     companion object {
         private val TAG = MediaCodecVideoActivity::class.java.simpleName

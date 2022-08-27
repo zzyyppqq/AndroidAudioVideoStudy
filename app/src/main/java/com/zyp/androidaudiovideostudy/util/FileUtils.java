@@ -168,4 +168,16 @@ public class FileUtils {
         }
         return null;
     }
+
+    public static void deleteFile(File file) {
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                for (File f : file.listFiles()) {
+                    deleteFile(f);
+                }
+            } else {
+                boolean result = file.delete();
+            }
+        }
+    }
 }
