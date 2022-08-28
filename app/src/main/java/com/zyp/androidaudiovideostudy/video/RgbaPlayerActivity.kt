@@ -16,6 +16,7 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import com.zyp.androidaudiovideostudy.util.ToastUtil
 
 /**
  * 使用Android中的SurfaceView播放RGB视频数据
@@ -98,10 +99,11 @@ class MySurfaceView(context: Context?) : SurfaceView(context), SurfaceHolder.Cal
         m_flag = true
         try {
             m_fileInputStream = FileInputStream(RGB_FILE_NAME)
+            m_thread.start()
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
+            ToastUtil.show("FileNotFoundException: $RGB_FILE_NAME")
         }
-        m_thread.start()
     }
 
     override fun surfaceChanged(
