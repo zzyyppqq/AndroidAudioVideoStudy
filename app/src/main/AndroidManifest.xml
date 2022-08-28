@@ -45,6 +45,13 @@
             android:name=".opengl.OpenGLRendererTestActivity"
             android:exported="false" />
         <activity
+            android:name=".fmod.FmodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".fmod.EffectActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".opengl.CubeActivity"
             android:exported="false" />
          <activity

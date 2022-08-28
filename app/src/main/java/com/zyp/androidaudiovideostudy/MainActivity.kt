@@ -16,6 +16,8 @@ import com.zyp.androidaudiovideostudy.camera.*
 import com.zyp.androidaudiovideostudy.databinding.ActivityMainBinding
 import com.zyp.androidaudiovideostudy.fdkaac.FdkAACActivity
 import com.zyp.androidaudiovideostudy.ffmpeg.FFmpegActivity
+import com.zyp.androidaudiovideostudy.fmod.EffectActivity
+import com.zyp.androidaudiovideostudy.fmod.FmodActivity
 import com.zyp.androidaudiovideostudy.gpuimage.GpuImageActivity
 import com.zyp.androidaudiovideostudy.opengl.CubeActivity
 import com.zyp.androidaudiovideostudy.opengl.HockeyActivity
@@ -50,6 +52,8 @@ class MainActivity : BaseActivity() {
         MainItem(CameraOpenGLLookupActivity::class.java),
         MainItem(CameraMediaCodecActivity::class.java),
         MainItem(OpenGLRendererTestActivity::class.java),
+        MainItem(FmodActivity::class.java),
+        MainItem(EffectActivity::class.java),
         MainItem(CubeActivity::class.java),
         MainItem(HockeyActivity::class.java),
         MainItem(PanoramaActivity::class.java),
