@@ -45,6 +45,16 @@
             android:name=".opengl.OpenGLRendererTestActivity"
             android:exported="false" />
         <activity
+            android:name=".opengl.CubeActivity"
+            android:exported="false" />
+         <activity
+            android:name=".opengl.HockeyActivity"
+            android:exported="false" />
+         <activity
+            android:name=".opengl.PanoramaActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".assimp.AssimpActivity"
             android:exported="false" />
         <activity
