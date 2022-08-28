@@ -41,6 +41,7 @@ add_library( # Sets the name of the library.
         ffmpeg/ffmpeglib.cpp
         ffmpeg/NativewindRender.cpp)
 
+#  ------------------------------------ ffmpeg -------------------------------------------------
 
 # 添加库——外部引入的库
 # 库名称：avcodec（不需要包含前缀lib）
@@ -114,6 +115,74 @@ add_library(avdevice
 set_target_properties(avdevice
         PROPERTIES IMPORTED_LOCATION
         ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libavdevice.so)
+
+#  ------------------------------------ fdk-aac -------------------------------------------------
+
+
+add_library(
+        fdk-aac
+        STATIC
+        IMPORTED
+)
+
+SET_TARGET_PROPERTIES(
+        fdk-aac
+        PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/fdk-aac/libs/${CMAKE_ANDROID_ARCH_ABI}/libfdk-aac.a
+)
+
+include_directories(fdk-aac)
+
+#  ------------------------------------ rtmp -------------------------------------------------
+
+add_library(
+        rtmp
+        SHARED
+        IMPORTED
+)
+
+SET_TARGET_PROPERTIES(
+        rtmp
+        PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/rtmp/libs/${CMAKE_ANDROID_ARCH_ABI}/librtmp.so
+)
+
+include_directories(rtmp/include)
+
+#  ------------------------------------ x264 -------------------------------------------------
+
+add_library(
+        x264
+        STATIC
+        IMPORTED
+)
+
+SET_TARGET_PROPERTIES(
+        x264
+        PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/x264/libs/${CMAKE_ANDROID_ARCH_ABI}/libx264.a
+)
+
+include_directories(x264/include)
+
+#  ------------------------------------ yuv -------------------------------------------------
+
+
+add_library(
+        yuv
+        STATIC
+        IMPORTED
+)
+
+SET_TARGET_PROPERTIES(
+        yuv
+        PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/yuv/libs/${CMAKE_ANDROID_ARCH_ABI}/libyuv.a
+)
+
+include_directories(yuv/include)
+
+#  ------------------------------------ log -------------------------------------------------
 
 
 find_library( # Sets the name of the path variable.
