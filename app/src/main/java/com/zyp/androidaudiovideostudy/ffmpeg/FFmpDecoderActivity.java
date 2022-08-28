@@ -26,7 +26,7 @@ public class FFmpDecoderActivity extends Activity {
     private static final String TAG = "FFmpegTest";
     // ffmpeg解码+音视频同步
     private SurfaceView surfaceView;
-    private ZzrFFPlayer ffPlayer;
+    private FFPlayer ffPlayer;
     private SyncPlayer syncPlayer;
 
     @Override
@@ -56,9 +56,9 @@ public class FFmpDecoderActivity extends Activity {
 
     public void clickOnPlayVideo(@SuppressLint("USELESS") View view) {
         String path = Environment.getExternalStorageDirectory().getPath();
-        String input_mp4 = path + "/10s_test.mp4";
+        String input_mp4 = path + "/test.mp4";
         if(ffPlayer==null) {
-            ffPlayer = new ZzrFFPlayer();
+            ffPlayer = new FFPlayer();
             ffPlayer.init(input_mp4,surfaceView.getHolder().getSurface());
         }
         ffPlayer.play();
@@ -66,16 +66,16 @@ public class FFmpDecoderActivity extends Activity {
 
     public void clickOnPlayMusic(@SuppressLint("USELESS") View view) {
         String path = Environment.getExternalStorageDirectory().getPath();
-        String input_mp4 = path + "/10s_test.mp4";
+        String input_mp4 = path + "/test.mp4";
         if(ffPlayer==null) {
-            ffPlayer = new ZzrFFPlayer();
+            ffPlayer = new FFPlayer();
         }
         ffPlayer.playMusic(input_mp4);
     }
 
     public void clickOnSyncPlay(@SuppressLint("USELESS") View view) {
         String path = Environment.getExternalStorageDirectory().getPath();
-        String input_mp4 = path + "/10s_test.mp4";
+        String input_mp4 = path + "/test.mp4";
         if(syncPlayer!=null) {
             syncPlayer.release();
             syncPlayer = null;
@@ -89,8 +89,8 @@ public class FFmpDecoderActivity extends Activity {
 
     public void clickOnMP42YUV(@SuppressLint("USELESS") View view) {
         String path = Environment.getExternalStorageDirectory().getPath();
-        String input_mp4 = path + "/10s_test.mp4";
-        String output_yuv = path + "/10s_test.yuv";
+        String input_mp4 = path + "/test.mp4";
+        String output_yuv = path + "/test.yuv";
         if(!new File(input_mp4).exists()){
             Log.d(TAG, input_mp4 + " 文件不存在！");
             Toast.makeText(FFmpDecoderActivity.this, "找不到测试用例文件！", Toast.LENGTH_SHORT).show();
@@ -103,7 +103,7 @@ public class FFmpDecoderActivity extends Activity {
         }
         try {
             //int i = mFFmpegAIDLInterface.Mp4_TO_YUV(input_mp4, output_yuv, output_h264);
-            final int i = ZzrFFmpeg.Mp4TOYuv(input_mp4, output_yuv);
+            final int i = FFmpeg.Mp4TOYuv(input_mp4, output_yuv);
             Log.d(TAG, "Mp4_TO_YUV return:"+i);
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,8 +112,8 @@ public class FFmpDecoderActivity extends Activity {
 
     public void clickOnMP42PCM(@SuppressLint("USELESS") View view) {
         String path = Environment.getExternalStorageDirectory().getPath();
-        String input_mp4 = path + "/10s_test.mp4";
-        String output_pcm = path + "/10s_test.pcm";
+        String input_mp4 = path + "/test.mp4";
+        String output_pcm = path + "/test.pcm";
         if(!new File(input_mp4).exists()){
             Log.d(TAG, input_mp4+" 文件不存在！");
             Toast.makeText(FFmpDecoderActivity.this, "找不到测试用例文件！", Toast.LENGTH_SHORT).show();
@@ -125,7 +125,7 @@ public class FFmpDecoderActivity extends Activity {
             if(!delete) return;
         }
         try {
-            ZzrFFmpeg.Mp34TOPcm(input_mp4, output_pcm);
+            FFmpeg.Mp34TOPcm(input_mp4, output_pcm);
         } catch (Exception e) {
             e.printStackTrace();
         }

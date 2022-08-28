@@ -45,6 +45,13 @@
             android:name=".opengl.OpenGLRendererTestActivity"
             android:exported="false" />
         <activity
+            android:name=".ffmpeg.FFmpDecoderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ffmpeg.NativeAVEncodeActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".fmod.FmodActivity"
             android:exported="false" />
         <activity

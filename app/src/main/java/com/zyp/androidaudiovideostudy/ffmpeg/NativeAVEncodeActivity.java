@@ -13,6 +13,7 @@ import android.media.audiofx.AcousticEchoCanceler;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.Toast;
@@ -219,7 +220,7 @@ public class NativeAVEncodeActivity extends Activity implements ViewTreeObserver
     private RtmpPusher rtmpPusher;
     private boolean isPushing = false;
 
-    public void OnClickRtmpPush(Button view) {
+    public void OnClickRtmpPush(View view) {
         if(rtmpPusher == null) {
             Point previewSize = cameraHelper.getPreviewSize();
             if(previewSize == null) return;
@@ -231,11 +232,11 @@ public class NativeAVEncodeActivity extends Activity implements ViewTreeObserver
         if(!isPushing) {
             rtmpPusher.startPush("rtmp://127.0.0.1/live/zzr");
             isPushing = true;
-            view.setText("停止推流");
+            ((Button)view).setText("停止推流");
         } else {
             rtmpPusher.stopPush();
             isPushing = false;
-            view.setText("启动推流");
+            ((Button)view).setText("启动推流");
         }
     }
 }

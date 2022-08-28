@@ -134,11 +134,11 @@ add_library(
         SHARED
         IMPORTED
 )
-
+# 为了避免 与其他(librtmp)module的【librtmp.so】冲突，这里改 文件名为【librtmp_.so】
 SET_TARGET_PROPERTIES(
         rtmp
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/rtmp/libs/${CMAKE_ANDROID_ARCH_ABI}/librtmp.so
+        ${CMAKE_SOURCE_DIR}/rtmp/libs/${CMAKE_ANDROID_ARCH_ABI}/librtmp_.so
 )
 
 include_directories(rtmp/include)
@@ -238,7 +238,7 @@ add_library( # 生成动态库的名称
         # 指定是动态库SO
         SHARED
         # 编译库的源代码文件
-        ffmpeg/zzr_ffmpeg_player.c)
+        ffmpeg/ffmpeg_player.c)
 
 target_link_libraries( # 指定目标链接库
         zzr-ffmpeg-player
@@ -260,7 +260,7 @@ add_library( # 生成动态库的名称
         # 编译库的源代码文件
         ffmpeg/sync_player.c
         ffmpeg/AVPacket_buffer.c
-        common/zzr_common.c)
+        common/common.c)
 
 target_link_libraries( # 指定目标链接库
         sync-player
@@ -281,7 +281,7 @@ add_library( # 生成动态库的名称
         # 指定是动态库SO
         SHARED
         # 编译库的源代码文件
-        ffmpeg/zzr_ffmpeg_util.c)
+        ffmpeg/ffmpeg_util.c)
 
 target_link_libraries( # 指定目标链接库
         zzr-ffmpeg-utils
@@ -299,7 +299,7 @@ add_library( # 生成动态库的名称
         # 指定是动态库
         SHARED
         # 编译库的源代码文件
-        common/zzr_common.c
+        common/common.c
         push/queue.c
         push/rtmp_push.c )
 

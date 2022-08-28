@@ -10,7 +10,7 @@ import android.view.Surface;
  * ffmpeg代码都运行在主线程上，会阻塞主线程。
  * Created by zzr on 2018/12/11.
  */
-public class ZzrFFPlayer {
+public class FFPlayer {
 
     public native void init(String media_input_str,Surface surface);
     public native int play();
@@ -67,7 +67,8 @@ public class ZzrFFPlayer {
     {
         // Try loading libraries...
         try {
-            System.loadLibrary("yuv");
+            // yuv为静态库， 已经打包到libzzr-ffmpeg-player.so动态库中
+//            System.loadLibrary("yuv");
 
             System.loadLibrary("avutil");
             System.loadLibrary("swscale");

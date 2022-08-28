@@ -1,7 +1,7 @@
 #include <jni.h>
 #include <malloc.h>
 #include <pthread.h>
-#include "../common/zzr_common.h"
+#include "../common/common.h"
 #include "../x264/include/x264.h"
 #include "../rtmp/include/rtmp.h"
 #include "../faac/include/faac.h"

@@ -7,7 +7,7 @@ import android.util.Log;
  * ffmpeg代码都运行在主线程上，会阻塞主线程。
  * Created by zzr on 2018/11/28.
  */
-public class ZzrFFmpeg {
+public class FFmpeg {
 
     public static native int Mp34TOPcm(String input_mp3_str, String output_pcm_str);
 
