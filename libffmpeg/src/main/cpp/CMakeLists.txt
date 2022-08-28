@@ -6,7 +6,7 @@
 cmake_minimum_required(VERSION 3.18.1)
 
 # 定义变量
-set(JNI_LIBS_DIR src/main/cpp)
+set(JNI_LIBS_DIR .)
 
 #打印LOG
 message(STATUS "Cmake build type is: "${CMAKE_BUILD_TYPE})
@@ -30,16 +30,16 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/cmdutils.c
-        src/main/cpp/cmdutils.h
-        src/main/cpp/config.h
-        src/main/cpp/ffmpeg.c
-        src/main/cpp/ffmpeg.h
-        src/main/cpp/ffmpeg_filter.c
-        src/main/cpp/ffmpeg_hw.c
-        src/main/cpp/ffmpeg_opt.c
-        src/main/cpp/ffmpeglib.cpp
-        src/main/cpp/NativewindRender.cpp)
+        ffmpeg/cmdutils.c
+        ffmpeg/cmdutils.h
+        ffmpeg/config.h
+        ffmpeg/ffmpeg.c
+        ffmpeg/ffmpeg.h
+        ffmpeg/ffmpeg_filter.c
+        ffmpeg/ffmpeg_hw.c
+        ffmpeg/ffmpeg_opt.c
+        ffmpeg/ffmpeglib.cpp
+        ffmpeg/NativewindRender.cpp)
 
 
 # 添加库——外部引入的库
@@ -55,49 +55,49 @@ add_library(avcodec
 # 还可以设置其他属性，格式：PROPERTIES key value
 set_target_properties(avcodec
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavcodec.so)
+        ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libavcodec.so)
 
 add_library(avfilter
         SHARED
         IMPORTED)
 set_target_properties(avfilter
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavfilter.so)
+        ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libavfilter.so)
 
 add_library(avformat
         SHARED
         IMPORTED)
 set_target_properties(avformat
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavformat.so)
+        ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libavformat.so)
 
 add_library(avutil
         SHARED
         IMPORTED)
 set_target_properties(avutil
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavutil.so)
+        ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libavutil.so)
 
 add_library(swresample
         SHARED
         IMPORTED)
 set_target_properties(swresample
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libswresample.so)
+        ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libswresample.so)
 
 add_library(swscale
         SHARED
         IMPORTED)
 set_target_properties(swscale
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libswscale.so)
+        ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libswscale.so)
 
 add_library(postproc
         SHARED
         IMPORTED)
 set_target_properties(postproc
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libpostproc.so)
+        ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libpostproc.so)
 
 
 add_library(avresample
@@ -105,7 +105,7 @@ add_library(avresample
         IMPORTED)
 set_target_properties(avresample
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavresample.so)
+        ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libavresample.so)
 
 
 add_library(avdevice
@@ -113,7 +113,7 @@ add_library(avdevice
         IMPORTED)
 set_target_properties(avdevice
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libavdevice.so)
+        ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libavdevice.so)
 
 
 find_library( # Sets the name of the path variable.
@@ -125,8 +125,8 @@ find_library( # Sets the name of the path variable.
 
 
 # 引入头文件
-include_directories(src/main/cpp/include)
-include_directories(src/main/cpp)
+include_directories(ffmpeg/include)
+include_directories(ffmpeg)
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
