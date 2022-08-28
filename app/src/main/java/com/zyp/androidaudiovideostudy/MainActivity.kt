@@ -17,6 +17,7 @@ import com.zyp.androidaudiovideostudy.databinding.ActivityMainBinding
 import com.zyp.androidaudiovideostudy.fdkaac.FdkAACActivity
 import com.zyp.androidaudiovideostudy.ffmpeg.FFmpegActivity
 import com.zyp.androidaudiovideostudy.gpuimage.GpuImageActivity
+import com.zyp.androidaudiovideostudy.opengl.OpenGLRendererTestActivity
 import com.zyp.androidaudiovideostudy.rtmp.CameraMediaCodecRtmpActivity
 import com.zyp.androidaudiovideostudy.video.*
 import com.zyp.androidaudiovideostudy.x264.X264Activity
@@ -45,6 +46,7 @@ class MainActivity : BaseActivity() {
         MainItem(CameraOpenGLFilterActivity::class.java),
         MainItem(CameraOpenGLLookupActivity::class.java),
         MainItem(CameraMediaCodecActivity::class.java),
+        MainItem(OpenGLRendererTestActivity::class.java),
         MainItem(AssimpActivity::class.java),
         MainItem(MediaPlayerActivity::class.java),
         MainItem(VideoViewActivity::class.java),
