@@ -15,7 +15,7 @@ extern "C" {
 
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_zyp_nativelib_X264EncodeLib_stringFromJNI(
+Java_com_zyp_x264lib_X264EncodeLib_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
@@ -24,7 +24,7 @@ Java_com_zyp_nativelib_X264EncodeLib_stringFromJNI(
 
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_zyp_nativelib_X264EncodeLib_encode(
+Java_com_zyp_x264lib_X264EncodeLib_encode(
         JNIEnv *env, jobject thiz,
         jint width, jint height,
         jstring yuv_path, jstring h264_path, jint yuv_csp) {
