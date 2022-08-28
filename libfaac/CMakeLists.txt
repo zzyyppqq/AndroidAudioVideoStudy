@@ -28,7 +28,7 @@ add_library(
 SET_TARGET_PROPERTIES(
         faac
         PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libfaac.a
+        ${CMAKE_SOURCE_DIR}/${JNI_LIBS_DIR}/${CMAKE_ANDROID_ARCH_ABI}/libfaac.so
 )
 
 include_directories(src/main/cpp/include)

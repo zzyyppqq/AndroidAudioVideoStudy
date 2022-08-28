@@ -35,6 +35,11 @@ android {
         viewBinding = true
     }
 
+    packagingOptions {
+        //下面为实际重复导致报错的so文件
+//        pickFirst '../librtmp/build/intermediates/library_jni/debug/jni/armeabi-v7a/librtmp.so'
+    }
+
 }
 
 dependencies {

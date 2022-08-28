@@ -18,29 +18,6 @@ message(STATUS "Cmake source dir is: "${CMAKE_SOURCE_DIR})
 project("ffmpeglib")
 
 
-
-# 添加库——自己编写的库
-# 库名称：native-armeabi-v7a
-# 库类型：SHARED，表示动态库，后缀为.so（如果是STATIC，则表示静态库，后缀为.a）
-# 库源码文件：src/main/cpp/ffmpeglib.cpp
-add_library( # Sets the name of the library.
-        ffmpeglib
-
-        # Sets the library as a shared library.
-        SHARED
-
-        # Provides a relative path to your source file(s).
-        ffmpeg/cmdutils.c
-        ffmpeg/cmdutils.h
-        ffmpeg/config.h
-        ffmpeg/ffmpeg.c
-        ffmpeg/ffmpeg.h
-        ffmpeg/ffmpeg_filter.c
-        ffmpeg/ffmpeg_hw.c
-        ffmpeg/ffmpeg_opt.c
-        ffmpeg/ffmpeglib.cpp
-        ffmpeg/NativewindRender.cpp)
-
 #  ------------------------------------ ffmpeg -------------------------------------------------
 
 # 添加库——外部引入的库
@@ -115,6 +92,23 @@ add_library(avdevice
 set_target_properties(avdevice
         PROPERTIES IMPORTED_LOCATION
         ${CMAKE_SOURCE_DIR}/ffmpeg/libs/${CMAKE_ANDROID_ARCH_ABI}/libavdevice.so)
+
+#  ------------------------------------ faac -------------------------------------------------
+
+add_library(
+        faac
+        STATIC
+        IMPORTED
+)
+
+SET_TARGET_PROPERTIES(
+        faac
+        PROPERTIES IMPORTED_LOCATION
+        ${CMAKE_SOURCE_DIR}/faac/libs/${CMAKE_ANDROID_ARCH_ABI}/libfaac.so
+)
+
+include_directories(faac)
+include_directories(faac/include)
 
 #  ------------------------------------ fdk-aac -------------------------------------------------
 
@@ -196,10 +190,30 @@ find_library( # Sets the name of the path variable.
 # 引入头文件
 include_directories(ffmpeg/include)
 include_directories(ffmpeg)
+include_directories(common)
+include_directories(push)
 
-# Specifies libraries CMake should link to your target library. You
-# can link multiple libraries, such as libraries you define in this
-# build script, prebuilt third-party libraries, or system libraries.
+
+#  ------------------------------------ library -------------------------------------------------
+
+add_library( # Sets the name of the library.
+        ffmpeglib
+
+        # Sets the library as a shared library.
+        SHARED
+
+        # Provides a relative path to your source file(s).
+        ffmpeg/cmdutils.c
+        ffmpeg/cmdutils.h
+        ffmpeg/config.h
+        ffmpeg/ffmpeg.c
+        ffmpeg/ffmpeg.h
+        ffmpeg/ffmpeg_filter.c
+        ffmpeg/ffmpeg_hw.c
+        ffmpeg/ffmpeg_opt.c
+        ffmpeg/ffmpeglib.cpp
+        ffmpeg/NativewindRender.cpp)
+
 
 target_link_libraries(
         ffmpeglib
@@ -216,3 +230,83 @@ target_link_libraries(
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
+
+
+
+add_library( # 生成动态库的名称
+        zzr-ffmpeg-player
+        # 指定是动态库SO
+        SHARED
+        # 编译库的源代码文件
+        ffmpeg/zzr_ffmpeg_player.c)
+
+target_link_libraries( # 指定目标链接库
+        zzr-ffmpeg-player
+        # 添加预编译库到目标链接库中
+        ${log-lib}
+        ${android-lib}
+        avutil
+        avcodec
+        avformat
+        swscale
+        swresample
+        -landroid
+        yuv )
+
+add_library( # 生成动态库的名称
+        sync-player
+        # 指定是动态库SO
+        SHARED
+        # 编译库的源代码文件
+        ffmpeg/sync_player.c
+        ffmpeg/AVPacket_buffer.c
+        common/zzr_common.c)
+
+target_link_libraries( # 指定目标链接库
+        sync-player
+        # 添加预编译库到目标链接库中
+        ${log-lib}
+        ${android-lib}
+        avutil
+        avcodec
+        avformat
+        swscale
+        swresample
+        -landroid
+        yuv )
+
+
+add_library( # 生成动态库的名称
+        zzr-ffmpeg-utils
+        # 指定是动态库SO
+        SHARED
+        # 编译库的源代码文件
+        ffmpeg/zzr_ffmpeg_util.c)
+
+target_link_libraries( # 指定目标链接库
+        zzr-ffmpeg-utils
+        # 添加预编译库到目标链接库中
+        ${log-lib}
+        avutil
+        avcodec
+        avformat
+        swscale
+        swresample )
+
+
+add_library( # 生成动态库的名称
+        rtmp-push
+        # 指定是动态库
+        SHARED
+        # 编译库的源代码文件
+        common/zzr_common.c
+        push/queue.c
+        push/rtmp_push.c )
+
+target_link_libraries( # 指定目标链接库
+        rtmp-push
+        # 添加预编译库到目标链接库中
+        ${log-lib}
+        x264
+        faac
+        rtmp)
