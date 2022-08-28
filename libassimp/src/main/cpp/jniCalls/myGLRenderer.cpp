@@ -25,7 +25,7 @@ extern "C" {
 extern ModelAssimp *gAssimpObject;
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_assimp_NativeGLRenderer_DrawFrameNative(JNIEnv *env,
+Java_com_zyp_av_assimp_NativeGLRenderer_DrawFrameNative(JNIEnv *env,
                                                                       jobject instance) {
 
     if (gAssimpObject == NULL) {
@@ -36,7 +36,7 @@ Java_com_zyp_androidaudiovideostudy_assimp_NativeGLRenderer_DrawFrameNative(JNIE
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_assimp_NativeGLRenderer_SurfaceCreatedNative(JNIEnv *env,
+Java_com_zyp_av_assimp_NativeGLRenderer_SurfaceCreatedNative(JNIEnv *env,
                                                                            jobject instance) {
 
     if (gAssimpObject == NULL) {
@@ -47,7 +47,7 @@ Java_com_zyp_androidaudiovideostudy_assimp_NativeGLRenderer_SurfaceCreatedNative
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_assimp_NativeGLRenderer_SurfaceChangedNative(JNIEnv *env,
+Java_com_zyp_av_assimp_NativeGLRenderer_SurfaceChangedNative(JNIEnv *env,
                                                                            jobject instance,
                                                                            jint width,
                                                                            jint height) {

@@ -32,7 +32,7 @@ MyJNIHelper * gHelperObject=NULL;
  * Create the persistent native object and also initialize the single helper object
  */
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_assimp_AssimpActivity_CreateObjectNative(JNIEnv *env,
+Java_com_zyp_av_assimp_AssimpActivity_CreateObjectNative(JNIEnv *env,
                                                                          jobject instance,
                                                                          jobject assetManager,
                                                                          jstring pathToInternalDir) {
@@ -42,7 +42,7 @@ Java_com_zyp_androidaudiovideostudy_assimp_AssimpActivity_CreateObjectNative(JNI
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_assimp_AssimpActivity_DeleteObjectNative(JNIEnv *env,
+Java_com_zyp_av_assimp_AssimpActivity_DeleteObjectNative(JNIEnv *env,
                                                                          jobject instance) {
     if (gAssimpObject != NULL) {
         delete gAssimpObject;

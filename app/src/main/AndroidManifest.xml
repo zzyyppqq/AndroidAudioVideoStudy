@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zyp.androidaudiovideostudy">
+    package="com.zyp.av">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,7 +12,7 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-        android:name=".App"
+        android:name="com.zyp.av.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,98 +21,98 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".camera.CameraActivity"
+            android:name="com.zyp.av.camera.CameraActivity"
             android:exported="false" />
         <activity
-            android:name=".camera.Camera2Activity"
+            android:name="com.zyp.av.camera.Camera2Activity"
             android:exported="false" />
         <activity
-            android:name=".camera.CameraOpenGLActivity"
+            android:name="com.zyp.av.camera.CameraOpenGLActivity"
             android:exported="false" />
         <activity
-            android:name=".camera.CameraOpenGLFilterActivity"
+            android:name="com.zyp.av.camera.CameraOpenGLFilterActivity"
             android:exported="false" />
         <activity
-            android:name=".camera.CameraOpenGLLookupActivity"
+            android:name="com.zyp.av.camera.CameraOpenGLLookupActivity"
             android:exported="false" />
         <activity
-            android:name=".camera.CameraTextureActivity"
+            android:name="com.zyp.av.camera.CameraTextureActivity"
             android:exported="false" />
         <activity
-            android:name=".camera.Camera2TextureActivity"
+            android:name="com.zyp.av.camera.Camera2TextureActivity"
             android:exported="false" />
         <activity
-            android:name=".opengl.OpenGLRendererTestActivity"
+            android:name="com.zyp.av.opengl.OpenGLRendererTestActivity"
             android:exported="false" />
         <activity
-            android:name=".ffmpeg.FFmpDecoderActivity"
+            android:name="com.zyp.av.ffmpeg.FFmpDecoderActivity"
             android:exported="false" />
         <activity
-            android:name=".ffmpeg.NativeAVEncodeActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".fmod.FmodActivity"
-            android:exported="false" />
-        <activity
-            android:name=".fmod.EffectActivity"
+            android:name="com.zyp.av.ffmpeg.NativeAVEncodeActivity"
             android:exported="false" />
 
         <activity
-            android:name=".opengl.CubeActivity"
+            android:name="com.zyp.av.fmod.FmodActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.zyp.av.fmod.EffectActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.zyp.av.opengl.CubeActivity"
             android:exported="false" />
          <activity
-            android:name=".opengl.HockeyActivity"
+            android:name="com.zyp.av.opengl.HockeyActivity"
             android:exported="false" />
          <activity
-            android:name=".opengl.PanoramaActivity"
+            android:name="com.zyp.av.opengl.PanoramaActivity"
             android:exported="false" />
 
         <activity
-            android:name=".assimp.AssimpActivity"
+            android:name="com.zyp.av.assimp.AssimpActivity"
             android:exported="false" />
         <activity
-            android:name=".video.RgbaPlayerActivity"
+            android:name="com.zyp.av.video.RgbaPlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".fdkaac.FdkAACActivity"
+            android:name="com.zyp.av.fdkaac.FdkAACActivity"
             android:exported="false" />
         <activity
-            android:name=".ffmpeg.FFmpegActivity"
+            android:name="com.zyp.av.ffmpeg.FFmpegActivity"
             android:exported="false" />
         <activity
-            android:name=".video.MediaCodecVideoActivity"
+            android:name="com.zyp.av.video.MediaCodecVideoActivity"
             android:exported="false" />
         <activity
-            android:name=".video.VideoViewActivity"
+            android:name="com.zyp.av.video.VideoViewActivity"
             android:exported="false" />
         <activity
-            android:name=".video.MediaPlayerActivity"
+            android:name="com.zyp.av.video.MediaPlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".video.MediaCodecActivity"
+            android:name="com.zyp.av.video.MediaCodecActivity"
             android:exported="false" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.zyp.av.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".audio.AudioActivity" />
-        <activity android:name=".audio.LibmadActivity" />
-        <activity android:name=".audio.LiblameActivity" />
-        <activity android:name=".yuv.YuvCameraActivity" />
-        <activity android:name=".video.CameraMediaCodecActivity" />
-        <activity android:name=".x264.X264Activity" />
-        <activity android:name=".rtmp.CameraMediaCodecRtmpActivity" />
-        <activity android:name=".video.ANativeWindowActivity" />
-        <activity android:name=".yuv.YUViewActivity" />
-        <activity android:name=".yuv.RGBViewActivity" />
-        <activity android:name=".yuv.YUVTestActivity" />
+        <activity android:name="com.zyp.av.audio.AudioActivity" />
+        <activity android:name="com.zyp.av.audio.LibmadActivity" />
+        <activity android:name="com.zyp.av.audio.LiblameActivity" />
+        <activity android:name="com.zyp.av.yuv.YuvCameraActivity" />
+        <activity android:name="com.zyp.av.video.CameraMediaCodecActivity" />
+        <activity android:name="com.zyp.av.x264.X264Activity" />
+        <activity android:name="com.zyp.av.rtmp.CameraMediaCodecRtmpActivity" />
+        <activity android:name="com.zyp.av.video.ANativeWindowActivity" />
+        <activity android:name="com.zyp.av.yuv.YUViewActivity" />
+        <activity android:name="com.zyp.av.yuv.RGBViewActivity" />
+        <activity android:name="com.zyp.av.yuv.YUVTestActivity" />
 
         <activity
-            android:name=".gpuimage.GpuImageActivity"
+            android:name="com.zyp.av.gpuimage.GpuImageActivity"
             android:exported="false" />
 
         <provider

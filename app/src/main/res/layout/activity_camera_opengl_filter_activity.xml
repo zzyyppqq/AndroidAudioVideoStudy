@@ -7,7 +7,7 @@
     tools:context=".yuv.YuvCameraActivity">
 
 
-    <com.zyp.androidaudiovideostudy.gles.CameraGLSurfaceView
+    <com.zyp.av.gles.CameraGLSurfaceView
         android:id="@+id/cameraSurfaceView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

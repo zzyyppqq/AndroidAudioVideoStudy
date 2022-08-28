@@ -21,14 +21,14 @@ jstring gMediaPath;
 extern "C"
 {
 
-void Java_com_zyp_androidaudiovideostudy_fmod_VoiceEffectUtils_init(JNIEnv *env, jclass clazz )
+void Java_com_zyp_av_fmod_VoiceEffectUtils_init(JNIEnv *env, jclass clazz )
 {
     gJNIEnv = env;
     jstring obj = gJNIEnv->NewStringUTF("file:///android_asset/fmod/dfb.mp3");
     gMediaPath = (jstring) gJNIEnv->NewGlobalRef(obj); //创建cpp内全局引用。
 }
 
-void Java_com_zyp_androidaudiovideostudy_fmod_VoiceEffectUtils_release(JNIEnv *env, jclass clazz )
+void Java_com_zyp_av_fmod_VoiceEffectUtils_release(JNIEnv *env, jclass clazz )
 {
     if(gJNIEnv!=NULL)
     {
@@ -37,7 +37,7 @@ void Java_com_zyp_androidaudiovideostudy_fmod_VoiceEffectUtils_release(JNIEnv *e
     gJNIEnv = NULL;
 }
 
-void Java_com_zyp_androidaudiovideostudy_fmod_VoiceEffectUtils_play(JNIEnv *env, jclass clazz, jint type )
+void Java_com_zyp_av_fmod_VoiceEffectUtils_play(JNIEnv *env, jclass clazz, jint type )
 {
     FMOD::System    *system;
     void            *extradriverdata = 0;

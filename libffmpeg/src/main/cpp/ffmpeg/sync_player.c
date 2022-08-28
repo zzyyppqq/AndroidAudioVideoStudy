@@ -457,7 +457,7 @@ void initPlayerAVPacketBuffer(SyncPlayer* player)
 SyncPlayer* mSyncPlayer;
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_ffmpeg_SyncPlayer_nativeInit(JNIEnv *env, jobject instance)
+Java_com_zyp_av_ffmpeg_SyncPlayer_nativeInit(JNIEnv *env, jobject instance)
 {
     av_log_set_callback(ffmpeg_custom_log);
     av_register_all();
@@ -472,7 +472,7 @@ Java_com_zyp_androidaudiovideostudy_ffmpeg_SyncPlayer_nativeInit(JNIEnv *env, jo
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_ffmpeg_SyncPlayer_nativeRelease(JNIEnv *env, jobject instance)
+Java_com_zyp_av_ffmpeg_SyncPlayer_nativeRelease(JNIEnv *env, jobject instance)
 {
     if(mSyncPlayer == NULL)
         return;
@@ -519,7 +519,7 @@ Java_com_zyp_androidaudiovideostudy_ffmpeg_SyncPlayer_nativeRelease(JNIEnv *env,
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_ffmpeg_SyncPlayer_nativePrepare(JNIEnv *env, jobject instance,
+Java_com_zyp_av_ffmpeg_SyncPlayer_nativePrepare(JNIEnv *env, jobject instance,
                                                jstring media_input_jstr, jobject jSurface)
 {
     if(mSyncPlayer == NULL) {
@@ -584,7 +584,7 @@ Java_com_zyp_androidaudiovideostudy_ffmpeg_SyncPlayer_nativePrepare(JNIEnv *env,
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_ffmpeg_SyncPlayer_nativePlay(JNIEnv *env, jobject instance)
+Java_com_zyp_av_ffmpeg_SyncPlayer_nativePlay(JNIEnv *env, jobject instance)
 {
     if(mSyncPlayer == NULL) {
         LOGE("%s","请调用函数：nativeInit");

@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.zyp.androidaudiovideostudy"
+        applicationId "com.zyp.av"
         minSdkVersion 21
         targetSdkVersion 21
         versionCode 1

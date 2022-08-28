@@ -25,7 +25,7 @@ extern "C" {
 extern ModelAssimp *gAssimpObject;
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_assimp_GestureClass_DoubleTapNative(JNIEnv *env, jobject instance) {
+Java_com_zyp_av_assimp_GestureClass_DoubleTapNative(JNIEnv *env, jobject instance) {
 
     if (gAssimpObject == NULL) {
         return;
@@ -39,7 +39,7 @@ Java_com_zyp_androidaudiovideostudy_assimp_GestureClass_DoubleTapNative(JNIEnv *
  * from previous position
  */
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_assimp_GestureClass_ScrollNative(JNIEnv *env, jobject instance,
+Java_com_zyp_av_assimp_GestureClass_ScrollNative(JNIEnv *env, jobject instance,
                                                                jfloat distanceX, jfloat distanceY,
                                                                jfloat positionX, jfloat positionY) {
 
@@ -62,7 +62,7 @@ Java_com_zyp_androidaudiovideostudy_assimp_GestureClass_ScrollNative(JNIEnv *env
  * Pinch-and-zoom gesture: pass the change in scale to class' method
  */
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_assimp_GestureClass_ScaleNative(JNIEnv *env, jobject instance,
+Java_com_zyp_av_assimp_GestureClass_ScaleNative(JNIEnv *env, jobject instance,
                                                               jfloat scaleFactor) {
 
     if (gAssimpObject == NULL) {
@@ -77,7 +77,7 @@ Java_com_zyp_androidaudiovideostudy_assimp_GestureClass_ScaleNative(JNIEnv *env,
  * Two-finger drag - normalize the distance moved wrt GLES surface size
  */
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_assimp_GestureClass_MoveNative(JNIEnv *env, jobject instance,
+Java_com_zyp_av_assimp_GestureClass_MoveNative(JNIEnv *env, jobject instance,
                                                                jfloat distanceX, jfloat distanceY) {
 
     if (gAssimpObject == NULL) {

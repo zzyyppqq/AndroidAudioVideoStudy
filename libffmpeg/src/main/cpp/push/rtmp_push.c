@@ -318,7 +318,7 @@ void add_common_frame(unsigned char *buf ,int len)
 //////// native method implementation ////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-JNIEXPORT void JNICALL Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_feedVideoData
+JNIEXPORT void JNICALL Java_com_zyp_av_ffmpeg_RtmpPusher_feedVideoData
         (JNIEnv *env, jobject jobj, jbyteArray array)
 {
     if(gRtmpPusher == NULL )
@@ -395,7 +395,7 @@ JNIEXPORT void JNICALL Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_fee
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_prepareVideoEncoder(JNIEnv *env, jobject jobj,
+Java_com_zyp_av_ffmpeg_RtmpPusher_prepareVideoEncoder(JNIEnv *env, jobject jobj,
                                                         jint width, jint height, jint bitrate, jint fps)
 {
     if(gRtmpPusher == NULL) {
@@ -451,7 +451,7 @@ Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_prepareVideoEncoder(JNIEnv
 
 
 
-JNIEXPORT void JNICALL Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_feedAudioData
+JNIEXPORT void JNICALL Java_com_zyp_av_ffmpeg_RtmpPusher_feedAudioData
         (JNIEnv *env, jobject jObj, jbyteArray j_pcm_array, jint len)
 {
     if(gRtmpPusher==NULL || gRtmpPusher->faac_encoder==NULL)
@@ -503,7 +503,7 @@ JNIEXPORT void JNICALL Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_fee
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_prepareAudioEncoder(JNIEnv *env, jobject jobj,
+Java_com_zyp_av_ffmpeg_RtmpPusher_prepareAudioEncoder(JNIEnv *env, jobject jobj,
                                                      jint sampleRateInHz, jint channelNum)
 {
     if(gRtmpPusher == NULL) {
@@ -547,7 +547,7 @@ Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_prepareAudioEncoder(JNIEnv
 
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_startPush(JNIEnv *env, jobject jobj, jstring url_jstr)
+Java_com_zyp_av_ffmpeg_RtmpPusher_startPush(JNIEnv *env, jobject jobj, jstring url_jstr)
 {
     if(gRtmpPusher == NULL) {
         LOGE("%s","请先调用函数：prepareAudioEncoder&prepareVideoEncoder");
@@ -579,7 +579,7 @@ Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_startPush(JNIEnv *env, job
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_stopPush(JNIEnv *env, jobject jobj)
+Java_com_zyp_av_ffmpeg_RtmpPusher_stopPush(JNIEnv *env, jobject jobj)
 {
     if(gRtmpPusher->rtmp_path!=NULL) {
         free(gRtmpPusher->rtmp_path);
@@ -595,7 +595,7 @@ Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_stopPush(JNIEnv *env, jobj
 }
 
 JNIEXPORT void JNICALL
-Java_com_zyp_androidaudiovideostudy_ffmpeg_RtmpPusher_release(JNIEnv *env, jobject jobj)
+Java_com_zyp_av_ffmpeg_RtmpPusher_release(JNIEnv *env, jobject jobj)
 {
     x264_encoder_close(gRtmpPusher->x264_encoder);
     faacEncClose(gRtmpPusher->faac_encoder);
