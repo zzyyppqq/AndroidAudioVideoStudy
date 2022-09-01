@@ -14,9 +14,7 @@ import com.zyp.av.base.BaseActivity
 import com.zyp.av.camera.*
 import com.zyp.av.databinding.ActivityMainBinding
 import com.zyp.av.fdkaac.FdkAACActivity
-import com.zyp.av.ffmpeg.FFmpDecoderActivity
 import com.zyp.av.ffmpeg.FFmpegActivity
-import com.zyp.av.ffmpeg.NativeAVEncodeActivity
 import com.zyp.av.fmod.EffectActivity
 import com.zyp.av.fmod.FmodActivity
 import com.zyp.av.gpuimage.GpuImageActivity
@@ -54,8 +52,6 @@ class MainActivity : BaseActivity() {
         MainItem(CameraMediaCodecActivity::class.java),
         MainItem(OpenGLRendererTestActivity::class.java),
         MainItem(FFmpegActivity::class.java),
-        MainItem(FFmpDecoderActivity::class.java),
-        MainItem(NativeAVEncodeActivity::class.java),
         MainItem(FmodActivity::class.java),
         MainItem(EffectActivity::class.java),
         MainItem(CubeActivity::class.java),

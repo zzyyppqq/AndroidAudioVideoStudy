@@ -45,12 +45,6 @@
         <activity
             android:name="com.zyp.av.opengl.OpenGLRendererTestActivity"
             android:exported="false" />
-        <activity
-            android:name="com.zyp.av.ffmpeg.FFmpDecoderActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.zyp.av.ffmpeg.NativeAVEncodeActivity"
-            android:exported="false" />
 
         <activity
             android:name="com.zyp.av.fmod.FmodActivity"
