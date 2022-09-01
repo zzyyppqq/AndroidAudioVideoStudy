@@ -205,7 +205,7 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         ffmpeg/cmdutils.c
         ffmpeg/cmdutils.h
-        ffmpeg/config.h
+        ffmpeg/include/config.h
         ffmpeg/ffmpeg.c
         ffmpeg/ffmpeg.h
         ffmpeg/ffmpeg_filter.c
