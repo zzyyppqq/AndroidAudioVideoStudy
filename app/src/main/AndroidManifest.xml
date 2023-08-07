@@ -14,13 +14,12 @@
     <application
         android:name="com.zyp.av.App"
         android:allowBackup="true"
+        android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:debuggable="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name="com.zyp.av.camera.CameraActivity"
             android:exported="false" />
@@ -45,24 +44,21 @@
         <activity
             android:name="com.zyp.av.opengl.OpenGLRendererTestActivity"
             android:exported="false" />
-
         <activity
             android:name="com.zyp.av.fmod.FmodActivity"
             android:exported="false" />
         <activity
             android:name="com.zyp.av.fmod.EffectActivity"
             android:exported="false" />
-
         <activity
             android:name="com.zyp.av.opengl.CubeActivity"
             android:exported="false" />
-         <activity
+        <activity
             android:name="com.zyp.av.opengl.HockeyActivity"
             android:exported="false" />
-         <activity
+        <activity
             android:name="com.zyp.av.opengl.PanoramaActivity"
             android:exported="false" />
-
         <activity
             android:name="com.zyp.av.assimp.AssimpActivity"
             android:exported="false" />
@@ -105,7 +101,7 @@
         <activity android:name="com.zyp.av.yuv.YUViewActivity" />
         <activity android:name="com.zyp.av.yuv.RGBViewActivity" />
         <activity android:name="com.zyp.av.yuv.YUVTestActivity" />
-
+        <activity android:name="com.zyp.av.exoplayer.ExoPlayerActivity" />
         <activity
             android:name="com.zyp.av.gpuimage.GpuImageActivity"
             android:exported="false" />

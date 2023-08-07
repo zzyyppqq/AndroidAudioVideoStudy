@@ -13,6 +13,7 @@ import com.zyp.av.audio.LibmadActivity
 import com.zyp.av.base.BaseActivity
 import com.zyp.av.camera.*
 import com.zyp.av.databinding.ActivityMainBinding
+import com.zyp.av.exoplayer.ExoPlayerActivity
 import com.zyp.av.fdkaac.FdkAACActivity
 import com.zyp.av.ffmpeg.FFmpegActivity
 import com.zyp.av.fmod.EffectActivity
@@ -71,6 +72,7 @@ class MainActivity : BaseActivity() {
         MainItem(RGBViewActivity::class.java),
         MainItem(YUVTestActivity::class.java),
         MainItem(GpuImageActivity::class.java),
+        MainItem(ExoPlayerActivity::class.java),
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.zyp.av"
         minSdkVersion 21
@@ -40,6 +40,10 @@ android {
 //        pickFirst '../librtmp/build/intermediates/library_jni/debug/jni/armeabi-v7a/librtmp.so'
     }
 
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -60,6 +64,13 @@ dependencies {
     implementation 'com.googlecode.mp4parser:isoparser:1.1.22'
     // gpuimage
     implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
+
+    // exoplayer
+    def exoplayer_version = "2.18.2"
+    implementation "com.google.android.exoplayer:exoplayer:${exoplayer_version}"
+    implementation "com.google.android.exoplayer:exoplayer-core:${exoplayer_version}"
+    implementation "com.google.android.exoplayer:exoplayer-dash:${exoplayer_version}"
+    implementation "com.google.android.exoplayer:exoplayer-ui:${exoplayer_version}"
 
     implementation project(path: ':libmad')
     implementation project(path: ':liblame')
